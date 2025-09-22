@@ -1,0 +1,30 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers d'environnement
+.env
+.env.local
+.env.production
+.env.development
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dossiers de dépendances
+node_modules/
+.npm
+.pnpm-debug.log*
+
+# Fichiers de cache
+.cache/
+.parcel-cache/
+
+# Fichiers de build
+dist/
+build/
+
+# Fichiers temporaires
+*.tmp
+*.temp

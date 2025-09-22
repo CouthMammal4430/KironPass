@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iryon – Générateur de mots de passe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header">
+    <div class="header-container container">
+        <!-- Logo -->
+        <div class="logo"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
+
+        <!-- Boutons à droite -->
+        <div class="nav-right">
+            <!-- Bouton Découvrir Gold -->
+            <button class="btn-gold-top">Découvrir Gold</button>
+
+            <!-- Bouton Thème -->
+            <button class="theme-btn" id="theme-btn">
+                <span class="theme-icon">🌍</span>
+                <span class="theme-text">Thème</span>
+            </button>
+
+            <!-- Auth / Session -->
+            <div id="auth-controls" class="auth-controls">
+                <button id="open-auth-modal" class="btn">Se connecter</button>
+            </div>
+
+            <!-- Menu hamburger pour utilisateurs connectés -->
+            <div id="user-menu" class="user-menu" style="display: none;">
+                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu utilisateur">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div id="user-dropdown" class="user-dropdown">
+                    <div class="dropdown-item" id="profile-item">
+                        <span class="dropdown-icon">👤</span>
+                        <span>Mon profil</span>
+                    </div>
+                    <div class="dropdown-item" id="subscription-item">
+                        <span class="dropdown-icon">💎</span>
+                        <span>Mon abonnement</span>
+                    </div>
+                    <div class="dropdown-item" id="history-item">
+                        <span class="dropdown-icon">📋</span>
+                        <span>Historique complet</span>
+                    </div>
+                    <div class="dropdown-item" id="settings-item">
+                        <span class="dropdown-icon">⚙️</span>
+                        <span>Paramètres</span>
+                    </div>
+                    <div class="dropdown-item" id="help-item">
+                        <span class="dropdown-icon">❓</span>
+                        <span>Aide</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" id="logout-item">
+                        <span class="dropdown-icon">🚪</span>
+                        <span>Se déconnecter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- ===================== BANNIERE PROMO ===================== -->
+    <div class="promo-banner">
+        Votre mot de passe ultra sécurisé, gratuit ou en version Gold premium !
+    </div>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main class="container">
+
+        <!-- ===================== GENERATEUR ===================== -->
+        <section class="generator-container">
+            <h2>Générateur de mot de passe</h2>
+
+            <!-- OPTIONS -->
+            <div class="generator-options">
+                <label class="option-toggle"><input type="checkbox" id="includeUppercase" checked> Majuscules</label>
+                <label class="option-toggle"><input type="checkbox" id="includeNumbers" checked> Chiffres</label>
+                <label class="option-toggle"><input type="checkbox" id="includeSymbols"> Symboles</label>
+                <label class="length-control">
+                    Longueur: <span id="passwordLengthValue">12</span>
+                    <input type="range" id="passwordLength" min="6" max="64" value="12">
+                </label>
+            </div>
+
+            <!-- BARRE MOT DE PASSE + COPIER -->
+            <div class="password-wrapper">
+                <input type="text" id="password-output" readonly placeholder="Votre mot de passe apparaîtra ici">
+                <button id="copy-btn">Copier</button>
+            </div>
+
+            <!-- FORCE DU MOT DE PASSE -->
+            <div class="password-strength">
+                <div class="strength-bar"><div class="strength-fill"></div></div>
+                <span class="strength-text">Force</span>
+            </div>
+
+            <!-- BOUTONS GENERER -->
+            <div class="generator-buttons">
+                <button id="generateBtn" class="btn">Générer Free</button>
+                <button id="generateGoldBtn" class="btn btn-gold">Générer Gold</button>
+            </div>
+
+            <!-- ASTUCES / INFOS -->
+            <div class="generator-tips">
+                <p>Astuce : Pour un mot de passe ultra sécurisé, activez toutes les options et utilisez le mode Gold !</p>
+            </div>
+        </section>
+
+        <!-- ===================== HISTORIQUE ===================== -->
+        <section class="history-container">
+            <h2>Historique</h2>
+            <div class="history-list"></div>
+        </section>
+
+        <!-- ===================== PREMIUM INFO ===================== -->
+        <section class="premium-container">
+            <h2>Fonctionnalités Gold</h2>
+            <ul class="premium-features">
+                <li>Multi-génération de mots de passe</li>
+                <li>Patterns personnalisés</li>
+                <li>Historique complet illimité</li>
+                <li>Thème dynamique & boutons animés</li>
+                <li>Notifications stylées</li>
+                <li>Couleurs et glow premium</li>
+                <li>Responsive sur mobile, tablette et PC</li>
+            </ul>
+        </section>
+
+        <!-- ===================== SECTION FAQ ===================== -->
+        <section class="faq-container">
+            <h2>FAQ</h2>
+            <div class="faq-item">
+                <h3>Comment fonctionne le mode Gold ?</h3>
+                <p>Le mode Gold permet de générer plusieurs mots de passe à la fois, d’utiliser des patterns personnalisés et de débloquer l’historique complet.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Comment copier mon mot de passe ?</h3>
+                <p>Cliquez simplement sur le bouton “Copier” à droite de la barre du mot de passe.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Est-ce sécurisé ?</h3>
+                <p>Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.</p>
+            </div>
+        </section>
+
+        
+
+        <!-- ===================== SECTION CONTACT ===================== -->
+        <section class="contact-container">
+            <h2>Contact</h2>
+            <form id="contactForm">
+                <label for="name">Nom :</label>
+                <input type="text" id="name" name="name" placeholder="Votre nom" required>
+
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" placeholder="Votre email" required>
+
+                <label for="message">Message :</label>
+                <textarea id="message" name="message" placeholder="Votre message" required></textarea>
+
+                <button type="submit" class="btn btn-gold">Envoyer</button>
+            </form>
+        </section>
+
+        <!-- ===================== SECTION TEST ===================== -->
+        <section class="test-container">
+            <h2>Testez vos mots de passe</h2>
+            <p>Vérifiez la complexité et la force de vos mots de passe générés avant de les utiliser.</p>
+        </section>
+
+        <!-- ===================== SECTION SÉCURITÉ ===================== -->
+        <section class="security-container">
+            <h2>Besoin d'un rappel sur les bonnes pratiques des mots de passe ?</h2>
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <circle cx="12" cy="16" r="1"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>Longueur</h3>
+                    <p>Utilisez au moins <strong>12 caractères</strong>. Plus c'est long, plus c'est sécurisé !</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3>Complexité</h3>
+                    <p>Mélangez <strong>majuscules, minuscules, chiffres et symboles</strong> pour une sécurité maximale.</p>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="7.5,4.21 12,6.81 16.5,4.21"/>
+                            <polyline points="7.5,19.79 7.5,14.6 3,12"/>
+                            <polyline points="21,12 16.5,14.6 16.5,19.79"/>
+                        </svg>
+                    </div>
+                    <h3>Unicité</h3>
+                    <p>Un mot de passe <strong>unique pour chaque compte</strong>. Ne réutilisez jamais le même !</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div>© 2025 Iryon – Tous droits réservés</div>
+        <div class="footer-links">
+            <a href="#">Contact</a>
+            <a href="#">CGU</a>
+            <a href="#">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- ===================== NOTIFICATION ===================== -->
+    <div class="notification" id="notification">Copié !</div>
+
+    <!-- ===================== PAGE KIRONGOLD ===================== -->
+    <div class="modal" id="gold-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog gold-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="gold-modal-title">
+            <button class="modal-close" id="gold-modal-close" aria-label="Fermer">×</button>
+            <div class="gold-header">
+                <h2 id="gold-modal-title">KironGold</h2>
+                <p class="gold-subtitle">Générateur de mots de passe premium</p>
+            </div>
+            
+            <div class="gold-features">
+                <h3>Fonctionnalités incluses :</h3>
+                <ul class="feature-list">
+                    <li>✅ Génération de 5 mots de passe simultanément</li>
+                    <li>✅ Patterns personnalisés avancés</li>
+                    <li>✅ Historique illimité avec recherche</li>
+                    <li>✅ Thèmes dynamiques exclusifs</li>
+                    <li>✅ Notifications stylées premium</li>
+                    <li>✅ Export des mots de passe en PDF</li>
+                    <li>✅ Sauvegarde cloud sécurisée</li>
+                    <li>✅ Support prioritaire 24/7</li>
+                </ul>
+            </div>
+
+            <div class="pricing-section">
+                <div class="price-display">
+                    <span class="price">1,99€</span>
+                    <span class="period">/ mois</span>
+                </div>
+                <p class="price-note">Annulation possible à tout moment</p>
+            </div>
+
+            <div class="payment-section">
+                <div class="subscription-form">
+                    <p class="form-description">Pour activer votre abonnement KironGold, veuillez remplir ce formulaire :</p>
+                    
+                    <div class="form-group">
+                        <label for="user-name">Nom complet :</label>
+                        <input type="text" id="user-name" placeholder="Votre nom complet" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user-email">Email :</label>
+                        <input type="email" id="user-email" placeholder="votre@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment-method">Méthode de paiement préférée :</label>
+                        <select id="payment-method" required>
+                            <option value="">Choisissez une méthode</option>
+                            <option value="card">Carte bancaire</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="bank">Virement bancaire</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms-accepted" required>
+                            <span class="checkmark"></span>
+                            J'accepte les <a href="#" class="terms-link">conditions d'utilisation</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <button id="stripe-submit" class="btn btn-gold">Souscrire à KironGold</button>
+                
+                <div class="payment-methods">
+                    <p>Méthodes de paiement acceptées :</p>
+                    <div class="payment-icons">
+                        <span class="payment-icon">💳</span>
+                        <span class="payment-icon">🏦</span>
+                        <span class="payment-icon">📱</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE AUTH ===================== -->
+    <div class="modal" id="auth-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+            <button class="modal-close" id="auth-modal-close" aria-label="Fermer">×</button>
+            <h2 id="auth-modal-title">Bienvenue</h2>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Se connecter</button>
+                <button class="auth-tab" data-tab="signup">Créer un compte</button>
+            </div>
+            <div class="auth-panels">
+                <div class="auth-panel active" id="panel-login">
+                    <form id="login-form" class="auth-form">
+                        <label>Email</label>
+                        <input type="email" id="login-email" required placeholder="votre@email.com">
+                        <label>Mot de passe</label>
+                        <div class="password-field">
+                            <input type="password" id="login-password" required placeholder="Votre mot de passe">
+                            <button type="button" class="toggle-pw" data-target="login-password" aria-label="Afficher/masquer">
+                                <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="icon-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.3 20.3 0 015.06-5.94"/>
+                                    <path d="M9.9 4.24A10.94 10.94 0 0112 5c7 0 11 7 11 7a20.3 20.3 0 01-4.06 4.91"/>
+                                    <path d="M14 14a3 3 0 11-4-4"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="login-submit">Se connecter</button>
+                    </form>
+                    <div class="auth-separator"><span>ou</span></div>
+                    <div id="gsi-button-modal"></div>
+                </div>
+                <div class="auth-panel" id="panel-signup">
+                    <form id="signup-form" class="auth-form">
+                        <label>Email</label>
+                        <input type="email" id="signup-email" required placeholder="votre@email.com">
+                        <label>Mot de passe</label>
+                        <div class="password-field">
+                            <input type="password" id="signup-password" required placeholder="Créer un mot de passe">
+                            <button type="button" class="toggle-pw" data-target="signup-password" aria-label="Afficher/masquer">
+                                <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="icon-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.3 20.3 0 015.06-5.94"/>
+                                    <path d="M9.9 4.24A10.94 10.94 0 0112 5c7 0 11 7 11 7a20.3 20.3 0 01-4.06 4.91"/>
+                                    <path d="M14 14a3 3 0 11-4-4"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <label>Confirmer le mot de passe</label>
+                        <div class="password-field">
+                            <input type="password" id="signup-password-confirm" required placeholder="Répétez le mot de passe">
+                            <button type="button" class="toggle-pw" data-target="signup-password-confirm" aria-label="Afficher/masquer">
+                                <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="icon-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.3 20.3 0 015.06-5.94"/>
+                                    <path d="M9.9 4.24A10.94 10.94 0 0112 5c7 0 11 7 11 7a20.3 20.3 0 01-4.06 4.91"/>
+                                    <path d="M14 14a3 3 0 11-4-4"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="signup-submit">Créer mon compte</button>
+                        <p class="auth-note">Un email de validation vous sera envoyé.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE GESTION ABONNEMENT ===================== -->
+    <div class="modal" id="subscription-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog subscription-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="subscription-modal-title">
+            <button class="modal-close" id="subscription-modal-close" aria-label="Fermer">×</button>
+            <div class="subscription-header">
+                <h2 id="subscription-modal-title">Gestion de l'abonnement</h2>
+            </div>
+            
+            <div id="subscription-content">
+                <!-- Contenu dynamique selon le statut de l'abonnement -->
+                <div id="no-subscription" class="subscription-status">
+                    <div class="status-icon">❌</div>
+                    <h3>Aucun abonnement actif</h3>
+                    <p>Vous n'avez pas d'abonnement KironGold actif.</p>
+                    <button id="subscribe-now" class="btn btn-gold">Souscrire à KironGold</button>
+                </div>
+
+                <div id="active-subscription" class="subscription-status" style="display: none;">
+                    <div class="status-icon">✅</div>
+                    <h3>Abonnement KironGold actif</h3>
+                    <div class="subscription-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Statut :</span>
+                            <span class="detail-value active">Actif</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Prochain paiement :</span>
+                            <span class="detail-value" id="next-payment">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Montant :</span>
+                            <span class="detail-value">1,99€ / mois</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Méthode de paiement :</span>
+                            <span class="detail-value" id="payment-method">-</span>
+                        </div>
+                    </div>
+                    <div class="subscription-actions">
+                        <button id="update-payment" class="btn">Modifier le paiement</button>
+                        <button id="cancel-subscription" class="btn btn-danger">Résilier l'abonnement</button>
+                    </div>
+                </div>
+
+                <div id="cancelled-subscription" class="subscription-status" style="display: none;">
+                    <div class="status-icon">⚠️</div>
+                    <h3>Abonnement résilié</h3>
+                    <p>Votre abonnement KironGold sera actif jusqu'au <span id="cancellation-date">-</span>.</p>
+                    <button id="reactivate-subscription" class="btn btn-gold">Réactiver l'abonnement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Identity Services (remplacez le Client ID dans script.js) -->
+    <script src="https://accounts.google.com/gsi/client" defer onload="initGoogleSignIn()"></script>
+    <!-- EmailJS SDK (remplacez les IDs dans script.js). Utilise defer pour garantir l'ordre. -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <!-- Stripe SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Attendre que Stripe soit chargé avant d'exécuter le script principal
+        window.addEventListener('load', function() {
+            if (typeof Stripe !== 'undefined') {
+                console.log('✅ Stripe SDK chargé');
+                // Charger le script principal
+                const script = document.createElement('script');
+                script.src = 'script.js';
+                document.head.appendChild(script);
+            } else {
+                console.error('❌ Stripe SDK non chargé');
+            }
+        });
+    </script>
+</body>
+</html>
