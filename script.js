@@ -790,6 +790,32 @@ if (passwordLength && passwordLengthValue) {
     });
 }
 
+// Boutons de contrôle de longueur
+const lengthDecrease = document.getElementById('lengthDecrease');
+const lengthIncrease = document.getElementById('lengthIncrease');
+
+if (lengthDecrease && lengthIncrease && passwordLength) {
+    lengthDecrease.addEventListener('click', () => {
+        const currentValue = parseInt(passwordLength.value);
+        if (currentValue > parseInt(passwordLength.min)) {
+            passwordLength.value = currentValue - 1;
+            passwordLengthValue.textContent = passwordLength.value;
+            // Déclencher l'événement input pour mettre à jour l'affichage
+            passwordLength.dispatchEvent(new Event('input'));
+        }
+    });
+    
+    lengthIncrease.addEventListener('click', () => {
+        const currentValue = parseInt(passwordLength.value);
+        if (currentValue < parseInt(passwordLength.max)) {
+            passwordLength.value = currentValue + 1;
+            passwordLengthValue.textContent = passwordLength.value;
+            // Déclencher l'événement input pour mettre à jour l'affichage
+            passwordLength.dispatchEvent(new Event('input'));
+        }
+    });
+}
+
 // ===================== THEME DYNAMIQUE =====================
 const themeBtn = document.getElementById('theme-btn');
 let savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';

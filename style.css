@@ -154,17 +154,87 @@ button {
     width: 220px;
     accent-color: var(--primary-color);
 }
-.length-control input[type="range"]::-webkit-slider-runnable-track { background: #d0d0d0; }
-.length-control input[type="range"]::-moz-range-track { background: #d0d0d0; }
-.length-control input[type="range"]::-webkit-slider-thumb { background: var(--primary-color); }
-.length-control input[type="range"]::-webkit-slider-thumb:active { background: var(--primary-color); }
-.length-control input[type="range"]::-moz-range-thumb { background: var(--primary-color); }
+.length-control input[type="range"]::-webkit-slider-runnable-track { 
+    background: #d0d0d0; 
+    border-radius: 10px;
+    height: 8px;
+}
+.length-control input[type="range"]::-moz-range-track { 
+    background: #d0d0d0; 
+    border-radius: 10px;
+    height: 8px;
+    border: none;
+}
+.length-control input[type="range"]::-webkit-slider-thumb { 
+    background: var(--primary-color); 
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
+.length-control input[type="range"]::-webkit-slider-thumb:active { 
+    background: var(--primary-color); 
+    transform: scale(1.1);
+}
+.length-control input[type="range"]::-moz-range-thumb { 
+    background: var(--primary-color); 
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
 .length-control input[type="range"]:active { accent-color: var(--primary-color); }
+
+/* Mode sombre pour la barre de longueur */
+body.theme-dark .length-control input[type="range"]::-webkit-slider-runnable-track { 
+    background: #374151; 
+}
+body.theme-dark .length-control input[type="range"]::-moz-range-track { 
+    background: #374151; 
+}
 .length-control #passwordLengthValue {
     display: inline-block;
     min-width: 2ch;
     font-weight: bold;
     color: var(--text-color);
+}
+
+/* Boutons de contrôle de longueur */
+.length-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: 8px;
+}
+
+.length-btn:hover {
+    background: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+.length-btn:active {
+    transform: scale(0.95);
+}
+
+/* Mode sombre pour les boutons */
+body.theme-dark .length-btn {
+    background: var(--primary-color);
+}
+
+body.theme-dark .length-btn:hover {
+    background: var(--secondary-color);
 }
 
 /* ===================== BARRE MOT DE PASSE ===================== */
@@ -1313,9 +1383,9 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
 .security-container {
     margin: 40px 0;
     padding: 30px;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: #252544;
     border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .security-container h2 {
@@ -1335,12 +1405,12 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
 }
 
 .security-card {
-    background: white;
+    background: #2d2d44;
     padding: 24px;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
 
@@ -1375,7 +1445,7 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
 }
 
 .security-card p {
-    color: #64748b;
+    color: #d1d5db;
     line-height: 1.6;
     font-size: 0.95rem;
 }
@@ -1385,28 +1455,27 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
     font-weight: 600;
 }
 
-/* Mode sombre pour la section sécurité */
-body.theme-dark .security-container {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border-color: #374151;
+/* Mode clair pour la section sécurité */
+body.theme-light .security-container {
+    background: #f8fafc;
+    border-color: #e2e8f0;
 }
 
-body.theme-dark .security-card {
-    background: #1f2937;
-    border: 1px solid #374151;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+body.theme-light .security-card {
+    background: white;
+    border-color: #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-body.theme-dark .security-card:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    border-color: var(--primary-color);
+body.theme-light .security-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-body.theme-dark .security-card p {
-    color: #d1d5db;
+body.theme-light .security-card p {
+    color: #64748b;
 }
 
-body.theme-dark .security-card h3 {
+body.theme-light .security-card h3 {
     color: var(--primary-color);
 }
 
