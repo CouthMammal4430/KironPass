@@ -965,7 +965,7 @@ document.addEventListener('click', (e) => {
         closeUserDropdown();
     }
     if (e.target.closest('#settings-item')) {
-        showNotification('Paramètres en développement');
+        openSettingsModal();
         closeUserDropdown();
     }
     if (e.target.closest('#help-item')) {
@@ -999,6 +999,7 @@ document.addEventListener('click', (e) => {
     if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-close-modal')) {
         closeGoldModal();
         closeSubscriptionModal();
+        closeSettingsModal();
     }
 });
 
@@ -1020,6 +1021,423 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// ===================== GESTION DES PARAMÈTRES =====================
+const settingsModal = document.getElementById('settings-modal');
+const settingsModalClose = document.getElementById('settings-modal-close');
+let userProfile = JSON.parse(localStorage.getItem('kironUserProfile') || 'null');
+let userPreferences = JSON.parse(localStorage.getItem('kironUserPreferences') || 'null');
+
+// Initialiser les préférences par défaut
+if (!userPreferences) {
+    userPreferences = {
+        theme: 'dark',
+        language: 'fr',
+        emailNotifications: true,
+        marketingEmails: false,
+        securityAlerts: true
+    };
+    localStorage.setItem('kironUserPreferences', JSON.stringify(userPreferences));
+}
+
+function openSettingsModal() {
+    if (!settingsModal) return;
+    
+    // Empêcher le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    settingsModal.classList.add('show');
+    settingsModal.setAttribute('aria-hidden', 'false');
+    
+    // Charger les données utilisateur
+    loadUserProfile();
+    loadUserPreferences();
+    
+    // Focus sur la modale pour l'accessibilité
+    setTimeout(() => {
+        const modalDialog = settingsModal.querySelector('.modal-dialog');
+        if (modalDialog) modalDialog.focus();
+    }, 100);
+}
+
+function closeSettingsModal() {
+    if (!settingsModal) return;
+    
+    // Restaurer le défilement de la page
+    document.body.style.overflow = '';
+    
+    settingsModal.classList.remove('show');
+    settingsModal.setAttribute('aria-hidden', 'true');
+}
+
+// Navigation dans les paramètres
+function initSettingsNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.settings-section');
+    
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const sectionId = item.getAttribute('data-section');
+            
+            // Mettre à jour la navigation
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Afficher la section correspondante
+            sections.forEach(section => section.classList.remove('active'));
+            const targetSection = document.getElementById(`section-${sectionId}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        });
+    });
+}
+
+// ===================== GESTION DU PROFIL =====================
+function loadUserProfile() {
+    if (!userProfile) {
+        // Créer un profil par défaut basé sur les données d'authentification
+        const sessionName = (googleProfile && (googleProfile.name || googleProfile.email)) || 
+                           (appleProfile && (appleProfile.name || appleProfile.email)) ||
+                           (facebookProfile && (facebookProfile.name || facebookProfile.email)) ||
+                           (appUser && appUser.email) || 'Utilisateur';
+        
+        userProfile = {
+            firstname: '',
+            lastname: '',
+            username: sessionName,
+            email: (googleProfile && googleProfile.email) || 
+                   (appleProfile && appleProfile.email) ||
+                   (facebookProfile && facebookProfile.email) ||
+                   (appUser && appUser.email) || '',
+            phone: '',
+            avatar: (googleProfile && googleProfile.picture) || 
+                   (facebookProfile && facebookProfile.picture) ||
+                   `https://ui-avatars.com/api/?name=${encodeURIComponent(sessionName)}&background=random`
+        };
+    }
+    
+    // Remplir le formulaire
+    document.getElementById('profile-firstname').value = userProfile.firstname || '';
+    document.getElementById('profile-lastname').value = userProfile.lastname || '';
+    document.getElementById('profile-username').value = userProfile.username || '';
+    document.getElementById('profile-email').value = userProfile.email || '';
+    document.getElementById('profile-phone').value = userProfile.phone || '';
+    document.getElementById('profile-avatar').src = userProfile.avatar || 'https://ui-avatars.com/api/?name=U&background=random';
+}
+
+function saveUserProfile() {
+    const formData = {
+        firstname: document.getElementById('profile-firstname').value.trim(),
+        lastname: document.getElementById('profile-lastname').value.trim(),
+        username: document.getElementById('profile-username').value.trim(),
+        email: document.getElementById('profile-email').value.trim(),
+        phone: document.getElementById('profile-phone').value.trim(),
+        avatar: document.getElementById('profile-avatar').src
+    };
+    
+    // Validation
+    if (!formData.email) {
+        showNotification('L\'adresse email est obligatoire');
+        return false;
+    }
+    
+    if (!validateEmail(formData.email)) {
+        showNotification('Format d\'email invalide');
+        return false;
+    }
+    
+    // Sauvegarder
+    userProfile = { ...userProfile, ...formData };
+    localStorage.setItem('kironUserProfile', JSON.stringify(userProfile));
+    
+    // Mettre à jour l'UI d'authentification
+    updateAuthUI();
+    
+    showNotification('Profil sauvegardé avec succès');
+    return true;
+}
+
+// ===================== GESTION DES PRÉFÉRENCES =====================
+function loadUserPreferences() {
+    // Thème
+    const themeRadios = document.querySelectorAll('input[name="theme"]');
+    themeRadios.forEach(radio => {
+        radio.checked = radio.value === userPreferences.theme;
+    });
+    
+    // Langue
+    document.getElementById('language-select').value = userPreferences.language || 'fr';
+    
+    // Notifications
+    document.getElementById('email-notifications').checked = userPreferences.emailNotifications;
+    document.getElementById('marketing-emails').checked = userPreferences.marketingEmails;
+    document.getElementById('security-alerts').checked = userPreferences.securityAlerts;
+}
+
+function saveUserPreferences() {
+    const preferences = {
+        theme: document.querySelector('input[name="theme"]:checked').value,
+        language: document.getElementById('language-select').value,
+        emailNotifications: document.getElementById('email-notifications').checked,
+        marketingEmails: document.getElementById('marketing-emails').checked,
+        securityAlerts: document.getElementById('security-alerts').checked
+    };
+    
+    userPreferences = preferences;
+    localStorage.setItem('kironUserPreferences', JSON.stringify(userPreferences));
+    
+    // Appliquer le thème immédiatement
+    applyTheme(preferences.theme);
+    
+    showNotification('Préférences sauvegardées');
+}
+
+function applyTheme(theme) {
+    if (theme === 'auto') {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.classList.toggle('theme-dark', prefersDark);
+        document.body.classList.toggle('theme-light', !prefersDark);
+    } else {
+        document.body.classList.toggle('theme-dark', theme === 'dark');
+        document.body.classList.toggle('theme-light', theme === 'light');
+    }
+    localStorage.setItem('kironTheme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light') : `theme-${theme}`);
+}
+
+// ===================== GESTION DE LA SÉCURITÉ =====================
+function enable2FA() {
+    if (confirm('Voulez-vous activer l\'authentification à deux facteurs ?')) {
+        // Simulation de l'activation 2FA
+        showNotification('2FA activé avec succès');
+        document.querySelector('.security-status').textContent = 'Activé';
+        document.querySelector('.security-status').classList.remove('inactive');
+        document.querySelector('.security-status').classList.add('active');
+        document.getElementById('enable-2fa').textContent = 'Désactiver la 2FA';
+    }
+}
+
+function disconnectDevice(deviceElement) {
+    if (confirm('Voulez-vous déconnecter cet appareil ?')) {
+        deviceElement.remove();
+        showNotification('Appareil déconnecté');
+        updateDeviceCount();
+    }
+}
+
+function resetAllSessions() {
+    if (confirm('Cela déconnectera tous vos appareils. Voulez-vous continuer ?')) {
+        document.querySelectorAll('.device-item').forEach(device => device.remove());
+        showNotification('Toutes les sessions ont été réinitialisées');
+        updateDeviceCount();
+    }
+}
+
+function updateDeviceCount() {
+    const deviceCount = document.querySelectorAll('.device-item').length;
+    document.querySelector('.device-count').textContent = `${deviceCount} appareils`;
+}
+
+// ===================== GESTION DE L'ACTIVITÉ =====================
+function initActivityFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const activityItems = document.querySelectorAll('.activity-item');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+            
+            // Mettre à jour les boutons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Filtrer les activités
+            activityItems.forEach(item => {
+                if (filter === 'all' || item.classList.contains(filter)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+}
+
+// ===================== GESTION DU SUPPORT =====================
+function contactSupport() {
+    showNotification('Ouverture du formulaire de contact...');
+    // Ici, vous pourriez ouvrir une modale de contact ou rediriger vers un formulaire
+}
+
+function openFAQ() {
+    showNotification('Ouverture de la FAQ...');
+    // Ici, vous pourriez ouvrir une modale FAQ ou rediriger vers la page FAQ
+}
+
+function openDocs() {
+    showNotification('Ouverture de la documentation...');
+    // Ici, vous pourriez ouvrir la documentation
+}
+
+function reportBug() {
+    showNotification('Ouverture du formulaire de signalement...');
+    // Ici, vous pourriez ouvrir un formulaire de signalement de bug
+}
+
+// ===================== GESTION DU COMPTE =====================
+function deactivateAccount() {
+    if (confirm('Voulez-vous désactiver temporairement votre compte ?')) {
+        if (confirm('Êtes-vous vraiment sûr ? Cette action vous déconnectera.')) {
+            // Simulation de la désactivation
+            showNotification('Compte désactivé temporairement');
+            // Déconnexion
+            appUser = null;
+            localStorage.removeItem('kironUser');
+            signOutAllSocial();
+            closeSettingsModal();
+        }
+    }
+}
+
+function deleteAccount() {
+    const password = prompt('Pour confirmer la suppression, veuillez entrer votre mot de passe :');
+    if (!password) return;
+    
+    if (confirm('ATTENTION : Cette action est IRRÉVERSIBLE. Toutes vos données seront définitivement supprimées.')) {
+        if (confirm('Dernière confirmation : Voulez-vous vraiment supprimer votre compte ?')) {
+            // Simulation de la suppression
+            showNotification('Compte supprimé définitivement');
+            // Nettoyage complet
+            localStorage.clear();
+            // Redirection ou fermeture
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    }
+}
+
+// ===================== INITIALISATION =====================
+function initSettings() {
+    // Navigation
+    initSettingsNavigation();
+    
+    // Filtres d'activité
+    initActivityFilters();
+    
+    // Event listeners pour les formulaires
+    const profileForm = document.getElementById('profile-form');
+    if (profileForm) {
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            saveUserProfile();
+        });
+    }
+    
+    // Bouton sauvegarder préférences
+    const savePreferencesBtn = document.getElementById('save-preferences');
+    if (savePreferencesBtn) {
+        savePreferencesBtn.addEventListener('click', saveUserPreferences);
+    }
+    
+    // Boutons de sécurité
+    const enable2FABtn = document.getElementById('enable-2fa');
+    if (enable2FABtn) {
+        enable2FABtn.addEventListener('click', enable2FA);
+    }
+    
+    const resetSessionsBtn = document.getElementById('reset-sessions');
+    if (resetSessionsBtn) {
+        resetSessionsBtn.addEventListener('click', resetAllSessions);
+    }
+    
+    // Boutons de support
+    const contactSupportBtn = document.getElementById('contact-support');
+    if (contactSupportBtn) {
+        contactSupportBtn.addEventListener('click', contactSupport);
+    }
+    
+    const openFAQBtn = document.getElementById('open-faq');
+    if (openFAQBtn) {
+        openFAQBtn.addEventListener('click', openFAQ);
+    }
+    
+    const openDocsBtn = document.getElementById('open-docs');
+    if (openDocsBtn) {
+        openDocsBtn.addEventListener('click', openDocs);
+    }
+    
+    const reportBugBtn = document.getElementById('report-bug');
+    if (reportBugBtn) {
+        reportBugBtn.addEventListener('click', reportBug);
+    }
+    
+    // Boutons de gestion du compte
+    const deactivateAccountBtn = document.getElementById('deactivate-account');
+    if (deactivateAccountBtn) {
+        deactivateAccountBtn.addEventListener('click', deactivateAccount);
+    }
+    
+    const deleteAccountBtn = document.getElementById('delete-account');
+    if (deleteAccountBtn) {
+        deleteAccountBtn.addEventListener('click', deleteAccount);
+    }
+    
+    // Déconnexion d'appareils
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('device-action')) {
+            disconnectDevice(e.target.closest('.device-item'));
+        }
+    });
+    
+    // Boutons d'abonnement dans les paramètres
+    const changePlanBtn = document.getElementById('change-plan');
+    if (changePlanBtn) {
+        changePlanBtn.addEventListener('click', () => {
+            closeSettingsModal();
+            openGoldModal();
+        });
+    }
+    
+    const updatePaymentBtn = document.getElementById('update-payment-method');
+    if (updatePaymentBtn) {
+        updatePaymentBtn.addEventListener('click', () => {
+            closeSettingsModal();
+            openSubscriptionModal();
+        });
+    }
+    
+    const viewInvoicesBtn = document.getElementById('view-invoices');
+    if (viewInvoicesBtn) {
+        viewInvoicesBtn.addEventListener('click', () => {
+            showNotification('Téléchargement des factures...');
+        });
+    }
+    
+    const cancelSubscriptionBtn = document.getElementById('cancel-subscription-settings');
+    if (cancelSubscriptionBtn) {
+        cancelSubscriptionBtn.addEventListener('click', () => {
+            closeSettingsModal();
+            openSubscriptionModal();
+        });
+    }
+}
+
+// Appliquer les préférences au chargement
+if (userPreferences) {
+    applyTheme(userPreferences.theme);
+}
+
+// Initialiser les paramètres au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialiser les paramètres
+    initSettings();
+    
+    // Fermer la modale des paramètres
+    if (settingsModalClose) {
+        settingsModalClose.addEventListener('click', closeSettingsModal);
+    }
+});
+
 // Gestion de la touche Échap pour fermer les modales
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -1031,6 +1449,9 @@ document.addEventListener('keydown', (e) => {
         }
         if (subscriptionModal && subscriptionModal.classList.contains('show')) {
             closeSubscriptionModal();
+        }
+        if (settingsModal && settingsModal.classList.contains('show')) {
+            closeSettingsModal();
         }
     }
 });

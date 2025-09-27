@@ -468,6 +468,446 @@
         </div>
     </div>
 
+    <!-- ===================== MODALE PARAMÈTRES ===================== -->
+    <div class="modal" id="settings-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog settings-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+            <button class="modal-close" id="settings-modal-close" aria-label="Fermer">×</button>
+            
+            <div class="settings-container">
+                <!-- Header -->
+                <div class="settings-header">
+                    <h2 id="settings-modal-title">Paramètres</h2>
+                    <p class="settings-subtitle">Gérez votre compte et vos préférences</p>
+                </div>
+
+                <!-- Navigation latérale -->
+                <div class="settings-navigation">
+                    <nav class="settings-nav">
+                        <button class="nav-item active" data-section="profile">
+                            <span class="nav-icon">👤</span>
+                            <span class="nav-text">Profil</span>
+                        </button>
+                        <button class="nav-item" data-section="preferences">
+                            <span class="nav-icon">⚙️</span>
+                            <span class="nav-text">Préférences</span>
+                        </button>
+                        <button class="nav-item" data-section="subscription">
+                            <span class="nav-icon">💎</span>
+                            <span class="nav-text">Abonnement</span>
+                        </button>
+                        <button class="nav-item" data-section="security">
+                            <span class="nav-icon">🔒</span>
+                            <span class="nav-text">Sécurité</span>
+                        </button>
+                        <button class="nav-item" data-section="activity">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Activité</span>
+                        </button>
+                        <button class="nav-item" data-section="support">
+                            <span class="nav-icon">🆘</span>
+                            <span class="nav-text">Support</span>
+                        </button>
+                        <button class="nav-item danger" data-section="account">
+                            <span class="nav-icon">🗑️</span>
+                            <span class="nav-text">Compte</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Contenu principal -->
+                <div class="settings-content">
+                    <!-- Section Profil -->
+                    <div class="settings-section active" id="section-profile">
+                        <div class="section-header">
+                            <h3>Informations du profil</h3>
+                            <p>Gérez vos informations personnelles</p>
+                        </div>
+                        
+                        <form class="profile-form" id="profile-form">
+                            <div class="profile-avatar-section">
+                                <div class="avatar-container">
+                                    <img id="profile-avatar" src="https://ui-avatars.com/api/?name=U&background=random" alt="Avatar" class="profile-avatar">
+                                    <button type="button" id="change-avatar" class="avatar-change-btn">📷 Changer</button>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="profile-firstname">Prénom</label>
+                                    <input type="text" id="profile-firstname" name="firstname" placeholder="Votre prénom">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-lastname">Nom</label>
+                                    <input type="text" id="profile-lastname" name="lastname" placeholder="Votre nom">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-username">Nom d'utilisateur</label>
+                                    <input type="text" id="profile-username" name="username" placeholder="Votre pseudo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-email">Adresse email</label>
+                                    <input type="email" id="profile-email" name="email" placeholder="votre@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-phone">Téléphone</label>
+                                    <input type="tel" id="profile-phone" name="phone" placeholder="+33 6 12 34 56 78">
+                                </div>
+                            </div>
+
+                            <div class="password-section">
+                                <h4>Changer le mot de passe</h4>
+                                <div class="form-group">
+                                    <label for="current-password">Mot de passe actuel</label>
+                                    <input type="password" id="current-password" name="currentPassword" placeholder="Votre mot de passe actuel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">Nouveau mot de passe</label>
+                                    <input type="password" id="new-password" name="newPassword" placeholder="Nouveau mot de passe">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirmer le mot de passe</label>
+                                    <input type="password" id="confirm-password" name="confirmPassword" placeholder="Répétez le nouveau mot de passe">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Section Préférences -->
+                    <div class="settings-section" id="section-preferences">
+                        <div class="section-header">
+                            <h3>Préférences</h3>
+                            <p>Personnalisez votre expérience</p>
+                        </div>
+
+                        <div class="preferences-grid">
+                            <div class="preference-card">
+                                <div class="preference-header">
+                                    <h4>Apparence</h4>
+                                    <p>Choisissez votre thème préféré</p>
+                                </div>
+                                <div class="preference-options">
+                                    <label class="preference-option">
+                                        <input type="radio" name="theme" value="dark" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">🌙</span>
+                                            Mode sombre
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="radio" name="theme" value="light">
+                                        <span class="option-label">
+                                            <span class="option-icon">☀️</span>
+                                            Mode clair
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="radio" name="theme" value="auto">
+                                        <span class="option-label">
+                                            <span class="option-icon">🔄</span>
+                                            Automatique
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="preference-card">
+                                <div class="preference-header">
+                                    <h4>Langue</h4>
+                                    <p>Sélectionnez votre langue préférée</p>
+                                </div>
+                                <div class="form-group">
+                                    <select id="language-select" name="language">
+                                        <option value="fr">Français</option>
+                                        <option value="en">English</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="preference-card">
+                                <div class="preference-header">
+                                    <h4>Notifications</h4>
+                                    <p>Gérez vos notifications par email</p>
+                                </div>
+                                <div class="preference-options">
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="email-notifications" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">📧</span>
+                                            Notifications par email
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="marketing-emails">
+                                        <span class="option-label">
+                                            <span class="option-icon">📢</span>
+                                            Emails marketing
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="security-alerts" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">🔔</span>
+                                            Alertes de sécurité
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" id="save-preferences">Sauvegarder les préférences</button>
+                        </div>
+                    </div>
+
+                    <!-- Section Abonnement -->
+                    <div class="settings-section" id="section-subscription">
+                        <div class="section-header">
+                            <h3>Gestion de l'abonnement</h3>
+                            <p>Gérez votre abonnement KironGold</p>
+                        </div>
+
+                        <div class="subscription-overview">
+                            <div class="subscription-card">
+                                <div class="subscription-header">
+                                    <h4>KironGold Premium</h4>
+                                    <span class="subscription-status active">Actif</span>
+                                </div>
+                                <div class="subscription-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Formule actuelle :</span>
+                                        <span class="detail-value">KironGold Premium</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Prix :</span>
+                                        <span class="detail-value">1,99€ / mois</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Prochain renouvellement :</span>
+                                        <span class="detail-value" id="renewal-date">15 février 2025</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Méthode de paiement :</span>
+                                        <span class="detail-value">**** 4242</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subscription-actions-grid">
+                            <button class="action-card" id="change-plan">
+                                <span class="action-icon">🔄</span>
+                                <span class="action-title">Changer de plan</span>
+                                <span class="action-description">Modifier votre formule</span>
+                            </button>
+                            <button class="action-card" id="update-payment-method">
+                                <span class="action-icon">💳</span>
+                                <span class="action-title">Méthode de paiement</span>
+                                <span class="action-description">Mettre à jour votre carte</span>
+                            </button>
+                            <button class="action-card" id="view-invoices">
+                                <span class="action-icon">📄</span>
+                                <span class="action-title">Factures</span>
+                                <span class="action-description">Télécharger vos factures</span>
+                            </button>
+                            <button class="action-card danger" id="cancel-subscription-settings">
+                                <span class="action-icon">❌</span>
+                                <span class="action-title">Annuler</span>
+                                <span class="action-description">Résilier l'abonnement</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Section Sécurité -->
+                    <div class="settings-section" id="section-security">
+                        <div class="section-header">
+                            <h3>Sécurité</h3>
+                            <p>Protégez votre compte</p>
+                        </div>
+
+                        <div class="security-grid">
+                            <div class="security-card">
+                                <div class="security-header">
+                                    <h4>Authentification à deux facteurs</h4>
+                                    <span class="security-status inactive">Désactivé</span>
+                                </div>
+                                <p>Ajoutez une couche de sécurité supplémentaire à votre compte</p>
+                                <button class="btn btn-secondary" id="enable-2fa">Activer la 2FA</button>
+                            </div>
+
+                            <div class="security-card">
+                                <div class="security-header">
+                                    <h4>Appareils connectés</h4>
+                                    <span class="device-count">3 appareils</span>
+                                </div>
+                                <div class="connected-devices">
+                                    <div class="device-item">
+                                        <span class="device-icon">💻</span>
+                                        <div class="device-info">
+                                            <span class="device-name">MacBook Pro</span>
+                                            <span class="device-location">Paris, France</span>
+                                            <span class="device-last-seen">Actuellement connecté</span>
+                                        </div>
+                                        <button class="device-action">Déconnecter</button>
+                                    </div>
+                                    <div class="device-item">
+                                        <span class="device-icon">📱</span>
+                                        <div class="device-info">
+                                            <span class="device-name">iPhone 14</span>
+                                            <span class="device-location">Paris, France</span>
+                                            <span class="device-last-seen">Il y a 2 heures</span>
+                                        </div>
+                                        <button class="device-action">Déconnecter</button>
+                                    </div>
+                                    <div class="device-item">
+                                        <span class="device-icon">💻</span>
+                                        <div class="device-info">
+                                            <span class="device-name">Chrome Windows</span>
+                                            <span class="device-location">Lyon, France</span>
+                                            <span class="device-last-seen">Il y a 1 jour</span>
+                                        </div>
+                                        <button class="device-action">Déconnecter</button>
+                                    </div>
+                                </div>
+                                <button class="btn btn-secondary" id="reset-sessions">Réinitialiser toutes les sessions</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Activité -->
+                    <div class="settings-section" id="section-activity">
+                        <div class="section-header">
+                            <h3>Historique d'activité</h3>
+                            <p>Consultez vos connexions récentes</p>
+                        </div>
+
+                        <div class="activity-filters">
+                            <button class="filter-btn active" data-filter="all">Toutes</button>
+                            <button class="filter-btn" data-filter="login">Connexions</button>
+                            <button class="filter-btn" data-filter="password">Mots de passe</button>
+                            <button class="filter-btn" data-filter="settings">Paramètres</button>
+                        </div>
+
+                        <div class="activity-timeline">
+                            <div class="activity-item">
+                                <div class="activity-icon login">🔐</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Connexion réussie</div>
+                                    <div class="activity-details">
+                                        <span class="activity-ip">IP: 192.168.1.100</span>
+                                        <span class="activity-device">MacBook Pro - Chrome</span>
+                                        <span class="activity-location">Paris, France</span>
+                                    </div>
+                                    <div class="activity-time">Il y a 5 minutes</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon password">🔑</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Mot de passe généré</div>
+                                    <div class="activity-details">
+                                        <span class="activity-strength">Force: Très forte</span>
+                                        <span class="activity-length">Longueur: 16 caractères</span>
+                                    </div>
+                                    <div class="activity-time">Il y a 12 minutes</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon login">🔐</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Connexion réussie</div>
+                                    <div class="activity-details">
+                                        <span class="activity-ip">IP: 192.168.1.100</span>
+                                        <span class="activity-device">iPhone 14 - Safari</span>
+                                        <span class="activity-location">Paris, France</span>
+                                    </div>
+                                    <div class="activity-time">Il y a 2 heures</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Support -->
+                    <div class="settings-section" id="section-support">
+                        <div class="section-header">
+                            <h3>Support et aide</h3>
+                            <p>Besoin d'aide ? Nous sommes là pour vous</p>
+                        </div>
+
+                        <div class="support-grid">
+                            <div class="support-card">
+                                <span class="support-icon">💬</span>
+                                <h4>Contactez le support</h4>
+                                <p>Obtenez une aide personnalisée</p>
+                                <button class="btn btn-primary" id="contact-support">Contacter</button>
+                            </div>
+                            <div class="support-card">
+                                <span class="support-icon">❓</span>
+                                <h4>FAQ</h4>
+                                <p>Questions fréquemment posées</p>
+                                <button class="btn btn-secondary" id="open-faq">Consulter</button>
+                            </div>
+                            <div class="support-card">
+                                <span class="support-icon">📖</span>
+                                <h4>Documentation</h4>
+                                <p>Guides et tutoriels</p>
+                                <button class="btn btn-secondary" id="open-docs">Lire</button>
+                            </div>
+                            <div class="support-card">
+                                <span class="support-icon">🐛</span>
+                                <h4>Signaler un bug</h4>
+                                <p>Aidez-nous à améliorer</p>
+                                <button class="btn btn-secondary" id="report-bug">Signaler</button>
+                            </div>
+                        </div>
+
+                        <div class="legal-links">
+                            <h4>Informations légales</h4>
+                            <div class="links-grid">
+                                <a href="#" class="legal-link">Politique de confidentialité</a>
+                                <a href="#" class="legal-link">Conditions d'utilisation</a>
+                                <a href="#" class="legal-link">Politique de cookies</a>
+                                <a href="#" class="legal-link">Mentions légales</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Compte -->
+                    <div class="settings-section" id="section-account">
+                        <div class="section-header">
+                            <h3>Gestion du compte</h3>
+                            <p>Actions importantes pour votre compte</p>
+                        </div>
+
+                        <div class="account-actions">
+                            <div class="account-card warning">
+                                <div class="account-icon">⏸️</div>
+                                <div class="account-content">
+                                    <h4>Désactiver temporairement</h4>
+                                    <p>Votre compte sera temporairement désactivé. Vous pourrez le réactiver à tout moment.</p>
+                                    <button class="btn btn-warning" id="deactivate-account">Désactiver</button>
+                                </div>
+                            </div>
+
+                            <div class="account-card danger">
+                                <div class="account-icon">🗑️</div>
+                                <div class="account-content">
+                                    <h4>Supprimer définitivement</h4>
+                                    <p>Cette action est irréversible. Toutes vos données seront définitivement supprimées.</p>
+                                    <button class="btn btn-danger" id="delete-account">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Configuration des variables d'environnement -->
     <script src="config.js"></script>
     <!-- Google Identity Services (remplacez le Client ID dans script.js) -->
