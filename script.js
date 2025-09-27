@@ -42,8 +42,8 @@ let elements = null;
 let paymentElement = null;
 
 // Configuration Stripe - Variables d'environnement
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_51S8MiXQtcnMXTC8Qw7cjVK5sUO32mRbnDpZedf62AtDxoDXxadsbSXG1eLdcycSpdb43h49kKAS2G289vAiTIr5i00jKvAl1ux';
-const STRIPE_PRICE_ID = 'price_1S8oPKQtcnMXTC8QBT2i4Sx1';
+const STRIPE_PUBLISHABLE_KEY = window.ENV?.STRIPE_PUBLISHABLE_KEY || '';
+const STRIPE_PRICE_ID = window.ENV?.STRIPE_PRICE_ID || '';
 const BACKEND_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:3001' 
     : '/.netlify/functions';
@@ -57,7 +57,7 @@ let googleProfile = null;
 let appUser = JSON.parse(localStorage.getItem('kironUser') || 'null');
 
 // REMPLACEZ par votre Client ID OAuth 2.0 (type Web) créé dans Google Cloud Console
-const GOOGLE_CLIENT_ID = '829701736270-vlqfh2j33foneoetm7un7497u68vgp1e.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = window.ENV?.GOOGLE_CLIENT_ID || '';
 
 // Exposé global pour l'attribut onload du script GIS dans index.html
 window.initGoogleSignIn = function initGoogleSignIn() {
@@ -240,9 +240,9 @@ function parseVerificationToken(token) {
 }
 
 // EmailJS
-const EMAILJS_PUBLIC_KEY = 'waHyIv_Nbx409q_cE';
-const EMAILJS_SERVICE_ID = 'service_jk3zxrc';
-const EMAILJS_TEMPLATE_ID = 'template_nhj5zs3';
+const EMAILJS_PUBLIC_KEY = window.ENV?.EMAILJS_PUBLIC_KEY || '';
+const EMAILJS_SERVICE_ID = window.ENV?.EMAILJS_SERVICE_ID || '';
+const EMAILJS_TEMPLATE_ID = window.ENV?.EMAILJS_TEMPLATE_ID || '';
 
 function sendVerificationEmail(toEmail, verifyUrl) {
     if (!window.emailjs) return Promise.reject(new Error('EmailJS non chargé'));

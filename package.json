@@ -1,0 +1,15 @@
+{
+  "name": "kironpass",
+  "version": "1.0.0",
+  "description": "Générateur de mots de passe sécurisé",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "start": "echo 'Static site - no start script needed'"
+  },
+  "keywords": ["password", "generator", "security"],
+  "author": "KironPass",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
