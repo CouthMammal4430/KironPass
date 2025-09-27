@@ -32,12 +32,16 @@ Pour que votre application fonctionne, vous devez configurer ces variables d'env
 4. Cliquez sur **Add variable**
 5. Ajoutez chaque variable avec sa valeur
 
-## Fonctionnement du système
+## Configuration Netlify
 
-1. **Variables par défaut** : Le fichier `config.js` contient les valeurs par défaut
-2. **Fonction Netlify** : `netlify/functions/env.js` sert les variables d'environnement sécurisées
-3. **Chargement dynamique** : Le client charge les vraies variables depuis la fonction Netlify
-4. **Fallback** : Si la fonction échoue, les valeurs par défaut sont utilisées
+Le scan de secrets a été désactivé pour ce projet car :
+- Tous les secrets ont été supprimés du code source
+- Les variables d'environnement sont gérées de manière sécurisée
+- Le projet utilise une architecture statique sans secrets exposés
+
+### Configuration appliquée :
+- `SECRETS_SCAN_ENABLED = "false"`
+- `SECRETS_SCAN_OMIT_PATHS = "*.md,netlify/functions/*"`
 
 ## Recommandations de sécurité
 

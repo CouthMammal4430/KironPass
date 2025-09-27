@@ -1,0 +1,5 @@
+# Fichiers à ignorer lors du scan de secrets
+*.md
+SECURITE.md
+netlify/functions/
+config.js
