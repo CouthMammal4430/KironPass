@@ -708,7 +708,7 @@ body.theme-light .premium-features li::before {
     position: fixed;
     inset: 0;
     display: none;
-    z-index: 1000;
+    z-index: 10000;
     overflow-y: auto;
 }
 .modal.show { display: block; }
@@ -716,7 +716,7 @@ body.theme-light .premium-features li::before {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.6);
-    z-index: 1001;
+    z-index: 10001;
 }
 .modal-dialog {
     position: relative;
@@ -727,7 +727,7 @@ body.theme-light .premium-features li::before {
     box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     padding: 22px 22px 26px;
     outline: none;
-    z-index: 1002;
+    z-index: 10002;
 }
 
 .modal-dialog:focus {
@@ -935,7 +935,7 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
     outline: none;
     tabindex: -1;
     position: relative;
-    z-index: 1002;
+    z-index: 10002;
 }
 
 .gold-modal-dialog:focus {
@@ -1065,7 +1065,7 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
     outline: none;
     tabindex: -1;
     position: relative;
-    z-index: 1002;
+    z-index: 10002;
 }
 
 .subscription-modal-dialog:focus {
@@ -1383,6 +1383,31 @@ body.theme-light .auth-separator::after { background: #e5e5ea; }
 .security-card p strong {
     color: var(--primary-color);
     font-weight: 600;
+}
+
+/* Mode sombre pour la section sécurité */
+body.theme-dark .security-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-color: #374151;
+}
+
+body.theme-dark .security-card {
+    background: #1f2937;
+    border: 1px solid #374151;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+body.theme-dark .security-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-color);
+}
+
+body.theme-dark .security-card p {
+    color: #d1d5db;
+}
+
+body.theme-dark .security-card h3 {
+    color: var(--primary-color);
 }
 
 /* Responsive pour la section sécurité */
