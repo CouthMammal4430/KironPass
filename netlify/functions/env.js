@@ -14,7 +14,9 @@ exports.handler = async (event, context) => {
             EMAILJS_PUBLIC_KEY: process.env.EMAILJS_PUBLIC_KEY || '',
             EMAILJS_SERVICE_ID: process.env.EMAILJS_SERVICE_ID || '',
             EMAILJS_TEMPLATE_ID: process.env.EMAILJS_TEMPLATE_ID || '',
-            GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || ''
+            GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
+            APPLE_CLIENT_ID: process.env.APPLE_CLIENT_ID || '',
+            FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID || ''
         })
     };
 };

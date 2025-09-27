@@ -51,30 +51,58 @@ const BACKEND_URL = window.location.hostname === 'localhost'
 // Gestion de l'abonnement utilisateur
 let userSubscription = JSON.parse(localStorage.getItem('kironSubscription') || 'null');
 
-// ===================== AUTH GOOGLE (GIS) =====================
+// ===================== AUTH SOCIALE =====================
 let googleCredential = null;
 let googleProfile = null;
+let appleCredential = null;
+let appleProfile = null;
+let facebookCredential = null;
+let facebookProfile = null;
 let appUser = JSON.parse(localStorage.getItem('kironUser') || 'null');
 
 // REMPLACEZ par votre Client ID OAuth 2.0 (type Web) créé dans Google Cloud Console
 const GOOGLE_CLIENT_ID = window.ENV?.GOOGLE_CLIENT_ID || '';
+const APPLE_CLIENT_ID = window.ENV?.APPLE_CLIENT_ID || '';
+const FACEBOOK_APP_ID = window.ENV?.FACEBOOK_APP_ID || '';
 
 // Exposé global pour l'attribut onload du script GIS dans index.html
 window.initGoogleSignIn = function initGoogleSignIn() {
-    if (!window.google || !google.accounts || !google.accounts.id) return;
+    if (!window.google || !google.accounts || !google.accounts.id) {
+        console.warn('⚠️ Google Identity Services non chargé');
+        return;
+    }
 
-    google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleGoogleCredential,
-        auto_select: false,
-        cancel_on_tap_outside: true
-    });
+    if (!GOOGLE_CLIENT_ID) {
+        console.warn('⚠️ GOOGLE_CLIENT_ID non configuré. Veuillez ajouter votre Client ID Google.');
+        // Afficher un message dans la console pour aider au développement
+        const gsiButtonModal = document.getElementById('gsi-button-modal');
+        if (gsiButtonModal) {
+            gsiButtonModal.innerHTML = '<div style="padding: 12px; background: #ff6b6b; color: white; border-radius: 8px; font-size: 14px; text-align: center;">Google Auth non configuré</div>';
+        }
+        return;
+    }
 
-    // Bouton Google dans la modale
-    renderGoogleButtonInModal();
+    try {
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleCredential,
+            auto_select: false,
+            cancel_on_tap_outside: true
+        });
 
-    // Tentative de récupération de session auto
-    google.accounts.id.prompt();
+        // Bouton Google dans la modale
+        renderGoogleButtonInModal();
+
+        // Tentative de récupération de session auto
+        google.accounts.id.prompt();
+        console.log('✅ Google Identity Services initialisé avec succès');
+    } catch (error) {
+        console.error('❌ Erreur lors de l\'initialisation Google:', error);
+        const gsiButtonModal = document.getElementById('gsi-button-modal');
+        if (gsiButtonModal) {
+            gsiButtonModal.innerHTML = '<div style="padding: 12px; background: #ff6b6b; color: white; border-radius: 8px; font-size: 14px; text-align: center;">Erreur Google Auth</div>';
+        }
+    }
 }
 
 function handleGoogleCredential(response) {
@@ -104,15 +132,75 @@ function signOutGoogle() {
         google.accounts.id.disableAutoSelect();
     }
     updateAuthUI();
-    showNotification('Déconnecté');
+    showNotification('Déconnecté de Google');
+}
+
+// ===================== AUTH APPLE =====================
+function handleAppleSignIn() {
+    // Simulation de connexion Apple (en production, utiliser Apple Sign In JS)
+    const mockAppleProfile = {
+        sub: 'apple_' + Date.now(),
+        email: 'user@privaterelay.appleid.com',
+        name: 'Utilisateur Apple',
+        picture: null
+    };
+    
+    appleCredential = 'apple_token_' + Date.now();
+    appleProfile = mockAppleProfile;
+    
+    updateAuthUI();
+    closeAuthModal();
+    showNotification('Connecté avec Apple');
+}
+
+function signOutApple() {
+    appleCredential = null;
+    appleProfile = null;
+    updateAuthUI();
+    showNotification('Déconnecté d\'Apple');
+}
+
+// ===================== AUTH FACEBOOK =====================
+function handleFacebookSignIn() {
+    // Simulation de connexion Facebook (en production, utiliser Facebook SDK)
+    const mockFacebookProfile = {
+        id: 'facebook_' + Date.now(),
+        email: 'user@example.com',
+        name: 'Utilisateur Facebook',
+        picture: 'https://ui-avatars.com/api/?name=Facebook+User&background=1877f2&color=fff'
+    };
+    
+    facebookCredential = 'facebook_token_' + Date.now();
+    facebookProfile = mockFacebookProfile;
+    
+    updateAuthUI();
+    closeAuthModal();
+    showNotification('Connecté avec Facebook');
+}
+
+function signOutFacebook() {
+    facebookCredential = null;
+    facebookProfile = null;
+    updateAuthUI();
+    showNotification('Déconnecté de Facebook');
+}
+
+// ===================== SIGNOUT GÉNÉRAL =====================
+function signOutAllSocial() {
+    signOutGoogle();
+    signOutApple();
+    signOutFacebook();
 }
 
 function updateAuthUI() {
     if (!authControls) return;
     authControls.innerHTML = '';
 
-    const sessionName = (googleProfile && (googleProfile.name || googleProfile.email)) || (appUser && appUser.email);
-    if (googleProfile || appUser) {
+    const sessionName = (googleProfile && (googleProfile.name || googleProfile.email)) || 
+                       (appleProfile && (appleProfile.name || appleProfile.email)) ||
+                       (facebookProfile && (facebookProfile.name || facebookProfile.email)) ||
+                       (appUser && appUser.email);
+    if (googleProfile || appleProfile || facebookProfile || appUser) {
         // Masquer le menu hamburger par défaut
         if (userMenu) userMenu.style.display = 'none';
         
@@ -121,7 +209,9 @@ function updateAuthUI() {
 
         const img = document.createElement('img');
         img.className = 'auth-avatar';
-        img.src = (googleProfile && googleProfile.picture) || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(sessionName || 'U');
+        img.src = (googleProfile && googleProfile.picture) || 
+                 (facebookProfile && facebookProfile.picture) ||
+                 'https://ui-avatars.com/api/?name=' + encodeURIComponent(sessionName || 'U');
         img.alt = sessionName || 'Utilisateur';
 
         const span = document.createElement('span');
@@ -134,7 +224,7 @@ function updateAuthUI() {
         btn.addEventListener('click', () => { 
             appUser = null; 
             localStorage.removeItem('kironUser'); 
-            signOutGoogle(); 
+            signOutAllSocial(); 
         });
 
         wrapper.appendChild(img);
@@ -885,7 +975,7 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('#logout-item')) {
         appUser = null;
         localStorage.removeItem('kironUser');
-        signOutGoogle();
+        signOutAllSocial();
         closeUserDropdown();
     }
 });
@@ -917,6 +1007,16 @@ document.addEventListener('click', (e) => {
     if (e.target.id === 'stripe-submit') {
         e.preventDefault();
         processSubscriptionPayment();
+    }
+});
+
+// ===================== EVENT LISTENERS POUR AUTHENTIFICATION SOCIALE =====================
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'apple-signin-btn') {
+        handleAppleSignIn();
+    }
+    if (e.target.id === 'facebook-signin-btn') {
+        handleFacebookSignIn();
     }
 });
 

@@ -6,7 +6,9 @@ window.ENV = {
     EMAILJS_PUBLIC_KEY: '',
     EMAILJS_SERVICE_ID: '',
     EMAILJS_TEMPLATE_ID: '',
-    GOOGLE_CLIENT_ID: ''
+    GOOGLE_CLIENT_ID: '',
+    APPLE_CLIENT_ID: '',
+    FACEBOOK_APP_ID: ''
 };
 
 // Fonction pour récupérer les variables d'environnement depuis Netlify
