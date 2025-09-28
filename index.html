@@ -81,8 +81,14 @@
         <section class="generator-container">
             <h2>Générateur de mot de passe</h2>
 
-            <!-- OPTIONS -->
-            <div class="generator-options">
+            <!-- TYPE DE MOT DE PASSE -->
+            <div class="password-type">
+                <label class="type-toggle"><input type="radio" name="passwordType" value="password" checked> Mot de passe</label>
+                <label class="type-toggle"><input type="radio" name="passwordType" value="passphrase"> Phrase de passe</label>
+            </div>
+
+            <!-- OPTIONS POUR MOT DE PASSE -->
+            <div class="generator-options" id="password-options">
                 <label class="option-toggle"><input type="checkbox" id="includeUppercase" checked> Majuscules</label>
                 <label class="option-toggle"><input type="checkbox" id="includeNumbers" checked> Chiffres</label>
                 <label class="option-toggle"><input type="checkbox" id="includeSymbols"> Symboles</label>
@@ -91,6 +97,18 @@
                     <input type="range" id="passwordLength" min="6" max="64" value="12">
                     <button type="button" id="lengthDecrease" class="length-btn">−</button>
                     <button type="button" id="lengthIncrease" class="length-btn">+</button>
+                </label>
+            </div>
+
+            <!-- OPTIONS POUR PHRASE DE PASSE -->
+            <div class="generator-options" id="passphrase-options" style="display: none;">
+                <label class="option-toggle"><input type="checkbox" id="passphraseUppercase" checked> Majuscules</label>
+                <label class="option-toggle"><input type="checkbox" id="passphraseNumbers" checked> Chiffres</label>
+                <label class="length-control">
+                    Mots: <span id="passphraseLengthValue">4</span>
+                    <input type="range" id="passphraseLength" min="1" max="10" value="4">
+                    <button type="button" id="passphraseDecrease" class="length-btn">−</button>
+                    <button type="button" id="passphraseIncrease" class="length-btn">+</button>
                 </label>
             </div>
 

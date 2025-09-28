@@ -30,9 +30,19 @@ const discoverGoldBtn = document.querySelector('.btn-gold-top');
 const includeUppercase = document.getElementById('includeUppercase');
 const includeNumbers = document.getElementById('includeNumbers');
 const includeSymbols = document.getElementById('includeSymbols');
-// Multi-génération retirée
 const passwordLength = document.getElementById('passwordLength');
 const passwordLengthValue = document.getElementById('passwordLengthValue');
+
+// Nouvelles variables pour passphrase
+const passwordTypeRadios = document.querySelectorAll('input[name="passwordType"]');
+const passwordOptions = document.getElementById('password-options');
+const passphraseOptions = document.getElementById('passphrase-options');
+const passphraseUppercase = document.getElementById('passphraseUppercase');
+const passphraseNumbers = document.getElementById('passphraseNumbers');
+const passphraseLength = document.getElementById('passphraseLength');
+const passphraseLengthValue = document.getElementById('passphraseLengthValue');
+const passphraseDecrease = document.getElementById('passphraseDecrease');
+const passphraseIncrease = document.getElementById('passphraseIncrease');
 
 let history = [];
 
@@ -474,17 +484,6 @@ function openGoldModal() {
     // Empêcher le défilement de la page
     document.body.style.overflow = 'hidden';
     
-    // Initialiser Stripe si pas encore fait
-    if (!stripe) {
-        initializeStripe().then(success => {
-            if (!success) {
-                showNotification('Erreur d\'initialisation Stripe. Veuillez recharger la page.');
-                document.body.style.overflow = '';
-                return;
-            }
-        });
-    }
-    
     // Afficher la modale
     goldModal.classList.add('show');
     goldModal.setAttribute('aria-hidden', 'false');
@@ -737,6 +736,52 @@ function generatePassword(length = 12, options = {}) {
     return password;
 }
 
+// FONCTION DE GENERATION DE PHRASE DE PASSE
+function generatePassphrase(wordCount = 4, options = {}) {
+    const words = [
+        'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract',
+        'absurd', 'abuse', 'access', 'accident', 'account', 'accuse', 'achieve', 'acid',
+        'acoustic', 'acquire', 'across', 'act', 'action', 'actor', 'actress', 'actual',
+        'adapt', 'add', 'addict', 'address', 'adjust', 'admit', 'adult', 'advance',
+        'advice', 'aerobic', 'affair', 'afford', 'afraid', 'again', 'age', 'agent',
+        'agree', 'ahead', 'aim', 'air', 'airport', 'aisle', 'alarm', 'album',
+        'alcohol', 'alert', 'alien', 'all', 'alley', 'allow', 'almost', 'alone',
+        'alpha', 'already', 'also', 'alter', 'always', 'amateur', 'amazing', 'among',
+        'amount', 'amused', 'analyst', 'anchor', 'ancient', 'anger', 'angle', 'angry',
+        'animal', 'ankle', 'announce', 'annual', 'another', 'answer', 'antenna', 'antique',
+        'anxiety', 'any', 'apart', 'apology', 'appear', 'apple', 'approve', 'april'
+    ];
+    
+    let passphrase = '';
+    for (let i = 0; i < wordCount; i++) {
+        const randomWord = words[getRandomInt(0, words.length - 1)];
+        
+        // Appliquer les options
+        let finalWord = randomWord;
+        
+        if (options.uppercase) {
+            finalWord = finalWord.charAt(0).toUpperCase() + finalWord.slice(1);
+        }
+        
+        if (options.numbers && i > 0) {
+            // Ajouter 1 ou 2 chiffres à des endroits aléatoires
+            const numDigits = getRandomInt(1, 2);
+            for (let j = 0; j < numDigits; j++) {
+                const randomDigit = getRandomInt(0, 9);
+                const randomPosition = getRandomInt(0, finalWord.length);
+                finalWord = finalWord.slice(0, randomPosition) + randomDigit + finalWord.slice(randomPosition);
+            }
+        }
+        
+        passphrase += finalWord;
+        if (i < wordCount - 1) {
+            passphrase += '-';
+        }
+    }
+    
+    return passphrase;
+}
+
 function calculateStrength(password) {
     let strength = 0;
     if (/[A-Z]/.test(password)) strength += 1;
@@ -805,20 +850,53 @@ function renderHistory() {
     });
 }
 
+// Boutons de contrôle passphrase
+if (passphraseDecrease && passphraseIncrease && passphraseLength) {
+    passphraseDecrease.addEventListener('click', () => {
+        const currentValue = parseInt(passphraseLength.value);
+        if (currentValue > parseInt(passphraseLength.min)) {
+            passphraseLength.value = currentValue - 1;
+            passphraseLengthValue.textContent = passphraseLength.value;
+            passphraseLength.dispatchEvent(new Event('input'));
+        }
+    });
+    
+    passphraseIncrease.addEventListener('click', () => {
+        const currentValue = parseInt(passphraseLength.value);
+        if (currentValue < parseInt(passphraseLength.max)) {
+            passphraseLength.value = currentValue + 1;
+            passphraseLengthValue.textContent = passphraseLength.value;
+            passphraseLength.dispatchEvent(new Event('input'));
+        }
+    });
+}
+
 // ===================== EVENEMENTS =====================
 
 // GENERATION MOT DE PASSE NORMAL
 generateBtn.addEventListener('click', () => {
     let count = 1; // Free: 1
     const passwords = [];
+    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
 
     for (let i = 0; i < count; i++) {
-        const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
-        const pwd = generatePassword(requestedLength, {
-            uppercase: includeUppercase.checked,
-            numbers: includeNumbers.checked,
-            symbols: includeSymbols.checked
-        });
+        let pwd;
+        
+        if (selectedType === 'password') {
+            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
+            pwd = generatePassword(requestedLength, {
+                uppercase: includeUppercase.checked,
+                numbers: includeNumbers.checked,
+                symbols: includeSymbols.checked
+            });
+        } else {
+            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
+            pwd = generatePassphrase(requestedWords, {
+                uppercase: passphraseUppercase.checked,
+                numbers: passphraseNumbers.checked
+            });
+        }
+        
         passwords.push(pwd);
         if (i === 0) passwordOutput.value = pwd;
     }
@@ -831,14 +909,26 @@ generateBtn.addEventListener('click', () => {
 generateGoldBtn.addEventListener('click', () => {
     const count = 5; // Gold: 5
     const passwords = [];
+    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
 
     for (let i = 0; i < count; i++) {
-        const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
-        const pwd = generatePassword(requestedLength, {
-            uppercase: includeUppercase.checked,
-            numbers: includeNumbers.checked,
-            symbols: includeSymbols.checked
-        });
+        let pwd;
+        
+        if (selectedType === 'password') {
+            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
+            pwd = generatePassword(requestedLength, {
+                uppercase: includeUppercase.checked,
+                numbers: includeNumbers.checked,
+                symbols: includeSymbols.checked
+            });
+        } else {
+            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
+            pwd = generatePassphrase(requestedWords, {
+                uppercase: passphraseUppercase.checked,
+                numbers: passphraseNumbers.checked
+            });
+        }
+        
         passwords.push(pwd);
         if (i === 0) passwordOutput.value = pwd;
     }
@@ -872,11 +962,37 @@ copyBtn.addEventListener('click', () => {
 // ===================== BARRE DE FORCE DYNAMIQUE =====================
 passwordOutput.addEventListener('input', () => updateStrengthBar(passwordOutput.value));
 
+// ===================== GESTION DU TYPE DE MOT DE PASSE =====================
+function togglePasswordType() {
+    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
+    
+    if (selectedType === 'password') {
+        passwordOptions.style.display = 'flex';
+        passphraseOptions.style.display = 'none';
+    } else {
+        passwordOptions.style.display = 'none';
+        passphraseOptions.style.display = 'flex';
+    }
+}
+
+// Event listeners pour le type de mot de passe
+passwordTypeRadios.forEach(radio => {
+    radio.addEventListener('change', togglePasswordType);
+});
+
 // Slider longueur - mise à jour valeur affichée
 if (passwordLength && passwordLengthValue) {
     passwordLengthValue.textContent = passwordLength.value;
     passwordLength.addEventListener('input', () => {
         passwordLengthValue.textContent = passwordLength.value;
+    });
+}
+
+// Slider passphrase - mise à jour valeur affichée
+if (passphraseLength && passphraseLengthValue) {
+    passphraseLengthValue.textContent = passphraseLength.value;
+    passphraseLength.addEventListener('input', () => {
+        passphraseLengthValue.textContent = passphraseLength.value;
     });
 }
 
