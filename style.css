@@ -1839,16 +1839,23 @@ body.theme-light .facebook-btn:hover {
 
 /* ===================== MODALE KIRONGOLD ===================== */
 .gold-modal-dialog {
-    max-width: 500px;
+    max-width: 600px;
+    width: 90%;
     max-height: 90vh;
+    margin: 2rem auto;
     padding: 30px;
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     outline: none;
     tabindex: -1;
     position: relative;
     z-index: 10002;
+    background: linear-gradient(135deg, #2a2f42, #1a1a2e);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3a3f52;
 }
 
 .gold-modal-dialog:focus {
@@ -1969,16 +1976,23 @@ body.theme-light .facebook-btn:hover {
 
 /* ===================== MODALE GESTION ABONNEMENT ===================== */
 .subscription-modal-dialog {
-    max-width: 450px;
+    max-width: 500px;
+    width: 90%;
     max-height: 90vh;
+    margin: 2rem auto;
     padding: 25px;
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     outline: none;
     tabindex: -1;
     position: relative;
     z-index: 10002;
+    background: linear-gradient(135deg, #2a2f42, #1a1a2e);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3a3f52;
 }
 
 .subscription-modal-dialog:focus {
@@ -2139,8 +2153,11 @@ body.theme-light .facebook-btn:hover {
 @media (max-width: 640px) {
     .gold-modal-dialog,
     .subscription-modal-dialog {
-        margin: 2vh auto;
+        width: 95%;
+        max-width: none;
+        margin: 1rem auto;
         padding: 20px;
+        max-height: 95vh;
     }
     
     .price {
