@@ -30,8 +30,8 @@
                 <button id="open-auth-modal" class="btn">Se connecter</button>
             </div>
 
-            <!-- Menu hamburger pour utilisateurs connectés -->
-            <div id="user-menu" class="user-menu" style="display: none;">
+            <!-- Menu hamburger toujours visible -->
+            <div id="user-menu" class="user-menu">
                 <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu utilisateur">
                     <span></span>
                     <span></span>
@@ -83,15 +83,45 @@
 
             <!-- TYPE DE MOT DE PASSE -->
             <div class="password-type">
-                <label class="type-toggle"><input type="radio" name="passwordType" value="password" checked> Mot de passe</label>
-                <label class="type-toggle"><input type="radio" name="passwordType" value="passphrase"> Phrase de passe</label>
+                <label class="type-toggle">
+                    <input type="radio" name="passwordType" value="password" checked>
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔐</span>
+                        <span class="toggle-text">MOT DE PASSE</span>
+                    </span>
+                </label>
+                <label class="type-toggle">
+                    <input type="radio" name="passwordType" value="passphrase">
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔑</span>
+                        <span class="toggle-text">PHRASE DE PASSE</span>
+                    </span>
+                </label>
             </div>
 
             <!-- OPTIONS POUR MOT DE PASSE -->
             <div class="generator-options" id="password-options">
-                <label class="option-toggle"><input type="checkbox" id="includeUppercase" checked> Majuscules</label>
-                <label class="option-toggle"><input type="checkbox" id="includeNumbers" checked> Chiffres</label>
-                <label class="option-toggle"><input type="checkbox" id="includeSymbols"> Symboles</label>
+                <label class="option-toggle">
+                    <input type="checkbox" id="includeUppercase" checked>
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔤</span>
+                        <span class="toggle-text">MAJUSCULES</span>
+                    </span>
+                </label>
+                <label class="option-toggle">
+                    <input type="checkbox" id="includeNumbers" checked>
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔢</span>
+                        <span class="toggle-text">CHIFFRES</span>
+                    </span>
+                </label>
+                <label class="option-toggle">
+                    <input type="checkbox" id="includeSymbols">
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔣</span>
+                        <span class="toggle-text">SYMBOLES</span>
+                    </span>
+                </label>
                 <label class="length-control">
                     Longueur: <span id="passwordLengthValue">12</span>
                     <input type="range" id="passwordLength" min="6" max="64" value="12">
@@ -102,8 +132,20 @@
 
             <!-- OPTIONS POUR PHRASE DE PASSE -->
             <div class="generator-options" id="passphrase-options" style="display: none;">
-                <label class="option-toggle"><input type="checkbox" id="passphraseUppercase" checked> Majuscules</label>
-                <label class="option-toggle"><input type="checkbox" id="passphraseNumbers" checked> Chiffres</label>
+                <label class="option-toggle">
+                    <input type="checkbox" id="passphraseUppercase" checked>
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔤</span>
+                        <span class="toggle-text">MAJUSCULES</span>
+                    </span>
+                </label>
+                <label class="option-toggle">
+                    <input type="checkbox" id="passphraseNumbers" checked>
+                    <span class="toggle-content">
+                        <span class="toggle-icon">🔢</span>
+                        <span class="toggle-text">CHIFFRES</span>
+                    </span>
+                </label>
                 <label class="length-control">
                     Mots: <span id="passphraseLengthValue">4</span>
                     <input type="range" id="passphraseLength" min="1" max="10" value="4">
@@ -638,11 +680,21 @@
                                     <h4>Langue</h4>
                                     <p>Sélectionnez votre langue préférée</p>
                                 </div>
-                                <div class="form-group">
-                                    <select id="language-select" name="language">
-                                        <option value="fr">Français</option>
-                                        <option value="en">English</option>
-                                    </select>
+                                <div class="language-options">
+                                    <label class="language-option">
+                                        <input type="radio" name="language" value="fr" checked>
+                                        <span class="language-content">
+                                            <span class="language-flag">🇫🇷</span>
+                                            <span class="language-text">Français</span>
+                                        </span>
+                                    </label>
+                                    <label class="language-option">
+                                        <input type="radio" name="language" value="en">
+                                        <span class="language-content">
+                                            <span class="language-flag">🇬🇧</span>
+                                            <span class="language-text">English</span>
+                                        </span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -671,6 +723,96 @@
                                         <span class="option-label">
                                             <span class="option-icon">🔔</span>
                                             Alertes de sécurité
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="preference-card">
+                                <div class="preference-header">
+                                    <h4>Confidentialité</h4>
+                                    <p>Contrôlez vos données personnelles</p>
+                                </div>
+                                <div class="preference-options">
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="data-collection" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">📊</span>
+                                            Collecte de données d'usage
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="analytics" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">📈</span>
+                                            Analytics et statistiques
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="cookies">
+                                        <span class="option-label">
+                                            <span class="option-icon">🍪</span>
+                                            Cookies de suivi
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="preference-card">
+                                <div class="preference-header">
+                                    <h4>Accessibilité</h4>
+                                    <p>Personnalisez l'interface pour vos besoins</p>
+                                </div>
+                                <div class="preference-options">
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="high-contrast">
+                                        <span class="option-label">
+                                            <span class="option-icon">🔍</span>
+                                            Contraste élevé
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="large-text">
+                                        <span class="option-label">
+                                            <span class="option-icon">🔤</span>
+                                            Texte agrandi
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="reduced-motion">
+                                        <span class="option-label">
+                                            <span class="option-icon">🎬</span>
+                                            Réduire les animations
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="preference-card">
+                                <div class="preference-header">
+                                    <h4>Génération</h4>
+                                    <p>Paramètres par défaut pour la génération</p>
+                                </div>
+                                <div class="preference-options">
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="auto-copy" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">📋</span>
+                                            Copie automatique
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="show-strength" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">💪</span>
+                                            Afficher la force
+                                        </span>
+                                    </label>
+                                    <label class="preference-option">
+                                        <input type="checkbox" id="save-history" checked>
+                                        <span class="option-label">
+                                            <span class="option-icon">💾</span>
+                                            Sauvegarder l'historique
                                         </span>
                                     </label>
                                 </div>

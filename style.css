@@ -130,27 +130,57 @@ button {
 }
 
 .type-toggle {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #b8bcc8;
-    font-size: 16px;
-    font-weight: 500;
     cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    background: #1f1f3a;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .type-toggle:hover {
     background: #2a2f42;
-    color: #ffffff;
+    border-color: #ff79c6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 121, 198, 0.3);
 }
 
 .type-toggle input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #ffd700;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.type-toggle input[type="radio"]:checked + .toggle-content {
+    color: #ff79c6;
+}
+
+.type-toggle input[type="radio"]:checked ~ * {
+    color: #ff79c6;
+}
+
+.toggle-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #b8bcc8;
+    transition: color 0.3s ease;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+}
+
+.toggle-text {
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .generator-options {
@@ -170,10 +200,40 @@ button {
 
 /* Boutons d'options agrandis */
 .generator-options label.option-toggle {
-    padding: 0.6rem 0.9rem;
-    border-radius: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
     background: #1f1f3a;
-    font-size: 1.05rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.generator-options label.option-toggle:hover {
+    background: #2a2f42;
+    border-color: #ff79c6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 121, 198, 0.3);
+}
+
+.generator-options label.option-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.generator-options label.option-toggle input[type="checkbox"]:checked + .toggle-content {
+    color: #ff79c6;
+}
+
+.generator-options label.option-toggle input[type="checkbox"]:checked ~ * {
+    color: #ff79c6;
 }
 
 /* Contrôle de longueur (slider) */
@@ -730,6 +790,50 @@ body.theme-light .password-item:hover {
     background: #f7f7fb;
 }
 
+/* ===================== OPTIONS D'ACCESSIBILITÉ ===================== */
+.high-contrast {
+    --primary-color: #ffffff;
+    --secondary-color: #000000;
+    --accent-color: #ffff00;
+    --text-color: #ffffff;
+    --bg-color: #000000;
+}
+
+.high-contrast * {
+    color: var(--text-color) !important;
+    background-color: var(--bg-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.large-text {
+    font-size: 1.2em;
+}
+
+.large-text h1, .large-text h2, .large-text h3 {
+    font-size: 1.5em;
+}
+
+.large-text button, .large-text input, .large-text select {
+    font-size: 1.1em;
+    padding: 0.8rem 1.2rem;
+}
+
+.reduced-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+.reduced-motion .btn:hover {
+    transform: none !important;
+}
+
+.reduced-motion .type-toggle:hover,
+.reduced-motion .option-toggle:hover,
+.reduced-motion .language-option:hover {
+    transform: none !important;
+}
+
 body.theme-light .contact-container form input,
 body.theme-light .contact-container form textarea {
     background: #ffffff;
@@ -866,7 +970,10 @@ body.theme-light .modal-dialog { background: #ffffff; }
     background: var(--primary-color);
     color: #000000;
 }
-.auth-panels { }
+.auth-panels {
+    display: flex;
+    flex-direction: column;
+}
 .auth-panel { display: none; }
 .auth-panel.active { display: block; }
 .auth-form { display: flex; flex-direction: column; gap: 10px; }
@@ -1236,6 +1343,63 @@ body.theme-light .facebook-btn:hover {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+}
+
+.language-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.language-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    background: #1f1f3a;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.language-option:hover {
+    background: #2a2f42;
+    border-color: #ff79c6;
+    transform: translateY(-1px);
+}
+
+.language-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.language-option input[type="radio"]:checked + .language-content {
+    color: #ff79c6;
+}
+
+.language-option input[type="radio"]:checked ~ * {
+    color: #ff79c6;
+}
+
+.language-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #b8bcc8;
+    transition: color 0.3s ease;
+    width: 100%;
+}
+
+.language-flag {
+    font-size: 1.5rem;
+}
+
+.language-text {
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .preference-option {
@@ -1886,7 +2050,7 @@ body.theme-light .facebook-btn:hover {
     display: flex;
     flex-direction: column;
     outline: none;
-    tabindex: -1;
+    /* tabindex: -1; */
     position: relative;
     z-index: 10002;
     background: linear-gradient(135deg, #2a2f42, #1a1a2e);
@@ -2023,7 +2187,7 @@ body.theme-light .facebook-btn:hover {
     display: flex;
     flex-direction: column;
     outline: none;
-    tabindex: -1;
+    /* tabindex: -1; */
     position: relative;
     z-index: 10002;
     background: linear-gradient(135deg, #2a2f42, #1a1a2e);

@@ -211,9 +211,6 @@ function updateAuthUI() {
                        (facebookProfile && (facebookProfile.name || facebookProfile.email)) ||
                        (appUser && appUser.email);
     if (googleProfile || appleProfile || facebookProfile || appUser) {
-        // Masquer le menu hamburger par défaut
-        if (userMenu) userMenu.style.display = 'none';
-        
         const wrapper = document.createElement('div');
         wrapper.className = 'auth-user';
 
@@ -241,13 +238,7 @@ function updateAuthUI() {
         wrapper.appendChild(span);
         wrapper.appendChild(btn);
         authControls.appendChild(wrapper);
-        
-        // Afficher le menu hamburger pour les utilisateurs connectés
-        if (userMenu) userMenu.style.display = 'flex';
     } else {
-        // Masquer le menu hamburger si pas connecté
-        if (userMenu) userMenu.style.display = 'none';
-        
         const btn = document.createElement('button');
         btn.id = 'open-auth-modal';
         btn.className = 'btn';
@@ -739,6 +730,7 @@ function generatePassword(length = 12, options = {}) {
 // FONCTION DE GENERATION DE PHRASE DE PASSE
 function generatePassphrase(wordCount = 4, options = {}) {
     const words = [
+        // A
         'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract',
         'absurd', 'abuse', 'access', 'accident', 'account', 'accuse', 'achieve', 'acid',
         'acoustic', 'acquire', 'across', 'act', 'action', 'actor', 'actress', 'actual',
@@ -749,10 +741,54 @@ function generatePassphrase(wordCount = 4, options = {}) {
         'alpha', 'already', 'also', 'alter', 'always', 'amateur', 'amazing', 'among',
         'amount', 'amused', 'analyst', 'anchor', 'ancient', 'anger', 'angle', 'angry',
         'animal', 'ankle', 'announce', 'annual', 'another', 'answer', 'antenna', 'antique',
-        'anxiety', 'any', 'apart', 'apology', 'appear', 'apple', 'approve', 'april'
+        'anxiety', 'any', 'apart', 'apology', 'appear', 'apple', 'approve', 'april',
+        // B
+        'baby', 'bachelor', 'bacon', 'badge', 'bag', 'balance', 'balcony', 'ball',
+        'bamboo', 'banana', 'banner', 'bar', 'barely', 'bargain', 'barrel', 'base',
+        'basic', 'basket', 'battle', 'beach', 'bean', 'beauty', 'because', 'become',
+        'beef', 'before', 'begin', 'behave', 'behind', 'believe', 'below', 'belt',
+        'bench', 'benefit', 'best', 'betray', 'better', 'between', 'beyond', 'bicycle',
+        'bid', 'bike', 'bind', 'biology', 'bird', 'birth', 'bitter', 'black',
+        'blade', 'blame', 'blanket', 'blast', 'bleak', 'bless', 'blind', 'blood',
+        'blossom', 'blow', 'blue', 'blur', 'blush', 'board', 'boat', 'body',
+        'boil', 'bomb', 'bone', 'bonus', 'book', 'boost', 'border', 'boring',
+        'borrow', 'boss', 'bottom', 'bounce', 'box', 'boy', 'bracket', 'brain',
+        'brand', 'brass', 'brave', 'bread', 'breeze', 'brick', 'bridge', 'brief',
+        'bright', 'bring', 'brisk', 'broccoli', 'broken', 'bronze', 'broom', 'brother',
+        'brown', 'brush', 'bubble', 'buddy', 'budget', 'buffalo', 'build', 'bulb',
+        'bulk', 'bullet', 'bundle', 'bunker', 'burden', 'burger', 'burst', 'bus',
+        'business', 'busy', 'butter', 'buyer', 'buzz',
+        // C
+        'cabbage', 'cabin', 'cable', 'cactus', 'cage', 'cake', 'call', 'calm',
+        'camera', 'camp', 'can', 'canal', 'cancel', 'candy', 'cannon', 'canoe',
+        'canvas', 'canyon', 'capable', 'capital', 'captain', 'car', 'carbon', 'card',
+        'care', 'career', 'careful', 'careless', 'cargo', 'carpet', 'carry', 'cart',
+        'case', 'cash', 'casino', 'cast', 'casual', 'cat', 'catalog', 'catch',
+        'category', 'cattle', 'caught', 'cause', 'caution', 'cave', 'ceiling', 'celery',
+        'cement', 'census', 'century', 'cereal', 'certain', 'chair', 'chalk', 'champion',
+        'change', 'chaos', 'chapter', 'charge', 'chase', 'cheap', 'check', 'cheese',
+        'chef', 'cherry', 'chest', 'chicken', 'chief', 'child', 'chimney', 'choice',
+        'choose', 'chronic', 'chuckle', 'chunk', 'churn', 'cigar', 'cinnamon', 'circle',
+        'citizen', 'city', 'civil', 'claim', 'clamp', 'clarify', 'claw', 'clay',
+        'clean', 'clerk', 'clever', 'click', 'client', 'cliff', 'climb', 'cling',
+        'clinic', 'clip', 'clock', 'clog', 'close', 'cloth', 'cloud', 'clown',
+        'club', 'clump', 'cluster', 'clutch', 'coach', 'coast', 'coconut', 'code',
+        'coffee', 'coil', 'coin', 'collect', 'color', 'column', 'come', 'comfort',
+        'comic', 'common', 'company', 'concert', 'conduct', 'confirm', 'congress', 'connect',
+        'consider', 'control', 'convince', 'cook', 'cool', 'copper', 'copy', 'coral',
+        'core', 'corn', 'correct', 'cost', 'cotton', 'couch', 'country', 'couple',
+        'course', 'cousin', 'cover', 'coyote', 'crack', 'cradle', 'craft', 'cram',
+        'crane', 'crash', 'crater', 'crawl', 'crazy', 'cream', 'credit', 'creek',
+        'crew', 'cricket', 'crime', 'crisp', 'critic', 'crop', 'cross', 'crouch',
+        'crowd', 'crucial', 'cruel', 'cruise', 'crumble', 'crunch', 'crush', 'cry',
+        'crystal', 'cube', 'culture', 'cup', 'cupboard', 'curious', 'current', 'curtain',
+        'curve', 'cushion', 'custom', 'cute', 'cycle'
     ];
     
     let passphrase = '';
+    let totalDigits = 0;
+    const maxDigits = options.numbers ? getRandomInt(1, 2) : 0; // Max 1-2 chiffres au total
+    
     for (let i = 0; i < wordCount; i++) {
         const randomWord = words[getRandomInt(0, words.length - 1)];
         
@@ -763,13 +799,19 @@ function generatePassphrase(wordCount = 4, options = {}) {
             finalWord = finalWord.charAt(0).toUpperCase() + finalWord.slice(1);
         }
         
-        if (options.numbers && i > 0) {
-            // Ajouter 1 ou 2 chiffres à des endroits aléatoires
-            const numDigits = getRandomInt(1, 2);
-            for (let j = 0; j < numDigits; j++) {
+        // Ajouter des chiffres seulement si on n'a pas atteint le maximum
+        if (options.numbers && totalDigits < maxDigits) {
+            const shouldAddDigit = getRandomInt(0, 1) === 1; // 50% de chance
+            if (shouldAddDigit) {
                 const randomDigit = getRandomInt(0, 9);
-                const randomPosition = getRandomInt(0, finalWord.length);
-                finalWord = finalWord.slice(0, randomPosition) + randomDigit + finalWord.slice(randomPosition);
+                // Ajouter le chiffre au début ou à la fin du mot
+                const addAtEnd = getRandomInt(0, 1) === 1;
+                if (addAtEnd) {
+                    finalWord = finalWord + randomDigit;
+                } else {
+                    finalWord = randomDigit + finalWord;
+                }
+                totalDigits++;
             }
         }
         
@@ -1150,7 +1192,16 @@ if (!userPreferences) {
         language: 'fr',
         emailNotifications: true,
         marketingEmails: false,
-        securityAlerts: true
+        securityAlerts: true,
+        dataCollection: true,
+        analytics: true,
+        cookies: false,
+        highContrast: false,
+        largeText: false,
+        reducedMotion: false,
+        autoCopy: true,
+        showStrength: true,
+        saveHistory: true
     };
     localStorage.setItem('kironUserPreferences', JSON.stringify(userPreferences));
 }
@@ -1282,21 +1333,48 @@ function loadUserPreferences() {
     });
     
     // Langue
-    document.getElementById('language-select').value = userPreferences.language || 'fr';
+    const languageRadios = document.querySelectorAll('input[name="language"]');
+    languageRadios.forEach(radio => {
+        radio.checked = radio.value === userPreferences.language;
+    });
     
     // Notifications
     document.getElementById('email-notifications').checked = userPreferences.emailNotifications;
     document.getElementById('marketing-emails').checked = userPreferences.marketingEmails;
     document.getElementById('security-alerts').checked = userPreferences.securityAlerts;
+    
+    // Confidentialité
+    document.getElementById('data-collection').checked = userPreferences.dataCollection;
+    document.getElementById('analytics').checked = userPreferences.analytics;
+    document.getElementById('cookies').checked = userPreferences.cookies;
+    
+    // Accessibilité
+    document.getElementById('high-contrast').checked = userPreferences.highContrast;
+    document.getElementById('large-text').checked = userPreferences.largeText;
+    document.getElementById('reduced-motion').checked = userPreferences.reducedMotion;
+    
+    // Génération
+    document.getElementById('auto-copy').checked = userPreferences.autoCopy;
+    document.getElementById('show-strength').checked = userPreferences.showStrength;
+    document.getElementById('save-history').checked = userPreferences.saveHistory;
 }
 
 function saveUserPreferences() {
     const preferences = {
         theme: document.querySelector('input[name="theme"]:checked').value,
-        language: document.getElementById('language-select').value,
+        language: document.querySelector('input[name="language"]:checked').value,
         emailNotifications: document.getElementById('email-notifications').checked,
         marketingEmails: document.getElementById('marketing-emails').checked,
-        securityAlerts: document.getElementById('security-alerts').checked
+        securityAlerts: document.getElementById('security-alerts').checked,
+        dataCollection: document.getElementById('data-collection').checked,
+        analytics: document.getElementById('analytics').checked,
+        cookies: document.getElementById('cookies').checked,
+        highContrast: document.getElementById('high-contrast').checked,
+        largeText: document.getElementById('large-text').checked,
+        reducedMotion: document.getElementById('reduced-motion').checked,
+        autoCopy: document.getElementById('auto-copy').checked,
+        showStrength: document.getElementById('show-strength').checked,
+        saveHistory: document.getElementById('save-history').checked
     };
     
     userPreferences = preferences;
@@ -1304,6 +1382,9 @@ function saveUserPreferences() {
     
     // Appliquer le thème immédiatement
     applyTheme(preferences.theme);
+    
+    // Appliquer les options d'accessibilité
+    applyAccessibilityOptions(preferences);
     
     showNotification('Préférences sauvegardées');
 }
@@ -1318,6 +1399,17 @@ function applyTheme(theme) {
         document.body.classList.toggle('theme-light', theme === 'light');
     }
     localStorage.setItem('kironTheme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light') : `theme-${theme}`);
+}
+
+function applyAccessibilityOptions(preferences) {
+    // Contraste élevé
+    document.body.classList.toggle('high-contrast', preferences.highContrast);
+    
+    // Texte agrandi
+    document.body.classList.toggle('large-text', preferences.largeText);
+    
+    // Réduire les animations
+    document.body.classList.toggle('reduced-motion', preferences.reducedMotion);
 }
 
 // ===================== GESTION DE LA SÉCURITÉ =====================
