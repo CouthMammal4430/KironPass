@@ -172,9 +172,9 @@
                 <button id="generateGoldBtn" class="btn btn-gold">Générer Gold</button>
             </div>
 
-            <!-- ASTUCES / INFOS -->
+            <!-- TEST DE SÉCURITÉ -->
             <div class="generator-tips">
-                <p>Astuce : Pour un mot de passe ultra sécurisé, activez toutes les options et utilisez le mode Gold !</p>
+                <p>Comment savoir si votre mot de passe est sécurisé ? <a href="#" id="security-test-link">Testez-le ici</a></p>
             </div>
         </section>
 
@@ -523,6 +523,123 @@
                     <h3>Abonnement résilié</h3>
                     <p>Votre abonnement KironGold sera actif jusqu'au <span id="cancellation-date">-</span>.</p>
                     <button id="reactivate-subscription" class="btn btn-gold">Réactiver l'abonnement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE HISTORIQUE COMPLET ===================== -->
+    <div class="modal" id="history-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="history-modal-title">
+            <button class="modal-close" id="history-modal-close" aria-label="Fermer">×</button>
+            <h2 id="history-modal-title">Historique complet</h2>
+            <div class="history-full-list">
+                <div class="history-filters">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="password">Mots de passe</button>
+                    <button class="filter-btn" data-filter="passphrase">Phrases de passe</button>
+                </div>
+                <div class="history-items" id="full-history-list">
+                    <!-- Les éléments d'historique seront générés dynamiquement -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE TEST DE SÉCURITÉ ===================== -->
+    <div class="modal" id="security-test-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="security-test-modal-title">
+            <button class="modal-close" id="security-test-modal-close" aria-label="Fermer">×</button>
+            <h2 id="security-test-modal-title">Test de sécurité du mot de passe</h2>
+            <div class="security-test-content">
+                <div class="password-input-section">
+                    <label for="test-password">Entrez votre mot de passe à tester :</label>
+                    <input type="text" id="test-password" placeholder="Votre mot de passe...">
+                </div>
+                <div class="security-results" id="security-results">
+                    <div class="score-section">
+                        <h3>Score de sécurité</h3>
+                        <div class="score-bar">
+                            <div class="score-fill" id="score-fill"></div>
+                        </div>
+                        <span class="score-text" id="score-text">0/4</span>
+                    </div>
+                    <div class="crack-time-section">
+                        <h3>Temps de crack estimé</h3>
+                        <div class="crack-time" id="crack-time">-</div>
+                    </div>
+                    <div class="feedback-section">
+                        <h3>Suggestions d'amélioration</h3>
+                        <ul class="feedback-list" id="feedback-list">
+                            <li>Entrez un mot de passe pour voir les suggestions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE NOTES ===================== -->
+    <div class="modal" id="notes-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="notes-modal-title">
+            <button class="modal-close" id="notes-modal-close" aria-label="Fermer">×</button>
+            <h2 id="notes-modal-title">Ajouter une note</h2>
+            <div class="notes-content">
+                <div class="password-display">
+                    <label>Mot de passe :</label>
+                    <input type="text" id="notes-password" readonly>
+                </div>
+                <div class="note-input">
+                    <label for="note-text">Note (ex: Site web, compte, etc.) :</label>
+                    <input type="text" id="note-text" placeholder="Ex: Compte Gmail, Site Amazon...">
+                </div>
+                <div class="notes-actions">
+                    <button id="save-note" class="btn btn-primary">Sauvegarder</button>
+                    <button id="cancel-note" class="btn">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE AIDE ===================== -->
+    <div class="modal" id="help-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+            <button class="modal-close" id="help-modal-close" aria-label="Fermer">×</button>
+            <h2 id="help-modal-title">Centre d'aide</h2>
+            <div class="help-content">
+                <div class="help-section">
+                    <h3>Comment utiliser KironPass</h3>
+                    <p>KironPass est un générateur de mots de passe sécurisé. Suivez ces étapes :</p>
+                    <ol>
+                        <li>Choisissez entre "Mot de passe" ou "Phrase de passe"</li>
+                        <li>Configurez vos options (majuscules, chiffres, symboles)</li>
+                        <li>Ajustez la longueur selon vos besoins</li>
+                        <li>Cliquez sur "Générer Free" ou "Générer Gold"</li>
+                        <li>Copiez votre mot de passe en cliquant sur "Copier"</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3>Fonctionnalités Gold</h3>
+                    <p>Avec KironGold, vous bénéficiez de :</p>
+                    <ul>
+                        <li>Génération de 5 mots de passe simultanément</li>
+                        <li>Historique complet illimité</li>
+                        <li>Patterns personnalisés</li>
+                        <li>Thèmes exclusifs</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h3>Conseils de sécurité</h3>
+                    <ul>
+                        <li>Utilisez au moins 12 caractères</li>
+                        <li>Activez toutes les options (majuscules, chiffres, symboles)</li>
+                        <li>Ne réutilisez jamais le même mot de passe</li>
+                        <li>Stockez vos mots de passe dans un gestionnaire sécurisé</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1076,6 +1193,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
     <!-- Stripe SDK -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- zxcvbn pour l'évaluation de la force des mots de passe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
     <script>
         // Attendre que Stripe soit chargé avant d'exécuter le script principal
         window.addEventListener('load', function() {

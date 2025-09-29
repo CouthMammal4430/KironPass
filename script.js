@@ -859,6 +859,23 @@ function showNotification(message) {
 function updateHistory(passwords) {
     if (!Array.isArray(passwords)) passwords = [passwords];
     history = [...passwords, ...history].slice(0, 20); // Limite à 20
+    
+    // Sauvegarder dans l'historique complet
+    const fullHistory = JSON.parse(localStorage.getItem('kironFullHistory') || '[]');
+    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
+    
+    passwords.forEach(pwd => {
+        fullHistory.unshift({
+            password: pwd,
+            type: selectedType === 'password' ? 'Mot de passe' : 'Phrase de passe',
+            timestamp: Date.now()
+        });
+    });
+    
+    // Limiter à 100 éléments dans l'historique complet
+    const limitedHistory = fullHistory.slice(0, 100);
+    localStorage.setItem('kironFullHistory', JSON.stringify(limitedHistory));
+    
     renderHistory();
 }
 
@@ -878,6 +895,14 @@ function renderHistory() {
         textSpan.style.textOverflow = 'ellipsis';
         textSpan.style.whiteSpace = 'nowrap';
 
+        const notesSpan = document.createElement('span');
+        notesSpan.classList.add('notes-icon');
+        notesSpan.title = 'Ajouter une note';
+        notesSpan.innerHTML = '\n            <svg viewBox="0 0 24 24" aria-hidden="true">\n                <circle cx="12" cy="12" r="1"/>\n                <circle cx="19" cy="12" r="1"/>\n                <circle cx="5" cy="12" r="1"/>\n            </svg>\n        ';
+        notesSpan.addEventListener('click', () => {
+            openNotesModal(pwd);
+        });
+
         const copySpan = document.createElement('span');
         copySpan.classList.add('copy-icon');
         copySpan.title = 'Copier';
@@ -887,6 +912,7 @@ function renderHistory() {
         });
 
         div.appendChild(textSpan);
+        div.appendChild(notesSpan);
         div.appendChild(copySpan);
         historyList.appendChild(div);
     });
@@ -1115,11 +1141,11 @@ document.addEventListener('click', (e) => {
         closeUserDropdown();
     }
     if (e.target.closest('#profile-item')) {
-        showNotification('Fonctionnalité en développement');
+        openSettingsModal();
         closeUserDropdown();
     }
     if (e.target.closest('#history-item')) {
-        showNotification('Historique complet disponible avec KironGold');
+        openHistoryModal();
         closeUserDropdown();
     }
     if (e.target.closest('#settings-item')) {
@@ -1127,7 +1153,7 @@ document.addEventListener('click', (e) => {
         closeUserDropdown();
     }
     if (e.target.closest('#help-item')) {
-        showNotification('Centre d\'aide en développement');
+        openHelpModal();
         closeUserDropdown();
     }
     if (e.target.closest('#logout-item')) {
@@ -1158,6 +1184,10 @@ document.addEventListener('click', (e) => {
         closeGoldModal();
         closeSubscriptionModal();
         closeSettingsModal();
+        closeHistoryModal();
+        closeHelpModal();
+        closeNotesModal();
+        closeSecurityTestModal();
     }
 });
 
@@ -1166,6 +1196,18 @@ document.addEventListener('click', (e) => {
     if (e.target.id === 'stripe-submit') {
         e.preventDefault();
         processSubscriptionPayment();
+    }
+    if (e.target.id === 'save-note') {
+        e.preventDefault();
+        saveNote();
+    }
+    if (e.target.id === 'cancel-note') {
+        e.preventDefault();
+        closeNotesModal();
+    }
+    if (e.target.id === 'security-test-link') {
+        e.preventDefault();
+        openSecurityTestModal();
     }
 });
 
@@ -1182,6 +1224,14 @@ document.addEventListener('click', (e) => {
 // ===================== GESTION DES PARAMÈTRES =====================
 const settingsModal = document.getElementById('settings-modal');
 const settingsModalClose = document.getElementById('settings-modal-close');
+const historyModal = document.getElementById('history-modal');
+const historyModalClose = document.getElementById('history-modal-close');
+const helpModal = document.getElementById('help-modal');
+const helpModalClose = document.getElementById('help-modal-close');
+const notesModal = document.getElementById('notes-modal');
+const notesModalClose = document.getElementById('notes-modal-close');
+const securityTestModal = document.getElementById('security-test-modal');
+const securityTestModalClose = document.getElementById('security-test-modal-close');
 let userProfile = JSON.parse(localStorage.getItem('kironUserProfile') || 'null');
 let userPreferences = JSON.parse(localStorage.getItem('kironUserPreferences') || 'null');
 
@@ -1234,6 +1284,253 @@ function closeSettingsModal() {
     
     settingsModal.classList.remove('show');
     settingsModal.setAttribute('aria-hidden', 'true');
+}
+
+function openHistoryModal() {
+    if (!historyModal) return;
+    
+    // Empêcher le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    historyModal.classList.add('show');
+    historyModal.setAttribute('aria-hidden', 'false');
+    
+    // Charger l'historique complet
+    loadFullHistory();
+    
+    // Focus sur la modale pour l'accessibilité
+    setTimeout(() => {
+        const modalDialog = historyModal.querySelector('.modal-dialog');
+        if (modalDialog) modalDialog.focus();
+    }, 100);
+}
+
+function closeHistoryModal() {
+    if (!historyModal) return;
+    
+    // Restaurer le défilement de la page
+    document.body.style.overflow = '';
+    
+    historyModal.classList.remove('show');
+    historyModal.setAttribute('aria-hidden', 'true');
+}
+
+function openHelpModal() {
+    if (!helpModal) return;
+    
+    // Empêcher le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    helpModal.classList.add('show');
+    helpModal.setAttribute('aria-hidden', 'false');
+    
+    // Focus sur la modale pour l'accessibilité
+    setTimeout(() => {
+        const modalDialog = helpModal.querySelector('.modal-dialog');
+        if (modalDialog) modalDialog.focus();
+    }, 100);
+}
+
+function closeHelpModal() {
+    if (!helpModal) return;
+    
+    // Restaurer le défilement de la page
+    document.body.style.overflow = '';
+    
+    helpModal.classList.remove('show');
+    helpModal.setAttribute('aria-hidden', 'true');
+}
+
+function openNotesModal(password) {
+    if (!notesModal) return;
+    
+    // Empêcher le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    // Remplir le mot de passe
+    document.getElementById('notes-password').value = password;
+    document.getElementById('note-text').value = '';
+    
+    notesModal.classList.add('show');
+    notesModal.setAttribute('aria-hidden', 'false');
+    
+    // Focus sur le champ de note
+    setTimeout(() => {
+        document.getElementById('note-text').focus();
+    }, 100);
+}
+
+function closeNotesModal() {
+    if (!notesModal) return;
+    
+    // Restaurer le défilement de la page
+    document.body.style.overflow = '';
+    
+    notesModal.classList.remove('show');
+    notesModal.setAttribute('aria-hidden', 'true');
+}
+
+function saveNote() {
+    const password = document.getElementById('notes-password').value;
+    const note = document.getElementById('note-text').value.trim();
+    
+    if (!note) {
+        showNotification('Veuillez saisir une note');
+        return;
+    }
+    
+    // Sauvegarder la note
+    const notes = JSON.parse(localStorage.getItem('kironNotes') || '{}');
+    notes[password] = note;
+    localStorage.setItem('kironNotes', JSON.stringify(notes));
+    
+    showNotification('Note sauvegardée !');
+    closeNotesModal();
+}
+
+function openSecurityTestModal() {
+    if (!securityTestModal) return;
+    
+    // Empêcher le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    // Remplir avec le mot de passe actuel s'il existe
+    const currentPassword = document.getElementById('password-output').value;
+    if (currentPassword) {
+        document.getElementById('test-password').value = currentPassword;
+        testPasswordSecurity(currentPassword);
+    }
+    
+    securityTestModal.classList.add('show');
+    securityTestModal.setAttribute('aria-hidden', 'false');
+    
+    // Focus sur le champ de test
+    setTimeout(() => {
+        document.getElementById('test-password').focus();
+    }, 100);
+}
+
+function closeSecurityTestModal() {
+    if (!securityTestModal) return;
+    
+    // Restaurer le défilement de la page
+    document.body.style.overflow = '';
+    
+    securityTestModal.classList.remove('show');
+    securityTestModal.setAttribute('aria-hidden', 'true');
+}
+
+function testPasswordSecurity(password) {
+    if (!password || typeof zxcvbn === 'undefined') {
+        return;
+    }
+    
+    const result = zxcvbn(password);
+    
+    // Mettre à jour le score
+    const scoreFill = document.getElementById('score-fill');
+    const scoreText = document.getElementById('score-text');
+    const crackTime = document.getElementById('crack-time');
+    const feedbackList = document.getElementById('feedback-list');
+    
+    // Score de 0 à 4
+    const score = result.score;
+    const scorePercent = (score / 4) * 100;
+    
+    scoreFill.style.width = `${scorePercent}%`;
+    
+    const scoreLabels = ['Très faible', 'Faible', 'Moyen', 'Bon', 'Très bon'];
+    scoreText.textContent = `${scoreLabels[score]} (${score}/4)`;
+    
+    // Couleur du score
+    if (score <= 1) {
+        scoreFill.style.background = '#ef4444';
+    } else if (score <= 2) {
+        scoreFill.style.background = '#f59e0b';
+    } else if (score <= 3) {
+        scoreFill.style.background = '#eab308';
+    } else {
+        scoreFill.style.background = '#22c55e';
+    }
+    
+    // Temps de crack
+    crackTime.textContent = result.crack_times_display.offline_slow_hashing_1e4_per_second;
+    
+    // Suggestions
+    feedbackList.innerHTML = '';
+    if (result.feedback.suggestions && result.feedback.suggestions.length > 0) {
+        result.feedback.suggestions.forEach(suggestion => {
+            const li = document.createElement('li');
+            li.textContent = suggestion;
+            feedbackList.appendChild(li);
+        });
+    } else {
+        const li = document.createElement('li');
+        li.textContent = 'Excellent ! Votre mot de passe est très sécurisé.';
+        li.style.color = '#22c55e';
+        feedbackList.appendChild(li);
+    }
+    
+    // Avertissements
+    if (result.feedback.warning) {
+        const li = document.createElement('li');
+        li.textContent = `⚠️ ${result.feedback.warning}`;
+        li.style.color = '#f59e0b';
+        feedbackList.appendChild(li);
+    }
+}
+
+function loadFullHistory() {
+    const fullHistoryList = document.getElementById('full-history-list');
+    if (!fullHistoryList) return;
+    
+    // Récupérer l'historique complet depuis localStorage
+    const fullHistory = JSON.parse(localStorage.getItem('kironFullHistory') || '[]');
+    
+    fullHistoryList.innerHTML = '';
+    
+    if (fullHistory.length === 0) {
+        fullHistoryList.innerHTML = '<p style="text-align: center; color: #8a8fa3; padding: 2rem;">Aucun mot de passe généré pour le moment</p>';
+        return;
+    }
+    
+    fullHistory.forEach((item, index) => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'full-history-item';
+        historyItem.innerHTML = `
+            <div class="history-item-content">
+                <span class="history-password">${item.password}</span>
+                <span class="history-type">${item.type}</span>
+                <span class="history-date">${new Date(item.timestamp).toLocaleString('fr-FR')}</span>
+            </div>
+            <div class="history-item-actions">
+                <button class="copy-history-btn" data-password="${item.password}">Copier</button>
+                <button class="delete-history-btn" data-index="${index}">Supprimer</button>
+            </div>
+        `;
+        fullHistoryList.appendChild(historyItem);
+    });
+    
+    // Ajouter les event listeners
+    fullHistoryList.querySelectorAll('.copy-history-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const password = btn.getAttribute('data-password');
+            navigator.clipboard.writeText(password).then(() => {
+                showNotification('Mot de passe copié !');
+            });
+        });
+    });
+    
+    fullHistoryList.querySelectorAll('.delete-history-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const index = parseInt(btn.getAttribute('data-index'));
+            if (confirm('Supprimer ce mot de passe de l\'historique ?')) {
+                fullHistory.splice(index, 1);
+                localStorage.setItem('kironFullHistory', JSON.stringify(fullHistory));
+                loadFullHistory();
+            }
+        });
+    });
 }
 
 // Navigation dans les paramètres
@@ -1640,9 +1937,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialiser les paramètres
     initSettings();
     
-    // Fermer la modale des paramètres
+    // Event listener pour le test de sécurité en temps réel
+    const testPasswordInput = document.getElementById('test-password');
+    if (testPasswordInput) {
+        testPasswordInput.addEventListener('input', (e) => {
+            testPasswordSecurity(e.target.value);
+        });
+    }
+    
+    // Fermer les modales
     if (settingsModalClose) {
         settingsModalClose.addEventListener('click', closeSettingsModal);
+    }
+    if (historyModalClose) {
+        historyModalClose.addEventListener('click', closeHistoryModal);
+    }
+    if (helpModalClose) {
+        helpModalClose.addEventListener('click', closeHelpModal);
+    }
+    if (notesModalClose) {
+        notesModalClose.addEventListener('click', closeNotesModal);
+    }
+    if (securityTestModalClose) {
+        securityTestModalClose.addEventListener('click', closeSecurityTestModal);
     }
 });
 
@@ -1660,6 +1977,18 @@ document.addEventListener('keydown', (e) => {
         }
         if (settingsModal && settingsModal.classList.contains('show')) {
             closeSettingsModal();
+        }
+        if (historyModal && historyModal.classList.contains('show')) {
+            closeHistoryModal();
+        }
+        if (helpModal && helpModal.classList.contains('show')) {
+            closeHelpModal();
+        }
+        if (notesModal && notesModal.classList.contains('show')) {
+            closeNotesModal();
+        }
+        if (securityTestModal && securityTestModal.classList.contains('show')) {
+            closeSecurityTestModal();
         }
     }
 });
