@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iryon – Générateur de mots de passe</title>
+    <title>KironPass</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
 
             <!-- Bouton Thème -->
             <button class="theme-btn" id="theme-btn">
-                <span class="theme-icon">🌍</span>
+                <span class="theme-icon">🌙</span>
                 <span class="theme-text">Thème</span>
             </button>
 
@@ -57,6 +57,10 @@
                     <div class="dropdown-item" id="help-item">
                         <span class="dropdown-icon">❓</span>
                         <span>Aide</span>
+                    </div>
+                    <div class="dropdown-item" id="language-item">
+                        <span class="dropdown-icon">🌐</span>
+                        <span>Langue</span>
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-item" id="logout-item">
@@ -642,6 +646,33 @@
                         <li>Ne réutilisez jamais le même mot de passe</li>
                         <li>Stockez vos mots de passe dans un gestionnaire sécurisé</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== MODALE LANGUE ===================== -->
+    <div class="modal" id="language-modal" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="language-modal-title">
+            <button class="modal-close" id="language-modal-close" aria-label="Fermer">×</button>
+            <h2 id="language-modal-title">Choisir la langue</h2>
+            <div class="language-selection">
+                <div class="language-option" data-lang="fr">
+                    <span class="language-flag">🇫🇷</span>
+                    <span class="language-text">Français</span>
+                </div>
+                <div class="language-option" data-lang="en">
+                    <span class="language-flag">🇬🇧</span>
+                    <span class="language-text">English</span>
+                </div>
+                <div class="language-option" data-lang="es">
+                    <span class="language-flag">🇪🇸</span>
+                    <span class="language-text">Español</span>
+                </div>
+                <div class="language-option" data-lang="de">
+                    <span class="language-flag">🇩🇪</span>
+                    <span class="language-text">Deutsch</span>
                 </div>
             </div>
         </div>

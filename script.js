@@ -1095,12 +1095,28 @@ const themeBtn = document.getElementById('theme-btn');
 let savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';
 document.body.classList.add(savedTheme);
 
+// Définir l'icône correcte au chargement
+const themeIcon = document.querySelector('.theme-icon');
+if (savedTheme === 'theme-dark') {
+    themeIcon.textContent = '🌙'; // Lune pour le thème sombre
+} else {
+    themeIcon.textContent = '☀️'; // Soleil pour le thème clair
+}
+
 themeBtn.addEventListener('click', () => {
     let current = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
     let next = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
     document.body.classList.remove(current);
     document.body.classList.add(next);
     localStorage.setItem('kironTheme', next);
+    
+    // Mettre à jour l'icône du thème
+    const themeIcon = document.querySelector('.theme-icon');
+    if (next === 'theme-dark') {
+        themeIcon.textContent = '🌙'; // Lune pour le thème sombre
+    } else {
+        themeIcon.textContent = '☀️'; // Soleil pour le thème clair
+    }
 });
 
 // ===================== EVENT LISTENERS POUR NOUVELLES FONCTIONNALITÉS =====================
@@ -1156,6 +1172,10 @@ document.addEventListener('click', (e) => {
         openHelpModal();
         closeUserDropdown();
     }
+    if (e.target.closest('#language-item')) {
+        openLanguageModal();
+        closeUserDropdown();
+    }
     if (e.target.closest('#logout-item')) {
         appUser = null;
         localStorage.removeItem('kironUser');
@@ -1186,6 +1206,7 @@ document.addEventListener('click', (e) => {
         closeSettingsModal();
         closeHistoryModal();
         closeHelpModal();
+        closeLanguageModal();
         closeNotesModal();
         closeSecurityTestModal();
     }
@@ -1228,6 +1249,8 @@ const historyModal = document.getElementById('history-modal');
 const historyModalClose = document.getElementById('history-modal-close');
 const helpModal = document.getElementById('help-modal');
 const helpModalClose = document.getElementById('help-modal-close');
+const languageModal = document.getElementById('language-modal');
+const languageModalClose = document.getElementById('language-modal-close');
 const notesModal = document.getElementById('notes-modal');
 const notesModalClose = document.getElementById('notes-modal-close');
 const securityTestModal = document.getElementById('security-test-modal');
@@ -1339,6 +1362,90 @@ function closeHelpModal() {
     
     helpModal.classList.remove('show');
     helpModal.setAttribute('aria-hidden', 'true');
+}
+
+function openLanguageModal() {
+    if (!languageModal) return;
+    
+    // Empêcher le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    languageModal.classList.add('show');
+    languageModal.setAttribute('aria-hidden', 'false');
+    
+    // Charger la langue actuelle
+    loadCurrentLanguage();
+    
+    // Focus sur la modale pour l'accessibilité
+    setTimeout(() => {
+        const modalDialog = languageModal.querySelector('.modal-dialog');
+        if (modalDialog) modalDialog.focus();
+    }, 100);
+}
+
+function closeLanguageModal() {
+    if (!languageModal) return;
+    
+    // Restaurer le défilement de la page
+    document.body.style.overflow = '';
+    
+    languageModal.classList.remove('show');
+    languageModal.setAttribute('aria-hidden', 'true');
+}
+
+function loadCurrentLanguage() {
+    const currentLang = userPreferences?.language || 'fr';
+    const languageOptions = document.querySelectorAll('.language-selection .language-option');
+    
+    languageOptions.forEach(option => {
+        option.classList.remove('selected');
+        if (option.getAttribute('data-lang') === currentLang) {
+            option.classList.add('selected');
+        }
+    });
+}
+
+function changeLanguage(lang) {
+    // Mettre à jour les préférences
+    if (!userPreferences) {
+        userPreferences = {
+            theme: 'dark',
+            language: 'fr',
+            emailNotifications: true,
+            marketingEmails: false,
+            securityAlerts: true,
+            dataCollection: true,
+            analytics: true,
+            cookies: false,
+            highContrast: false,
+            largeText: false,
+            reducedMotion: false,
+            autoCopy: true,
+            showStrength: true,
+            saveHistory: true
+        };
+    }
+    
+    userPreferences.language = lang;
+    localStorage.setItem('kironUserPreferences', JSON.stringify(userPreferences));
+    
+    // Mettre à jour l'affichage
+    loadCurrentLanguage();
+    
+    // Afficher une notification
+    const langNames = {
+        'fr': 'Français',
+        'en': 'English',
+        'es': 'Español',
+        'de': 'Deutsch'
+    };
+    
+    showNotification(`Langue changée en ${langNames[lang]}`);
+    
+    // Fermer la modale après un court délai
+    setTimeout(() => {
+        closeLanguageModal();
+    }, 1000);
 }
 
 function openNotesModal(password) {
@@ -1945,6 +2052,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Event listeners pour la sélection de langue
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.language-selection .language-option')) {
+            const option = e.target.closest('.language-option');
+            const lang = option.getAttribute('data-lang');
+            changeLanguage(lang);
+        }
+    });
+    
     // Fermer les modales
     if (settingsModalClose) {
         settingsModalClose.addEventListener('click', closeSettingsModal);
@@ -1954,6 +2070,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (helpModalClose) {
         helpModalClose.addEventListener('click', closeHelpModal);
+    }
+    if (languageModalClose) {
+        languageModalClose.addEventListener('click', closeLanguageModal);
     }
     if (notesModalClose) {
         notesModalClose.addEventListener('click', closeNotesModal);
@@ -1983,6 +2102,9 @@ document.addEventListener('keydown', (e) => {
         }
         if (helpModal && helpModal.classList.contains('show')) {
             closeHelpModal();
+        }
+        if (languageModal && languageModal.classList.contains('show')) {
+            closeLanguageModal();
         }
         if (notesModal && notesModal.classList.contains('show')) {
             closeNotesModal();
