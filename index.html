@@ -104,21 +104,21 @@
                 <label class="option-toggle">
                     <input type="checkbox" id="includeUppercase" checked>
                     <span class="toggle-content">
-                        <span class="toggle-icon">🔤</span>
+                        <span class="toggle-icon">( ABC )</span>
                         <span class="toggle-text">MAJUSCULES</span>
                     </span>
                 </label>
                 <label class="option-toggle">
                     <input type="checkbox" id="includeNumbers" checked>
                     <span class="toggle-content">
-                        <span class="toggle-icon">🔢</span>
+                        <span class="toggle-icon">( 123 )</span>
                         <span class="toggle-text">CHIFFRES</span>
                     </span>
                 </label>
                 <label class="option-toggle">
                     <input type="checkbox" id="includeSymbols">
                     <span class="toggle-content">
-                        <span class="toggle-icon">🔣</span>
+                        <span class="toggle-icon">( &#/ )</span>
                         <span class="toggle-text">SYMBOLES</span>
                     </span>
                 </label>
@@ -135,14 +135,14 @@
                 <label class="option-toggle">
                     <input type="checkbox" id="passphraseUppercase" checked>
                     <span class="toggle-content">
-                        <span class="toggle-icon">🔤</span>
+                        <span class="toggle-icon">( ABC )</span>
                         <span class="toggle-text">MAJUSCULES</span>
                     </span>
                 </label>
                 <label class="option-toggle">
                     <input type="checkbox" id="passphraseNumbers" checked>
                     <span class="toggle-content">
-                        <span class="toggle-icon">🔢</span>
+                        <span class="toggle-icon">( 123 )</span>
                         <span class="toggle-text">CHIFFRES</span>
                     </span>
                 </label>
@@ -174,7 +174,7 @@
 
             <!-- TEST DE SÉCURITÉ -->
             <div class="generator-tips">
-                <p>Comment savoir si votre mot de passe est sécurisé ? <a href="#" id="security-test-link">Testez-le ici</a></p>
+                <p>Comment savoir si votre mot de passe est sécurisé ? <a href="#" id="security-test-link" class="security-test-link">Testez-le ici</a></p>
             </div>
         </section>
 
@@ -550,9 +550,11 @@
     <!-- ===================== MODALE TEST DE SÉCURITÉ ===================== -->
     <div class="modal" id="security-test-modal" aria-hidden="true">
         <div class="modal-backdrop" data-close-modal></div>
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="security-test-modal-title">
-            <button class="modal-close" id="security-test-modal-close" aria-label="Fermer">×</button>
-            <h2 id="security-test-modal-title">Test de sécurité du mot de passe</h2>
+        <div class="modal-dialog security-test-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="security-test-modal-title">
+            <div class="modal-header">
+                <h2 id="security-test-modal-title">Test de sécurité du mot de passe</h2>
+                <button class="modal-close" id="security-test-modal-close" aria-label="Fermer">×</button>
+            </div>
             <div class="security-test-content">
                 <div class="password-input-section">
                     <label for="test-password">Entrez votre mot de passe à tester :</label>
