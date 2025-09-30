@@ -49,7 +49,7 @@ button {
 .logo {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 /* Kiron + Pass (KironPass) */
@@ -72,19 +72,19 @@ button {
 }
 
 .btn-gold-top {
-    background: linear-gradient(135deg, #c77dff, #e0aaff, #b19cd9);
+    background: var(--gold-bg);
     color: #fff;
-    box-shadow: 0 0 4px #c77dff;
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5), 0 0 16px rgba(245, 158, 11, 0.3);
 }
 
 .btn-gold-top:hover {
     transform: scale(1.01);
-    box-shadow: 0 0 3px #c77dff;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(245, 158, 11, 0.4);
 }
 
 .theme-btn {
     background: transparent;
-    color: #c77dff;
+    color: var(--primary-color);
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -102,7 +102,7 @@ button {
     text-align: center;
     padding: 1rem;
     font-size: 1rem;
-    color: #c77dff;
+    color: var(--primary-color);
     font-weight: 500;
     box-shadow: 0 2px 6px rgba(0,0,0,0.8);
 }
@@ -113,12 +113,14 @@ button {
     border-radius: 16px;
     margin: 2rem 0;
     box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
 }
 
 .generator-container h2 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 /* ===================== TYPE DE MOT DE PASSE ===================== */
@@ -146,9 +148,9 @@ button {
 
 .type-toggle:hover {
     background: #1a1a1a;
-    border-color: #c77dff;
+    border-color: var(--primary-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(199, 125, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
 .type-toggle input[type="radio"] {
@@ -159,21 +161,21 @@ button {
 }
 
 .type-toggle input[type="radio"]:checked + .toggle-content {
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 .type-toggle input[type="radio"]:checked ~ * {
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 .type-toggle input[type="radio"]:checked {
-    border-color: #c77dff;
-    box-shadow: 0 0 0 2px rgba(255, 121, 198, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
 }
 
 .type-toggle:has(input[type="radio"]:checked) {
-    border-color: #c77dff;
-    box-shadow: 0 0 0 2px rgba(255, 121, 198, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
 }
 
 .toggle-content {
@@ -198,6 +200,15 @@ button {
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1.5rem;
+}
+
+/* Options pour passe de phrase - garder en bas */
+#passphrase-options {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    order: 1; /* S'assurer qu'elle reste en bas */
 }
 
 .generator-options label {
@@ -226,22 +237,22 @@ button {
 
 .generator-options label.option-toggle:hover {
     background: #1a1a1a;
-    border-color: #c77dff;
+    border-color: var(--primary-color);
 }
 
 .generator-options label.option-toggle input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: #c77dff;
+    accent-color: var(--primary-color);
     cursor: pointer;
 }
 
 .generator-options label.option-toggle input[type="checkbox"]:checked + .toggle-content {
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 .generator-options label.option-toggle input[type="checkbox"]:checked ~ * {
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 /* Contrôle de longueur (slider) */
@@ -273,7 +284,7 @@ button {
     border: none;
 }
 .length-control input[type="range"]::-webkit-slider-thumb { 
-    background: #c77dff; 
+    background: var(--primary-color); 
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -296,7 +307,7 @@ button {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 .length-control input[type="range"]::-moz-range-thumb { 
-    background: #c77dff; 
+    background: var(--primary-color); 
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -389,6 +400,7 @@ body.theme-dark .length-btn:hover {
     align-items: center;
     margin-bottom: 1rem;
     gap: 0.5rem;
+    position: relative;
 }
 
 #password-output {
@@ -401,10 +413,26 @@ body.theme-dark .length-btn:hover {
     font-size: 1rem;
 }
 
+/* Styles pour les caractères colorés */
+.char-uppercase {
+    color: #ff69b4 !important; /* Rose vif */
+    font-weight: bold;
+}
+
+.char-number {
+    color: #00bfff !important; /* Bleu vif */
+    font-weight: bold;
+}
+
+.char-symbol {
+    color: #ff0000 !important; /* Rouge pétant */
+    font-weight: bold;
+}
+
 #copy-btn {
     padding: 0.8rem 1rem;
     border-radius: 12px;
-    background: #c77dff;
+    background: var(--btn-bg);
     color: #fff;
     font-weight: bold;
     transition: all 0.3s ease-in-out;
@@ -434,14 +462,14 @@ body.theme-dark .length-btn:hover {
 .strength-fill {
     width: 0%;
     height: 100%;
-    background: #c77dff;
+    background: var(--primary-color);
     transition: width 0.3s ease, background 0.3s ease;
 }
 
 .strength-text {
     font-size: 0.9rem;
     font-weight: bold;
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 /* ===================== BOUTONS GENERER ===================== */
@@ -455,7 +483,7 @@ body.theme-dark .length-btn:hover {
     flex: 1;
     padding: 0.8rem 1rem;
     border-radius: 12px;
-    background: #4444aa;
+    background: var(--btn-bg);
     color: #fff;
     font-weight: bold;
     font-size: 1rem;
@@ -468,12 +496,12 @@ body.theme-dark .length-btn:hover {
 }
 
 .btn-gold {
-    background: var(--btn-bg);
-    box-shadow: 0 0 6px var(--primary-color);
+    background: var(--gold-bg);
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5), 0 0 16px rgba(245, 158, 11, 0.3);
 }
 
 .btn-gold:hover {
-    box-shadow: 0 0 3px var(--primary-color);
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(245, 158, 11, 0.4);
 }
 
 /* ===================== ASTUCES ===================== */
@@ -765,30 +793,33 @@ body.theme-light .password-item .notes-icon { color: #000000; }
 :root {
     --bg-color: #0a0a0a;
     --container-bg: #151515;
-    --primary-color: #c77dff;
-    --secondary-color: #e0aaff;
+    --primary-color: #8b5cf6;
+    --secondary-color: #a855f7;
     --text-color: #f0f0f5;
-    --btn-bg: linear-gradient(135deg, #c77dff, #e0aaff, #b19cd9);
+    --btn-bg: linear-gradient(135deg, #8b5cf6, #a855f7, #9333ea);
+    --gold-bg: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
 }
 
 /* Thème sombre */
 body.theme-dark {
     --bg-color: #0a0a0a;
     --container-bg: #151515;
-    --primary-color: #c77dff;
-    --secondary-color: #e0aaff;
+    --primary-color: #8b5cf6;
+    --secondary-color: #a855f7;
     --text-color: #f0f0f5;
-    --btn-bg: linear-gradient(135deg, #c77dff, #e0aaff, #b19cd9);
+    --btn-bg: linear-gradient(135deg, #8b5cf6, #a855f7, #9333ea);
+    --gold-bg: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
 }
 
 /* Thème clair */
 body.theme-light {
     --bg-color: #f8f8f8;
     --container-bg: #eaeaea;
-    --primary-color: #9c4dcc; /* violet-rose plus foncé */
-    --secondary-color: #b19cd9; /* violet plus foncé */
+    --primary-color: #7c3aed; /* violet plus foncé */
+    --secondary-color: #8b5cf6; /* violet plus foncé */
     --text-color: #000000;
-    --btn-bg: linear-gradient(135deg, #9c4dcc, #b19cd9, #8e7cc3);
+    --btn-bg: linear-gradient(135deg, #7c3aed, #8b5cf6, #6d28d9);
+    --gold-bg: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
 }
 
 /* Contour rose pour les boutons sélectionnés en thème clair */

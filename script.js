@@ -287,11 +287,7 @@ function closeAuthModal() {
     authModal.setAttribute('aria-hidden', 'true');
 }
 
-if (openAuthModalBtn) openAuthModalBtn.addEventListener('click', openAuthModal);
-if (authModalClose) authModalClose.addEventListener('click', closeAuthModal);
-document.addEventListener('click', (e) => {
-    if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-close-modal')) closeAuthModal();
-});
+// Event listeners seront attachés dans DOMContentLoaded
 
 // Tabs
 tabs.forEach(tab => {
@@ -879,6 +875,59 @@ function updateHistory(passwords) {
     renderHistory();
 }
 
+// Fonction pour colorier les caractères du mot de passe
+function colorizePassword(password) {
+    let coloredPassword = '';
+    for (let char of password) {
+        if (/[A-Z]/.test(char)) {
+            // Majuscules en rose
+            coloredPassword += `<span class="char-uppercase">${char}</span>`;
+        } else if (/[0-9]/.test(char)) {
+            // Chiffres en bleu
+            coloredPassword += `<span class="char-number">${char}</span>`;
+        } else if (/[^A-Za-z0-9]/.test(char)) {
+            // Symboles en rouge pétant
+            coloredPassword += `<span class="char-symbol">${char}</span>`;
+        } else {
+            // Minuscules normales
+            coloredPassword += char;
+        }
+    }
+    return coloredPassword;
+}
+
+// Fonction pour afficher le mot de passe coloré
+function displayColoredPassword(password) {
+    const coloredPassword = colorizePassword(password);
+    
+    // Créer un conteneur pour le mot de passe coloré
+    let passwordDisplay = document.getElementById('password-colored-display');
+    if (!passwordDisplay) {
+        passwordDisplay = document.createElement('div');
+        passwordDisplay.id = 'password-colored-display';
+        passwordDisplay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: transparent;
+        `;
+        passwordOutput.parentNode.style.position = 'relative';
+        passwordOutput.parentNode.appendChild(passwordDisplay);
+    }
+    
+    passwordDisplay.innerHTML = coloredPassword;
+}
+
 function renderHistory() {
     if (!historyList) return;
     const items = historyList.querySelectorAll('.password-item');
@@ -966,7 +1015,10 @@ generateBtn.addEventListener('click', () => {
         }
         
         passwords.push(pwd);
-        if (i === 0) passwordOutput.value = pwd;
+        if (i === 0) {
+            passwordOutput.value = pwd;
+            displayColoredPassword(pwd);
+        }
     }
 
     updateStrengthBar(passwords[0]);
@@ -998,7 +1050,10 @@ generateGoldBtn.addEventListener('click', () => {
         }
         
         passwords.push(pwd);
-        if (i === 0) passwordOutput.value = pwd;
+        if (i === 0) {
+            passwordOutput.value = pwd;
+            displayColoredPassword(pwd);
+        }
     }
 
     updateStrengthBar(passwords[0]);
@@ -1128,15 +1183,7 @@ if (discoverGoldBtn) {
     console.warn('Bouton "Découvrir Gold" non trouvé');
 }
 
-// Fermeture modale Gold
-if (goldModalClose) {
-    goldModalClose.addEventListener('click', closeGoldModal);
-}
-
-// Fermeture modale Abonnement
-if (subscriptionModalClose) {
-    subscriptionModalClose.addEventListener('click', closeSubscriptionModal);
-}
+// Fermeture modale Gold et Abonnement - event listeners dans DOMContentLoaded
 
 // Menu hamburger
 if (hamburgerBtn) {
@@ -1503,9 +1550,23 @@ function openSecurityTestModal() {
     
     // Remplir avec le mot de passe actuel s'il existe
     const currentPassword = document.getElementById('password-output').value;
+    const testPasswordInput = document.getElementById('test-password');
     if (currentPassword) {
-        document.getElementById('test-password').value = currentPassword;
+        testPasswordInput.value = currentPassword;
         testPasswordSecurity(currentPassword);
+    } else {
+        // Vider le champ si aucun mot de passe généré
+        testPasswordInput.value = '';
+        // Réinitialiser les résultats
+        const scoreFill = document.getElementById('score-fill');
+        const scoreText = document.getElementById('score-text');
+        const crackTime = document.getElementById('crack-time');
+        const feedbackList = document.getElementById('feedback-list');
+        
+        if (scoreFill) scoreFill.style.width = '0%';
+        if (scoreText) scoreText.textContent = 'Entrez un mot de passe pour tester';
+        if (crackTime) crackTime.textContent = '';
+        if (feedbackList) feedbackList.innerHTML = '';
     }
     
     securityTestModal.classList.add('show');
@@ -2050,6 +2111,11 @@ document.addEventListener('DOMContentLoaded', function() {
         testPasswordInput.addEventListener('input', (e) => {
             testPasswordSecurity(e.target.value);
         });
+        
+        // Test initial si le champ a déjà une valeur
+        if (testPasswordInput.value) {
+            testPasswordSecurity(testPasswordInput.value);
+        }
     }
     
     // Event listeners pour la sélection de langue
@@ -2080,6 +2146,28 @@ document.addEventListener('DOMContentLoaded', function() {
     if (securityTestModalClose) {
         securityTestModalClose.addEventListener('click', closeSecurityTestModal);
     }
+    
+    // Event listeners pour les autres modales
+    if (openAuthModalBtn) openAuthModalBtn.addEventListener('click', openAuthModal);
+    if (authModalClose) authModalClose.addEventListener('click', closeAuthModal);
+    if (goldModalClose) goldModalClose.addEventListener('click', closeGoldModal);
+    if (subscriptionModalClose) subscriptionModalClose.addEventListener('click', closeSubscriptionModal);
+    
+    // Event listeners pour fermer les modales en cliquant sur le backdrop
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-close-modal')) {
+            // Fermer toutes les modales ouvertes
+            if (authModal && authModal.classList.contains('show')) closeAuthModal();
+            if (goldModal && goldModal.classList.contains('show')) closeGoldModal();
+            if (subscriptionModal && subscriptionModal.classList.contains('show')) closeSubscriptionModal();
+            if (settingsModal && settingsModal.classList.contains('show')) closeSettingsModal();
+            if (historyModal && historyModal.classList.contains('show')) closeHistoryModal();
+            if (helpModal && helpModal.classList.contains('show')) closeHelpModal();
+            if (languageModal && languageModal.classList.contains('show')) closeLanguageModal();
+            if (notesModal && notesModal.classList.contains('show')) closeNotesModal();
+            if (securityTestModal && securityTestModal.classList.contains('show')) closeSecurityTestModal();
+        }
+    });
 });
 
 // Gestion de la touche Échap pour fermer les modales
