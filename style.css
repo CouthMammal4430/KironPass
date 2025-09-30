@@ -411,22 +411,36 @@ body.theme-dark .length-btn:hover {
     background: #0f0f0f;
     color: #fff;
     font-size: 1rem;
+    min-height: 20px;
+    line-height: 1.2;
+    word-break: break-all;
+    font-family: monospace;
+}
+
+/* Style pour le placeholder du div de mot de passe */
+.password-display:empty::before {
+    content: attr(data-placeholder);
+    color: #666;
+    font-style: italic;
 }
 
 /* Styles pour les caractères colorés */
 .char-uppercase {
     color: #ff69b4 !important; /* Rose vif */
     font-weight: bold;
+    display: inline;
 }
 
 .char-number {
     color: #00bfff !important; /* Bleu vif */
     font-weight: bold;
+    display: inline;
 }
 
 .char-symbol {
     color: #ff0000 !important; /* Rouge pétant */
     font-weight: bold;
+    display: inline;
 }
 
 #copy-btn {
@@ -844,7 +858,6 @@ body {
 }
 
 /* Boutons Gold et Thème */
-.btn-gold-top,
 .theme-btn,
 #copy-btn {
     background: var(--btn-bg);
@@ -858,7 +871,6 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-.btn-gold-top:hover,
 .theme-btn:hover,
 #copy-btn:hover {
     transform: scale(1.01);

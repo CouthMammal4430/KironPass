@@ -39,6 +39,7 @@ const passwordOptions = document.getElementById('password-options');
 const passphraseOptions = document.getElementById('passphrase-options');
 const passphraseUppercase = document.getElementById('passphraseUppercase');
 const passphraseNumbers = document.getElementById('passphraseNumbers');
+const passphraseSymbols = document.getElementById('passphraseSymbols');
 const passphraseLength = document.getElementById('passphraseLength');
 const passphraseLengthValue = document.getElementById('passphraseLengthValue');
 const passphraseDecrease = document.getElementById('passphraseDecrease');
@@ -781,9 +782,13 @@ function generatePassphrase(wordCount = 4, options = {}) {
         'curve', 'cushion', 'custom', 'cute', 'cycle'
     ];
     
+    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    
     let passphrase = '';
     let totalDigits = 0;
+    let totalSymbols = 0;
     const maxDigits = options.numbers ? getRandomInt(1, 2) : 0; // Max 1-2 chiffres au total
+    const maxSymbols = options.symbols ? getRandomInt(1, 2) : 0; // Max 1-2 symboles au total
     
     for (let i = 0; i < wordCount; i++) {
         const randomWord = words[getRandomInt(0, words.length - 1)];
@@ -808,6 +813,22 @@ function generatePassphrase(wordCount = 4, options = {}) {
                     finalWord = randomDigit + finalWord;
                 }
                 totalDigits++;
+            }
+        }
+        
+        // Ajouter des symboles seulement si on n'a pas atteint le maximum
+        if (options.symbols && totalSymbols < maxSymbols) {
+            const shouldAddSymbol = getRandomInt(0, 2) === 1; // 33% de chance
+            if (shouldAddSymbol) {
+                const randomSymbol = symbols[getRandomInt(0, symbols.length - 1)];
+                // Ajouter le symbole au début ou à la fin du mot
+                const addAtEnd = getRandomInt(0, 1) === 1;
+                if (addAtEnd) {
+                    finalWord = finalWord + randomSymbol;
+                } else {
+                    finalWord = randomSymbol + finalWord;
+                }
+                totalSymbols++;
             }
         }
         
@@ -899,33 +920,10 @@ function colorizePassword(password) {
 // Fonction pour afficher le mot de passe coloré
 function displayColoredPassword(password) {
     const coloredPassword = colorizePassword(password);
-    
-    // Créer un conteneur pour le mot de passe coloré
-    let passwordDisplay = document.getElementById('password-colored-display');
-    if (!passwordDisplay) {
-        passwordDisplay = document.createElement('div');
-        passwordDisplay.id = 'password-colored-display';
-        passwordDisplay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 0.8rem 1rem;
-            font-size: 1rem;
-            font-family: monospace;
-            pointer-events: none;
-            z-index: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: transparent;
-        `;
-        passwordOutput.parentNode.style.position = 'relative';
-        passwordOutput.parentNode.appendChild(passwordDisplay);
+    const passwordOutput = document.getElementById('password-output');
+    if (passwordOutput) {
+        passwordOutput.innerHTML = coloredPassword;
     }
-    
-    passwordDisplay.innerHTML = coloredPassword;
 }
 
 function renderHistory() {
@@ -1010,13 +1008,13 @@ generateBtn.addEventListener('click', () => {
             const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
             pwd = generatePassphrase(requestedWords, {
                 uppercase: passphraseUppercase.checked,
-                numbers: passphraseNumbers.checked
+                numbers: passphraseNumbers.checked,
+                symbols: passphraseSymbols.checked
             });
         }
         
         passwords.push(pwd);
         if (i === 0) {
-            passwordOutput.value = pwd;
             displayColoredPassword(pwd);
         }
     }
@@ -1045,13 +1043,13 @@ generateGoldBtn.addEventListener('click', () => {
             const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
             pwd = generatePassphrase(requestedWords, {
                 uppercase: passphraseUppercase.checked,
-                numbers: passphraseNumbers.checked
+                numbers: passphraseNumbers.checked,
+                symbols: passphraseSymbols.checked
             });
         }
         
         passwords.push(pwd);
         if (i === 0) {
-            passwordOutput.value = pwd;
             displayColoredPassword(pwd);
         }
     }
@@ -1062,8 +1060,10 @@ generateGoldBtn.addEventListener('click', () => {
 
 // ===================== COPIER AVEC GLOW =====================
 copyBtn.addEventListener('click', () => {
-    if (!passwordOutput.value) return;
-    navigator.clipboard.writeText(passwordOutput.value).then(() => {
+    // Récupérer le texte brut du mot de passe (sans les balises HTML)
+    const passwordText = passwordOutput.textContent || passwordOutput.innerText;
+    if (!passwordText) return;
+    navigator.clipboard.writeText(passwordText).then(() => {
         showNotification('Copié !');
         copyBtn.classList.add('active');
         setTimeout(() => copyBtn.classList.remove('active'), 400);
@@ -1083,7 +1083,7 @@ copyBtn.addEventListener('click', () => {
 });
 
 // ===================== BARRE DE FORCE DYNAMIQUE =====================
-passwordOutput.addEventListener('input', () => updateStrengthBar(passwordOutput.value));
+// L'event listener input n'est plus nécessaire car c'est maintenant un div
 
 // ===================== GESTION DU TYPE DE MOT DE PASSE =====================
 function togglePasswordType() {
@@ -1549,7 +1549,7 @@ function openSecurityTestModal() {
     document.body.style.overflow = 'hidden';
     
     // Remplir avec le mot de passe actuel s'il existe
-    const currentPassword = document.getElementById('password-output').value;
+    const currentPassword = document.getElementById('password-output').textContent;
     const testPasswordInput = document.getElementById('test-password');
     if (currentPassword) {
         testPasswordInput.value = currentPassword;

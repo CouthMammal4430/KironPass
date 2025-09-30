@@ -150,6 +150,13 @@
                         <span class="toggle-text">CHIFFRES</span>
                     </span>
                 </label>
+                <label class="option-toggle">
+                    <input type="checkbox" id="passphraseSymbols">
+                    <span class="toggle-content">
+                        <span class="toggle-icon">( &#/ )</span>
+                        <span class="toggle-text">SYMBOLES</span>
+                    </span>
+                </label>
                 <label class="length-control">
                     Mots: <span id="passphraseLengthValue">4</span>
                     <input type="range" id="passphraseLength" min="1" max="10" value="4">
@@ -160,7 +167,7 @@
 
             <!-- BARRE MOT DE PASSE + COPIER -->
             <div class="password-wrapper">
-                <input type="text" id="password-output" readonly placeholder="Votre mot de passe apparaîtra ici">
+                <div id="password-output" class="password-display" data-placeholder="Votre mot de passe apparaîtra ici"></div>
                 <button id="copy-btn">Copier</button>
             </div>
 
