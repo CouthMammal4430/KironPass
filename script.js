@@ -988,98 +988,117 @@ if (passphraseDecrease && passphraseIncrease && passphraseLength) {
 
 // ===================== EVENEMENTS =====================
 
-// GENERATION MOT DE PASSE NORMAL
-generateBtn.addEventListener('click', () => {
-    let count = 1; // Free: 1
-    const passwords = [];
+// ===================== GÉNÉRATION DE MOT DE PASSE - NOUVEAU CODE =====================
+function generatePasswordNew() {
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
+    let password = '';
+    
+    if (selectedType === 'password') {
+        const length = parseInt(passwordLength.value) || 12;
+        password = generatePassword(length, {
+            uppercase: includeUppercase.checked,
+            numbers: includeNumbers.checked,
+            symbols: includeSymbols.checked
+        });
+    } else {
+        const words = parseInt(passphraseLength.value) || 4;
+        password = generatePassphrase(words, {
+            uppercase: passphraseUppercase.checked,
+            numbers: passphraseNumbers.checked,
+            symbols: passphraseSymbols.checked
+        });
+    }
+    
+    // Afficher le mot de passe
+    displayColoredPassword(password);
+    updateStrengthBar(password);
+    updateHistory([password]);
+}
 
-    for (let i = 0; i < count; i++) {
-        let pwd;
+function generatePasswordGold() {
+    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
+    const passwords = [];
+    
+    for (let i = 0; i < 5; i++) {
+        let password = '';
         
         if (selectedType === 'password') {
-            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
-            pwd = generatePassword(requestedLength, {
+            const length = parseInt(passwordLength.value) || 12;
+            password = generatePassword(length, {
                 uppercase: includeUppercase.checked,
                 numbers: includeNumbers.checked,
                 symbols: includeSymbols.checked
             });
         } else {
-            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
-            pwd = generatePassphrase(requestedWords, {
+            const words = parseInt(passphraseLength.value) || 4;
+            password = generatePassphrase(words, {
                 uppercase: passphraseUppercase.checked,
                 numbers: passphraseNumbers.checked,
                 symbols: passphraseSymbols.checked
             });
         }
         
-        passwords.push(pwd);
-        if (i === 0) {
-            displayColoredPassword(pwd);
-        }
+        passwords.push(password);
     }
-
+    
+    // Afficher le premier mot de passe
+    displayColoredPassword(passwords[0]);
     updateStrengthBar(passwords[0]);
     updateHistory(passwords);
-});
+}
 
-// GENERATION MOT DE PASSE GOLD
-generateGoldBtn.addEventListener('click', () => {
-    const count = 5; // Gold: 5
-    const passwords = [];
-    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
-
-    for (let i = 0; i < count; i++) {
-        let pwd;
-        
-        if (selectedType === 'password') {
-            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
-            pwd = generatePassword(requestedLength, {
-                uppercase: includeUppercase.checked,
-                numbers: includeNumbers.checked,
-                symbols: includeSymbols.checked
-            });
-        } else {
-            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
-            pwd = generatePassphrase(requestedWords, {
-                uppercase: passphraseUppercase.checked,
-                numbers: passphraseNumbers.checked,
-                symbols: passphraseSymbols.checked
-            });
-        }
-        
-        passwords.push(pwd);
-        if (i === 0) {
-            displayColoredPassword(pwd);
-        }
+// Event listeners pour les nouveaux boutons
+document.addEventListener('DOMContentLoaded', function() {
+    const generateBtn = document.getElementById('generateBtn');
+    const generateGoldBtn = document.getElementById('generateGoldBtn');
+    
+    if (generateBtn) {
+        generateBtn.addEventListener('click', generatePasswordNew);
     }
-
-    updateStrengthBar(passwords[0]);
-    updateHistory(passwords);
+    
+    if (generateGoldBtn) {
+        generateGoldBtn.addEventListener('click', generatePasswordGold);
+    }
 });
 
 
-// ===================== COPIER AVEC GLOW =====================
-copyBtn.addEventListener('click', () => {
-    // Récupérer le texte brut du mot de passe (sans les balises HTML)
-    const passwordText = passwordOutput.textContent || passwordOutput.innerText;
-    if (!passwordText) return;
-    navigator.clipboard.writeText(passwordText).then(() => {
-        showNotification('Copié !');
-        copyBtn.classList.add('active');
-        setTimeout(() => copyBtn.classList.remove('active'), 400);
-    });
+// ===================== COPIER AVEC GLOW - NOUVEAU CODE =====================
+document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.getElementById('copy-btn');
+    const passwordOutput = document.getElementById('password-output');
+    
+    if (copyBtn && passwordOutput) {
+        copyBtn.addEventListener('click', () => {
+            // Récupérer le texte brut du mot de passe (sans les balises HTML)
+            const passwordText = passwordOutput.textContent || passwordOutput.innerText;
+            if (!passwordText) return;
+            
+            navigator.clipboard.writeText(passwordText).then(() => {
+                showNotification('Copié !');
+                copyBtn.classList.add('active');
+                setTimeout(() => copyBtn.classList.remove('active'), 400);
+            });
+        });
+    }
 });
 
 // (Toggle historique supprimé, liste désormais scrollable)
 
-// ===================== MICRO-INTERACTIONS BOUTONS =====================
-[generateBtn, generateGoldBtn, copyBtn].forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'scale(1.01)';
-    });
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'scale(1)';
+// ===================== MICRO-INTERACTIONS BOUTONS - NOUVEAU CODE =====================
+document.addEventListener('DOMContentLoaded', function() {
+    const generateBtn = document.getElementById('generateBtn');
+    const generateGoldBtn = document.getElementById('generateGoldBtn');
+    const copyBtn = document.getElementById('copy-btn');
+    
+    [generateBtn, generateGoldBtn, copyBtn].forEach(btn => {
+        if (btn) {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'scale(1.01)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        }
     });
 });
 

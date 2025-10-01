@@ -486,42 +486,101 @@ body.theme-dark .length-btn:hover {
     color: var(--primary-color);
 }
 
-/* ===================== BOUTONS GENERER ===================== */
-.generator-buttons {
-    display: flex !important;
+/* ===================== BOUTONS GENERER - NOUVEAU CODE ===================== */
+.buttons-row {
+    display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
-    flex-direction: row !important;
-    flex-wrap: nowrap;
+    margin: 1.5rem 0;
+    justify-content: center;
+    align-items: center;
 }
 
-.btn {
+.btn-generate {
     flex: 1;
-    padding: 0.8rem 1rem;
+    max-width: 200px;
+    padding: 1rem 1.5rem;
     border-radius: 12px;
     background: var(--btn-bg);
     color: #fff;
     font-weight: bold;
     font-size: 1rem;
-    transition: all 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
     display: inline-block;
-    width: auto;
 }
 
-.btn:hover {
-    transform: scale(1.01);
-    box-shadow: 0 0 2px var(--primary-color);
+.btn-generate:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.btn-gold {
-    background: var(--gold-bg) !important;
-    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5), 0 0 16px rgba(245, 158, 11, 0.3) !important;
-    color: #fff !important;
+.btn-generate.btn-gold {
+    background: var(--gold-bg);
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5), 0 0 16px rgba(245, 158, 11, 0.3);
 }
 
-.btn-gold:hover {
-    box-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(245, 158, 11, 0.4) !important;
-    transform: scale(1.01);
+.btn-generate.btn-gold:hover {
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(245, 158, 11, 0.4);
+}
+
+/* ===================== ZONE D'AFFICHAGE MOT DE PASSE - NOUVEAU CODE ===================== */
+.password-display-area {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    gap: 1rem;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.password-text {
+    flex: 1;
+    padding: 0.8rem;
+    background: transparent;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    min-height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: break-all;
+    border: none;
+    outline: none;
+}
+
+.password-text:empty::before {
+    content: attr(data-placeholder);
+    color: #666;
+    font-style: italic;
+}
+
+.btn-copy {
+    padding: 0.8rem 1.5rem;
+    background: var(--btn-bg);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: 100px;
+}
+
+.btn-copy:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.btn-copy.active {
+    background: #4CAF50;
+    transform: scale(1.05);
 }
 
 /* ===================== ASTUCES ===================== */
@@ -786,10 +845,9 @@ body.theme-light .password-item .notes-icon { color: #000000; }
     .generator-options {
         flex-direction: column;
     }
-    .generator-buttons {
-        flex-direction: row !important;
+    .buttons-row {
+        flex-direction: row;
         gap: 0.5rem;
-        display: flex !important;
     }
     .nav-right {
         flex-direction: column;
@@ -798,8 +856,9 @@ body.theme-light .password-item .notes-icon { color: #000000; }
 }
 
 @media (max-width: 640px) {
-    .password-wrapper {
+    .password-display-area {
         flex-direction: column;
+        gap: 0.5rem;
     }
     #copy-btn {
         width: 100%;
