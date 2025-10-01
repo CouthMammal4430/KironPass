@@ -349,9 +349,11 @@ body.theme-light .length-control input[type="range"]::-webkit-slider-runnable-tr
 body.theme-light .length-control input[type="range"]::-moz-range-track { 
     background: #6b7280; 
 }
-.length-control #passwordLengthValue {
+.length-control #passwordLengthValue,
+.length-control #passphraseLengthValue {
     display: inline-block;
-    min-width: 2ch;
+    min-width: 3ch;
+    text-align: center;
     font-weight: bold;
     color: var(--text-color);
 }
@@ -2573,8 +2575,8 @@ body.theme-light .language-text {
     background: var(--container-bg);
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    min-width: 200px;
-    padding: 8px 0;
+    min-width: 250px;
+    padding: 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -2591,30 +2593,78 @@ body.theme-light .language-text {
     transform: translateY(0);
 }
 
-.dropdown-item {
+.language-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.language-menu-header h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-language-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-language-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+.language-options {
+    padding: 12px 0;
+}
+
+.language-option-btn {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    width: 100%;
+    padding: 12px 20px;
+    background: none;
+    border: none;
     color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
 }
 
-.dropdown-item:hover {
+.language-option-btn:hover {
     background: rgba(255,255,255,0.1);
 }
 
-.dropdown-icon {
-    font-size: 16px;
-    width: 20px;
+.language-option-btn.active {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--primary-color);
+}
+
+.language-flag {
+    font-size: 20px;
+    width: 24px;
     text-align: center;
 }
 
-.dropdown-divider {
-    height: 1px;
-    background: rgba(255,255,255,0.1);
-    margin: 8px 0;
+.language-text {
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* ===================== MODALE KIRONGOLD ===================== */

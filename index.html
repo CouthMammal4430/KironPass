@@ -21,55 +21,40 @@
         <!-- Boutons à droite -->
         <div class="nav-right">
             <!-- Bouton Découvrir Gold -->
-            <button class="btn-gold-top">Découvrir Gold</button>
+            <button class="btn-gold-top" data-translate="discover-gold">Découvrir Gold</button>
 
             <!-- Bouton Thème -->
             <button class="theme-btn" id="theme-btn">
                 <span class="theme-icon">🌙</span>
-                <span class="theme-text">Thème</span>
+                <span class="theme-text" data-translate="theme">Thème</span>
             </button>
 
             <!-- Auth / Session -->
             <div id="auth-controls" class="auth-controls">
-                <button id="open-auth-modal" class="btn">Se connecter</button>
+                <button id="open-auth-modal" class="btn" data-translate="login">Se connecter</button>
             </div>
 
-            <!-- Menu hamburger toujours visible -->
+            <!-- Menu hamburger pour la langue -->
             <div id="user-menu" class="user-menu">
-                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu utilisateur">
+                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu langue">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 <div id="user-dropdown" class="user-dropdown">
-                    <div class="dropdown-item" id="profile-item">
-                        <span class="dropdown-icon">👤</span>
-                        <span>Mon profil</span>
+                    <div class="language-menu-header">
+                        <h3>Choisir la langue</h3>
+                        <button id="close-language-menu" class="close-language-btn" aria-label="Fermer">×</button>
                     </div>
-                    <div class="dropdown-item" id="subscription-item">
-                        <span class="dropdown-icon">💎</span>
-                        <span>Mon abonnement</span>
-                    </div>
-                    <div class="dropdown-item" id="history-item">
-                        <span class="dropdown-icon">📋</span>
-                        <span>Historique complet</span>
-                    </div>
-                    <div class="dropdown-item" id="settings-item">
-                        <span class="dropdown-icon">⚙️</span>
-                        <span>Paramètres</span>
-                    </div>
-                    <div class="dropdown-item" id="help-item">
-                        <span class="dropdown-icon">❓</span>
-                        <span>Aide</span>
-                    </div>
-                    <div class="dropdown-item" id="language-item">
-                        <span class="dropdown-icon">🌐</span>
-                        <span>Langue</span>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item" id="logout-item">
-                        <span class="dropdown-icon">🚪</span>
-                        <span>Se déconnecter</span>
+                    <div class="language-options">
+                        <button class="language-option-btn" data-lang="fr">
+                            <span class="language-flag">🇫🇷</span>
+                            <span class="language-text">Français</span>
+                        </button>
+                        <button class="language-option-btn" data-lang="en">
+                            <span class="language-flag">🇬🇧</span>
+                            <span class="language-text">English</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -98,7 +83,7 @@
 
         <!-- ===================== GENERATEUR ===================== -->
         <section class="generator-container">
-            <h2>Générateur de mot de passe</h2>
+            <h2 data-translate="password-generator">Générateur de mot de passe</h2>
 
             <!-- TYPE DE MOT DE PASSE -->
             <div class="password-type">
@@ -106,14 +91,14 @@
                     <input type="radio" name="passwordType" value="password" checked>
                     <span class="toggle-content">
                         <span class="toggle-icon">🔐</span>
-                        <span class="toggle-text">MOT DE PASSE</span>
+                        <span class="toggle-text" data-translate="password">MOT DE PASSE</span>
                     </span>
                 </label>
                 <label class="type-toggle">
                     <input type="radio" name="passwordType" value="passphrase">
                     <span class="toggle-content">
                         <span class="toggle-icon">🔑</span>
-                        <span class="toggle-text">PHRASE DE PASSE</span>
+                        <span class="toggle-text" data-translate="passphrase">PHRASE DE PASSE</span>
                     </span>
                 </label>
             </div>
@@ -124,25 +109,25 @@
                     <input type="checkbox" id="includeUppercase" checked>
                     <span class="toggle-content">
                         <span class="toggle-icon">( ABC )</span>
-                        <span class="toggle-text">MAJUSCULES</span>
+                        <span class="toggle-text" data-translate="uppercase">MAJUSCULES</span>
                     </span>
                 </label>
                 <label class="option-toggle">
                     <input type="checkbox" id="includeNumbers" checked>
                     <span class="toggle-content">
                         <span class="toggle-icon">( 123 )</span>
-                        <span class="toggle-text">CHIFFRES</span>
+                        <span class="toggle-text" data-translate="numbers">CHIFFRES</span>
                     </span>
                 </label>
                 <label class="option-toggle">
                     <input type="checkbox" id="includeSymbols">
                     <span class="toggle-content">
                         <span class="toggle-icon">( &#/ )</span>
-                        <span class="toggle-text">SYMBOLES</span>
+                        <span class="toggle-text" data-translate="symbols">SYMBOLES</span>
                     </span>
                 </label>
                 <label class="length-control">
-                    Longueur: <span id="passwordLengthValue">12</span>
+                    <span data-translate="length">Longueur</span>: <span id="passwordLengthValue">12</span>
                     <input type="range" id="passwordLength" min="6" max="64" value="12">
                     <button type="button" id="lengthDecrease" class="length-btn">−</button>
                     <button type="button" id="lengthIncrease" class="length-btn">+</button>
@@ -173,7 +158,7 @@
                     </span>
                 </label>
                 <label class="length-control">
-                    Mots: <span id="passphraseLengthValue">4</span>
+                    <span data-translate="words">Mots</span>: <span id="passphraseLengthValue">4</span>
                     <input type="range" id="passphraseLength" min="1" max="10" value="4">
                     <button type="button" id="passphraseDecrease" class="length-btn">−</button>
                     <button type="button" id="passphraseIncrease" class="length-btn">+</button>
@@ -182,37 +167,37 @@
 
             <!-- BOUTONS GENERER -->
             <div class="generator-buttons">
-                <button id="generateBtn" class="btn">Générer Free</button>
-                <button id="generateGoldBtn" class="btn btn-gold">Générer Gold</button>
+                <button id="generateBtn" class="btn" data-translate="generate-free">Générer Free</button>
+                <button id="generateGoldBtn" class="btn btn-gold" data-translate="generate-gold">Générer Gold</button>
             </div>
 
             <!-- BARRE MOT DE PASSE + COPIER -->
             <div class="password-display-area">
                 <div id="password-output" class="password-text" data-placeholder="Votre mot de passe apparaîtra ici"></div>
-                <button id="copy-btn" class="btn-copy">Copier</button>
+                <button id="copy-btn" class="btn-copy" data-translate="copy">Copier</button>
             </div>
 
             <!-- FORCE DU MOT DE PASSE -->
             <div class="password-strength">
                 <div class="strength-bar"><div class="strength-fill"></div></div>
-                <span class="strength-text">Force</span>
+                <span class="strength-text" data-translate="strength">Force</span>
             </div>
 
             <!-- TEST DE SÉCURITÉ -->
             <div class="generator-tips">
-                <p>Comment savoir si votre mot de passe est sécurisé ? <a href="#" id="security-test-link" class="security-test-link">Testez-le ici</a></p>
+                <p><span data-translate="security-test">Comment savoir si votre mot de passe est sécurisé ?</span> <a href="#" id="security-test-link" class="security-test-link" data-translate="test-here">Testez-le ici</a></p>
             </div>
         </section>
 
         <!-- ===================== HISTORIQUE ===================== -->
         <section class="history-container">
-            <h2>Historique</h2>
+            <h2 data-translate="history">Historique</h2>
             <div class="history-list"></div>
         </section>
 
         <!-- ===================== SECTION SÉCURITÉ ===================== -->
         <section class="security-container">
-            <h2>Besoin d'un rappel sur les bonnes pratiques des mots de passe ?</h2>
+            <h2 data-translate="security-title">Besoin d'un rappel sur les bonnes pratiques des mots de passe ?</h2>
             <div class="security-grid">
                 <div class="security-card">
                     <div class="security-icon">
@@ -222,8 +207,8 @@
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </div>
-                    <h3>Longueur</h3>
-                    <p>Utilisez au moins <strong>12 caractères</strong>. Plus c'est long, plus c'est sécurisé !</p>
+                    <h3 data-translate="security-length">Longueur</h3>
+                    <p data-translate="security-length-desc">Utilisez au moins <strong>12 caractères</strong>. Plus c'est long, plus c'est sécurisé !</p>
                 </div>
                 
                 <div class="security-card">
@@ -235,8 +220,8 @@
                             <line x1="15" y1="9" x2="15.01" y2="9"/>
                         </svg>
                     </div>
-                    <h3>Complexité</h3>
-                    <p>Mélangez <strong>majuscules, minuscules, chiffres et symboles</strong> pour une sécurité maximale.</p>
+                    <h3 data-translate="security-complexity">Complexité</h3>
+                    <p data-translate="security-complexity-desc">Mélangez <strong>majuscules, minuscules, chiffres et symboles</strong> pour une sécurité maximale.</p>
                 </div>
                 
                 <div class="security-card">
@@ -248,40 +233,40 @@
                             <polyline points="21,12 16.5,14.6 16.5,19.79"/>
                         </svg>
                     </div>
-                    <h3>Unicité</h3>
-                    <p>Un mot de passe <strong>unique pour chaque compte</strong>. Ne réutilisez jamais le même !</p>
+                    <h3 data-translate="security-uniqueness">Unicité</h3>
+                    <p data-translate="security-uniqueness-desc">Un mot de passe <strong>unique pour chaque compte</strong>. Ne réutilisez jamais le même !</p>
                 </div>
             </div>
         </section>
 
         <!-- ===================== PREMIUM INFO ===================== -->
         <section class="premium-container">
-            <h2>Fonctionnalités Gold</h2>
+            <h2 data-translate="gold-features">Fonctionnalités Gold</h2>
             <ul class="premium-features">
-                <li>Multi-génération de mots de passe</li>
-                <li>Patterns personnalisés</li>
-                <li>Historique complet illimité</li>
-                <li>Thème dynamique & boutons animés</li>
-                <li>Notifications stylées</li>
-                <li>Couleurs et glow premium</li>
-                <li>Responsive sur mobile, tablette et PC</li>
+                <li data-translate="gold-feature-1">Multi-génération de mots de passe</li>
+                <li data-translate="gold-feature-2">Patterns personnalisés</li>
+                <li data-translate="gold-feature-3">Historique complet illimité</li>
+                <li data-translate="gold-feature-4">Thème dynamique & boutons animés</li>
+                <li data-translate="gold-feature-5">Notifications stylées</li>
+                <li data-translate="gold-feature-6">Couleurs et glow premium</li>
+                <li data-translate="gold-feature-7">Responsive sur mobile, tablette et PC</li>
             </ul>
         </section>
 
         <!-- ===================== SECTION FAQ ===================== -->
         <section class="faq-container">
-            <h2>FAQ</h2>
+            <h2 data-translate="faq">FAQ</h2>
             <div class="faq-item">
-                <h3>Comment fonctionne le mode Gold ?</h3>
-                <p>Le mode Gold permet de générer plusieurs mots de passe à la fois, d'utiliser des patterns personnalisés et de débloquer l'historique complet.</p>
+                <h3 data-translate="faq-1-q">Comment fonctionne le mode Gold ?</h3>
+                <p data-translate="faq-1-a">Le mode Gold permet de générer plusieurs mots de passe à la fois, d'utiliser des patterns personnalisés et de débloquer l'historique complet.</p>
             </div>
             <div class="faq-item">
-                <h3>Comment copier mon mot de passe ?</h3>
-                <p>Cliquez simplement sur le bouton "Copier" à droite de la barre du mot de passe.</p>
+                <h3 data-translate="faq-2-q">Comment copier mon mot de passe ?</h3>
+                <p data-translate="faq-2-a">Cliquez simplement sur le bouton "Copier" à droite de la barre du mot de passe.</p>
             </div>
             <div class="faq-item">
-                <h3>Est-ce sécurisé ?</h3>
-                <p>Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.</p>
+                <h3 data-translate="faq-3-q">Est-ce sécurisé ?</h3>
+                <p data-translate="faq-3-a">Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.</p>
             </div>
         </section>
 
@@ -300,18 +285,18 @@
 
         <!-- ===================== SECTION CONTACT ===================== -->
         <section class="contact-container">
-            <h2>Contact</h2>
+            <h2 data-translate="contact">Contact</h2>
             <form id="contactForm">
-                <label for="name">Nom :</label>
+                <label for="name" data-translate="name">Nom :</label>
                 <input type="text" id="name" name="name" placeholder="Votre nom" required>
 
-                <label for="email">Email :</label>
+                <label for="email" data-translate="email">Email :</label>
                 <input type="email" id="email" name="email" placeholder="Votre email" required>
 
-                <label for="message">Message :</label>
+                <label for="message" data-translate="message">Message :</label>
                 <textarea id="message" name="message" placeholder="Votre message" required></textarea>
 
-                <button type="submit" class="btn btn-gold">Envoyer</button>
+                <button type="submit" class="btn btn-gold" data-translate="send">Envoyer</button>
             </form>
         </section>
 
@@ -326,11 +311,11 @@
 
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
-        <div>© 2025 Iryon – Tous droits réservés</div>
+        <div data-translate="copyright">© 2025 Iryon – Tous droits réservés</div>
         <div class="footer-links">
-            <a href="#">Contact</a>
-            <a href="#">CGU</a>
-            <a href="#">Privacy</a>
+            <a href="#" data-translate="contact-link">Contact</a>
+            <a href="#" data-translate="terms-link">CGU</a>
+            <a href="#" data-translate="privacy-link">Privacy</a>
         </div>
     </footer>
 

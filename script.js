@@ -530,6 +530,182 @@ function closeUserDropdown() {
     userDropdown.classList.remove('show');
 }
 
+// ===================== GESTION DES LANGUES =====================
+let currentLanguage = localStorage.getItem('kironLanguage') || 'fr';
+
+// Traductions
+const translations = {
+    fr: {
+        // Header
+        'discover-gold': 'Découvrir Gold',
+        'theme': 'Thème',
+        'login': 'Se connecter',
+        
+        // Generator
+        'password-generator': 'Générateur de mot de passe',
+        'password': 'MOT DE PASSE',
+        'passphrase': 'PHRASE DE PASSE',
+        'uppercase': 'MAJUSCULES',
+        'numbers': 'CHIFFRES',
+        'symbols': 'SYMBOLES',
+        'length': 'Longueur',
+        'words': 'Mots',
+        'generate-free': 'Générer Free',
+        'generate-gold': 'Générer Gold',
+        'copy': 'Copier',
+        'strength': 'Force',
+        'security-test': 'Comment savoir si votre mot de passe est sécurisé ?',
+        'test-here': 'Testez-le ici',
+        
+        // History
+        'history': 'Historique',
+        
+        // Security
+        'security-title': 'Besoin d\'un rappel sur les bonnes pratiques des mots de passe ?',
+        'security-length': 'Longueur',
+        'security-length-desc': 'Utilisez au moins 12 caractères. Plus c\'est long, plus c\'est sécurisé !',
+        'security-complexity': 'Complexité',
+        'security-complexity-desc': 'Mélangez majuscules, minuscules, chiffres et symboles pour une sécurité maximale.',
+        'security-uniqueness': 'Unicité',
+        'security-uniqueness-desc': 'Un mot de passe unique pour chaque compte. Ne réutilisez jamais le même !',
+        
+        // Premium
+        'gold-features': 'Fonctionnalités Gold',
+        'gold-feature-1': 'Multi-génération de mots de passe',
+        'gold-feature-2': 'Patterns personnalisés',
+        'gold-feature-3': 'Historique complet illimité',
+        'gold-feature-4': 'Thème dynamique & boutons animés',
+        'gold-feature-5': 'Notifications stylées',
+        'gold-feature-6': 'Couleurs et glow premium',
+        'gold-feature-7': 'Responsive sur mobile, tablette et PC',
+        
+        // FAQ
+        'faq': 'FAQ',
+        'faq-1-q': 'Comment fonctionne le mode Gold ?',
+        'faq-1-a': 'Le mode Gold permet de générer plusieurs mots de passe à la fois, d\'utiliser des patterns personnalisés et de débloquer l\'historique complet.',
+        'faq-2-q': 'Comment copier mon mot de passe ?',
+        'faq-2-a': 'Cliquez simplement sur le bouton "Copier" à droite de la barre du mot de passe.',
+        'faq-3-q': 'Est-ce sécurisé ?',
+        'faq-3-a': 'Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.',
+        
+        // Contact
+        'contact': 'Contact',
+        'name': 'Nom',
+        'email': 'Email',
+        'message': 'Message',
+        'send': 'Envoyer',
+        
+        // Footer
+        'copyright': '© 2025 Iryon – Tous droits réservés',
+        'contact-link': 'Contact',
+        'terms-link': 'CGU',
+        'privacy-link': 'Privacy'
+    },
+    en: {
+        // Header
+        'discover-gold': 'Discover Gold',
+        'theme': 'Theme',
+        'login': 'Sign in',
+        
+        // Generator
+        'password-generator': 'Password Generator',
+        'password': 'PASSWORD',
+        'passphrase': 'PASSPHRASE',
+        'uppercase': 'UPPERCASE',
+        'numbers': 'NUMBERS',
+        'symbols': 'SYMBOLS',
+        'length': 'Length',
+        'words': 'Words',
+        'generate-free': 'Generate Free',
+        'generate-gold': 'Generate Gold',
+        'copy': 'Copy',
+        'strength': 'Strength',
+        'security-test': 'How to know if your password is secure?',
+        'test-here': 'Test it here',
+        
+        // History
+        'history': 'History',
+        
+        // Security
+        'security-title': 'Need a reminder about password best practices?',
+        'security-length': 'Length',
+        'security-length-desc': 'Use at least 12 characters. The longer, the more secure!',
+        'security-complexity': 'Complexity',
+        'security-complexity-desc': 'Mix uppercase, lowercase, numbers and symbols for maximum security.',
+        'security-uniqueness': 'Uniqueness',
+        'security-uniqueness-desc': 'A unique password for each account. Never reuse the same one!',
+        
+        // Premium
+        'gold-features': 'Gold Features',
+        'gold-feature-1': 'Multi-password generation',
+        'gold-feature-2': 'Custom patterns',
+        'gold-feature-3': 'Unlimited complete history',
+        'gold-feature-4': 'Dynamic theme & animated buttons',
+        'gold-feature-5': 'Styled notifications',
+        'gold-feature-6': 'Premium colors and glow',
+        'gold-feature-7': 'Responsive on mobile, tablet and PC',
+        
+        // FAQ
+        'faq': 'FAQ',
+        'faq-1-q': 'How does Gold mode work?',
+        'faq-1-a': 'Gold mode allows you to generate multiple passwords at once, use custom patterns and unlock the complete history.',
+        'faq-2-q': 'How to copy my password?',
+        'faq-2-a': 'Simply click the "Copy" button to the right of the password bar.',
+        'faq-3-q': 'Is it secure?',
+        'faq-3-a': 'Yes, all passwords are generated client-side and are never sent to a server.',
+        
+        // Contact
+        'contact': 'Contact',
+        'name': 'Name',
+        'email': 'Email',
+        'message': 'Message',
+        'send': 'Send',
+        
+        // Footer
+        'copyright': '© 2025 Iryon – All rights reserved',
+        'contact-link': 'Contact',
+        'terms-link': 'Terms',
+        'privacy-link': 'Privacy'
+    }
+};
+
+function changeLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('kironLanguage', lang);
+    
+    // Mettre à jour l'interface
+    updateLanguageUI();
+    
+    // Mettre à jour l'état actif des boutons
+    updateLanguageButtons();
+}
+
+function updateLanguageUI() {
+    const elements = document.querySelectorAll('[data-translate]');
+    elements.forEach(element => {
+        const key = element.dataset.translate;
+        if (translations[currentLanguage] && translations[currentLanguage][key]) {
+            element.textContent = translations[currentLanguage][key];
+        }
+    });
+}
+
+function updateLanguageButtons() {
+    const langButtons = document.querySelectorAll('.language-option-btn');
+    langButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === currentLanguage) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// Initialiser la langue au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    updateLanguageUI();
+    updateLanguageButtons();
+});
+
 // ===================== GESTION D'ABONNEMENT =====================
 function updateSubscriptionDisplay() {
     const noSubscription = document.getElementById('no-subscription');
@@ -1186,7 +1362,7 @@ if (discoverGoldBtn) {
 
 // Fermeture modale Gold et Abonnement - event listeners dans DOMContentLoaded
 
-// Menu hamburger
+// Menu hamburger pour la langue
 if (hamburgerBtn) {
     hamburgerBtn.addEventListener('click', toggleUserDropdown);
 }
@@ -1198,36 +1374,18 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Actions du menu dropdown
+// Actions du menu langue
 document.addEventListener('click', (e) => {
-    if (e.target.closest('#subscription-item')) {
-        openSubscriptionModal();
+    // Fermer le menu avec la croix
+    if (e.target.id === 'close-language-menu') {
         closeUserDropdown();
     }
-    if (e.target.closest('#profile-item')) {
-        openSettingsModal();
-        closeUserDropdown();
-    }
-    if (e.target.closest('#history-item')) {
-        openHistoryModal();
-        closeUserDropdown();
-    }
-    if (e.target.closest('#settings-item')) {
-        openSettingsModal();
-        closeUserDropdown();
-    }
-    if (e.target.closest('#help-item')) {
-        openHelpModal();
-        closeUserDropdown();
-    }
-    if (e.target.closest('#language-item')) {
-        openLanguageModal();
-        closeUserDropdown();
-    }
-    if (e.target.closest('#logout-item')) {
-        appUser = null;
-        localStorage.removeItem('kironUser');
-        signOutAllSocial();
+    
+    // Changer de langue
+    if (e.target.closest('.language-option-btn')) {
+        const langBtn = e.target.closest('.language-option-btn');
+        const selectedLang = langBtn.dataset.lang;
+        changeLanguage(selectedLang);
         closeUserDropdown();
     }
 });
