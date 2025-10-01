@@ -1589,7 +1589,7 @@ function closeLanguageModal() {
 }
 
 function loadCurrentLanguage() {
-    const currentLang = userPreferences?.language || 'fr';
+    const currentLang = currentLanguage || 'fr';
     const languageOptions = document.querySelectorAll('.language-selection .language-option');
     
     languageOptions.forEach(option => {
@@ -1600,44 +1600,6 @@ function loadCurrentLanguage() {
     });
 }
 
-function changeLanguage(lang) {
-    // Mettre à jour les préférences
-    if (!userPreferences) {
-        userPreferences = {
-            theme: 'dark',
-            language: 'fr',
-            emailNotifications: true,
-            marketingEmails: false,
-            securityAlerts: true,
-            dataCollection: true,
-            analytics: true,
-            cookies: false,
-            highContrast: false,
-            largeText: false,
-            reducedMotion: false,
-            autoCopy: true,
-            showStrength: true,
-            saveHistory: true
-        };
-    }
-    
-    userPreferences.language = lang;
-    localStorage.setItem('kironUserPreferences', JSON.stringify(userPreferences));
-    
-    // Mettre à jour l'affichage
-    loadCurrentLanguage();
-    
-    // Afficher une notification
-    const langNames = {
-        'fr': 'Français',
-        'en': 'English'
-    };
-    
-    showNotification(`Langue changée en ${langNames[lang]}`);
-    
-    // Fermer la modale immédiatement
-    closeLanguageModal();
-}
 
 function openNotesModal(password) {
     if (!notesModal) return;
