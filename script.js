@@ -1058,57 +1058,6 @@ generateGoldBtn.addEventListener('click', () => {
     updateHistory(passwords);
 });
 
-// Event listeners pour les nouveaux boutons de phrase de passe
-document.addEventListener('DOMContentLoaded', function() {
-    const generateBtnPassphrase = document.getElementById('generateBtnPassphrase');
-    const generateGoldBtnPassphrase = document.getElementById('generateGoldBtnPassphrase');
-    
-    if (generateBtnPassphrase) {
-        generateBtnPassphrase.addEventListener('click', () => {
-            let count = 1; // Free: 1
-            const passwords = [];
-            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
-            
-            for (let i = 0; i < count; i++) {
-                const pwd = generatePassphrase(requestedWords, {
-                    uppercase: passphraseUppercase.checked,
-                    numbers: passphraseNumbers.checked,
-                    symbols: passphraseSymbols.checked
-                });
-                passwords.push(pwd);
-                if (i === 0) {
-                    displayColoredPassword(pwd);
-                }
-            }
-            
-            updateStrengthBar(passwords[0]);
-            updateHistory(passwords);
-        });
-    }
-    
-    if (generateGoldBtnPassphrase) {
-        generateGoldBtnPassphrase.addEventListener('click', () => {
-            const count = 5; // Gold: 5
-            const passwords = [];
-            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
-            
-            for (let i = 0; i < count; i++) {
-                const pwd = generatePassphrase(requestedWords, {
-                    uppercase: passphraseUppercase.checked,
-                    numbers: passphraseNumbers.checked,
-                    symbols: passphraseSymbols.checked
-                });
-                passwords.push(pwd);
-                if (i === 0) {
-                    displayColoredPassword(pwd);
-                }
-            }
-            
-            updateStrengthBar(passwords[0]);
-            updateHistory(passwords);
-        });
-    }
-});
 
 // ===================== COPIER AVEC GLOW =====================
 copyBtn.addEventListener('click', () => {
@@ -1140,19 +1089,13 @@ copyBtn.addEventListener('click', () => {
 // ===================== GESTION DU TYPE DE MOT DE PASSE =====================
 function togglePasswordType() {
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
-    const passwordGeneratorButtons = document.getElementById('password-generator-buttons');
-    const passphraseGeneratorButtons = document.getElementById('passphrase-generator-buttons');
     
     if (selectedType === 'password') {
         passwordOptions.style.display = 'flex';
         passphraseOptions.style.display = 'none';
-        if (passwordGeneratorButtons) passwordGeneratorButtons.style.display = 'flex';
-        if (passphraseGeneratorButtons) passphraseGeneratorButtons.style.display = 'none';
     } else {
         passwordOptions.style.display = 'none';
         passphraseOptions.style.display = 'flex';
-        if (passwordGeneratorButtons) passwordGeneratorButtons.style.display = 'none';
-        if (passphraseGeneratorButtons) passphraseGeneratorButtons.style.display = 'flex';
     }
 }
 
@@ -1511,6 +1454,7 @@ function loadCurrentLanguage() {
 }
 
 function changeLanguage(lang) {
+    console.log('changeLanguage appelée avec:', lang);
     // Mettre à jour les préférences
     if (!userPreferences) {
         userPreferences = {
@@ -2173,12 +2117,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Event listeners pour la sélection de langue
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('.language-selection .language-option')) {
-            const option = e.target.closest('.language-option');
+    const languageOptions = document.querySelectorAll('.language-selection .language-option');
+    languageOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.preventDefault();
             const lang = option.getAttribute('data-lang');
+            console.log('Langue sélectionnée:', lang);
             changeLanguage(lang);
-        }
+        });
     });
     
     // Fermer les modales
@@ -2192,7 +2138,10 @@ document.addEventListener('DOMContentLoaded', function() {
         helpModalClose.addEventListener('click', closeHelpModal);
     }
     if (languageModalClose) {
-        languageModalClose.addEventListener('click', closeLanguageModal);
+        languageModalClose.addEventListener('click', (e) => {
+            console.log('Fermeture du menu langue');
+            closeLanguageModal();
+        });
     }
     if (notesModalClose) {
         notesModalClose.addEventListener('click', closeNotesModal);
