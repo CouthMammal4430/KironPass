@@ -207,7 +207,6 @@ button {
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1.5rem;
-    order: 1; /* S'assurer qu'elle reste en bas */
 }
 
 .generator-options label {
