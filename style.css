@@ -488,9 +488,11 @@ body.theme-dark .length-btn:hover {
 
 /* ===================== BOUTONS GENERER ===================== */
 .generator-buttons {
-    display: flex;
+    display: flex !important;
     gap: 1rem;
     margin-bottom: 1rem;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
 }
 
 .btn {
@@ -502,6 +504,8 @@ body.theme-dark .length-btn:hover {
     font-weight: bold;
     font-size: 1rem;
     transition: all 0.3s ease-in-out;
+    display: inline-block;
+    width: auto;
 }
 
 .btn:hover {
@@ -783,7 +787,9 @@ body.theme-light .password-item .notes-icon { color: #000000; }
         flex-direction: column;
     }
     .generator-buttons {
-        flex-direction: column;
+        flex-direction: row !important;
+        gap: 0.5rem;
+        display: flex !important;
     }
     .nav-right {
         flex-direction: column;
