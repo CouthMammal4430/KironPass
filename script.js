@@ -673,11 +673,8 @@ function changeLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('kironLanguage', lang);
     
-    // Mettre à jour l'interface
-    updateLanguageUI();
-    
-    // Mettre à jour l'état actif des boutons
-    updateLanguageButtons();
+    // Recharger la page pour appliquer le changement de langue
+    window.location.reload();
 }
 
 function updateLanguageUI() {
@@ -1374,18 +1371,10 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Actions du menu langue
+// Actions du menu dropdown
 document.addEventListener('click', (e) => {
-    // Fermer le menu avec la croix
-    if (e.target.id === 'close-language-menu') {
-        closeUserDropdown();
-    }
-    
-    // Changer de langue
-    if (e.target.closest('.language-option-btn')) {
-        const langBtn = e.target.closest('.language-option-btn');
-        const selectedLang = langBtn.dataset.lang;
-        changeLanguage(selectedLang);
+    if (e.target.closest('#language-item')) {
+        openLanguageModal();
         closeUserDropdown();
     }
 });

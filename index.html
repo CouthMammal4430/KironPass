@@ -34,27 +34,17 @@
                 <button id="open-auth-modal" class="btn" data-translate="login">Se connecter</button>
             </div>
 
-            <!-- Menu hamburger pour la langue -->
+            <!-- Menu hamburger -->
             <div id="user-menu" class="user-menu">
-                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu langue">
+                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu utilisateur">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 <div id="user-dropdown" class="user-dropdown">
-                    <div class="language-menu-header">
-                        <h3>Choisir la langue</h3>
-                        <button id="close-language-menu" class="close-language-btn" aria-label="Fermer">×</button>
-                    </div>
-                    <div class="language-options">
-                        <button class="language-option-btn" data-lang="fr">
-                            <span class="language-flag">🇫🇷</span>
-                            <span class="language-text">Français</span>
-                        </button>
-                        <button class="language-option-btn" data-lang="en">
-                            <span class="language-flag">🇬🇧</span>
-                            <span class="language-text">English</span>
-                        </button>
+                    <div class="dropdown-item" id="language-item">
+                        <span class="dropdown-icon">🌐</span>
+                        <span>Langue</span>
                     </div>
                 </div>
             </div>
@@ -677,12 +667,12 @@
             <h2 id="language-modal-title">Choisir la langue</h2>
             <div class="language-selection">
                 <div class="language-option" data-lang="fr">
-                    <span class="language-text">Français</span>
                     <span class="language-flag">🇫🇷</span>
+                    <span class="language-text">Français</span>
                 </div>
                 <div class="language-option" data-lang="en">
-                    <span class="language-text">English</span>
                     <span class="language-flag">🇬🇧</span>
+                    <span class="language-text">English</span>
                 </div>
             </div>
         </div>
