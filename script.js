@@ -1694,8 +1694,50 @@ function closeSecurityTestModal() {
     securityTestModal.setAttribute('aria-hidden', 'true');
 }
 
+function formatCrackTime(seconds) {
+    if (seconds < 1) {
+        return 'Moins d\'une seconde';
+    } else if (seconds < 60) {
+        return `${Math.round(seconds)} seconde${seconds >= 2 ? 's' : ''}`;
+    } else if (seconds < 3600) {
+        const minutes = Math.round(seconds / 60);
+        return `${minutes} minute${minutes >= 2 ? 's' : ''}`;
+    } else if (seconds < 86400) {
+        const hours = Math.round(seconds / 3600);
+        return `${hours} heure${hours >= 2 ? 's' : ''}`;
+    } else if (seconds < 2592000) {
+        const days = Math.round(seconds / 86400);
+        return `${days} jour${days >= 2 ? 's' : ''}`;
+    } else if (seconds < 31536000) {
+        const months = Math.round(seconds / 2592000);
+        return `${months} mois`;
+    } else if (seconds < 31536000000) {
+        const years = Math.round(seconds / 31536000);
+        return `${years} an${years >= 2 ? 's' : ''}`;
+    } else if (seconds < 31536000000000) {
+        const centuries = Math.round(seconds / 3153600000);
+        return `${centuries} siècle${centuries >= 2 ? 's' : ''}`;
+    } else {
+        return 'Plusieurs millénaires';
+    }
+}
+
 function testPasswordSecurity(password) {
-    if (!password || typeof zxcvbn === 'undefined') {
+    if (typeof zxcvbn === 'undefined') {
+        return;
+    }
+    
+    // Si le mot de passe est vide, réinitialiser l'affichage
+    if (!password || password.trim() === '') {
+        const scoreFill = document.getElementById('score-fill');
+        const scoreText = document.getElementById('score-text');
+        const crackTime = document.getElementById('crack-time');
+        const feedbackList = document.getElementById('feedback-list');
+        
+        if (scoreFill) scoreFill.style.width = '0%';
+        if (scoreText) scoreText.textContent = 'Entrez un mot de passe pour tester';
+        if (crackTime) crackTime.textContent = '-';
+        if (feedbackList) feedbackList.innerHTML = '<li>Entrez un mot de passe pour voir les suggestions</li>';
         return;
     }
     
@@ -1727,8 +1769,9 @@ function testPasswordSecurity(password) {
         scoreFill.style.background = '#22c55e';
     }
     
-    // Temps de crack
-    crackTime.textContent = result.crack_times_display.offline_slow_hashing_1e4_per_second;
+    // Temps de crack - utiliser le temps de crack brut et le formater
+    const crackTimeSeconds = result.crack_times_seconds.offline_slow_hashing_1e4_per_second;
+    crackTime.textContent = formatCrackTime(crackTimeSeconds);
     
     // Suggestions
     feedbackList.innerHTML = '';
