@@ -510,12 +510,14 @@ body.theme-dark .length-btn:hover {
 }
 
 .btn-gold {
-    background: var(--gold-bg);
-    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5), 0 0 16px rgba(245, 158, 11, 0.3);
+    background: var(--gold-bg) !important;
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5), 0 0 16px rgba(245, 158, 11, 0.3) !important;
+    color: #fff !important;
 }
 
 .btn-gold:hover {
-    box-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(245, 158, 11, 0.4) !important;
+    transform: scale(1.01);
 }
 
 /* ===================== ASTUCES ===================== */
@@ -3280,5 +3282,136 @@ body.theme-light .security-test-link:hover {
     
     .score-section, .crack-time-section, .feedback-section {
         padding: 15px;
+    }
+}
+
+/* ===================== ESPACES PUBLICITAIRES ===================== */
+.ad-banner {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+.ad-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.ad-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    color: #6c757d;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.ad-placeholder {
+    text-align: center;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.ad-placeholder p {
+    margin: 0 0 5px 0;
+    font-weight: 500;
+}
+
+.ad-placeholder small {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.ad-section {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.ad-container {
+    position: relative;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 728px;
+    width: 100%;
+}
+
+.ad-placeholder-large {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #6c757d;
+    text-align: center;
+}
+
+.ad-placeholder-large p {
+    margin: 0 0 5px 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.ad-placeholder-large small {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* Thème sombre pour les espaces publicitaires */
+.theme-dark .ad-content,
+.theme-dark .ad-placeholder-large {
+    background: linear-gradient(135deg, #2d3748, #4a5568);
+    color: #a0aec0;
+}
+
+.theme-dark .ad-label {
+    background: rgba(45, 55, 72, 0.8);
+    color: #a0aec0;
+}
+
+/* Responsive pour les espaces publicitaires */
+@media (max-width: 768px) {
+    .ad-banner {
+        margin: 15px;
+        border-radius: 6px;
+    }
+    
+    .ad-content {
+        min-height: 80px;
+    }
+    
+    .ad-placeholder {
+        font-size: 12px;
+    }
+    
+    .ad-container {
+        margin: 0 15px;
+        border-radius: 8px;
+    }
+    
+    .ad-placeholder-large {
+        min-height: 70px;
+    }
+    
+    .ad-placeholder-large p {
+        font-size: 14px;
+    }
+    
+    .ad-placeholder-large small {
+        font-size: 11px;
     }
 }

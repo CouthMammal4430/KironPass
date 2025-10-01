@@ -78,6 +78,17 @@
         Votre mot de passe ultra sécurisé, gratuit ou en version Gold premium !
     </div>
 
+    <!-- ===================== BANNIERE PUBLICITAIRE ===================== -->
+    <div class="ad-banner">
+        <div class="ad-content">
+            <span class="ad-label">Publicité</span>
+            <div class="ad-placeholder">
+                <p>Espace publicitaire disponible</p>
+                <small>300x100px</small>
+            </div>
+        </div>
+    </div>
+
     <!-- ===================== MAIN CONTENT ===================== -->
     <main class="container">
 
@@ -165,6 +176,12 @@
                 </label>
             </div>
 
+            <!-- BOUTONS GENERER (pour mot de passe) -->
+            <div class="generator-buttons" id="password-generator-buttons">
+                <button id="generateBtn" class="btn">Générer Free</button>
+                <button id="generateGoldBtn" class="btn btn-gold">Générer Gold</button>
+            </div>
+
             <!-- BARRE MOT DE PASSE + COPIER -->
             <div class="password-wrapper">
                 <div id="password-output" class="password-display" data-placeholder="Votre mot de passe apparaîtra ici"></div>
@@ -177,15 +194,15 @@
                 <span class="strength-text">Force</span>
             </div>
 
-            <!-- BOUTONS GENERER -->
-            <div class="generator-buttons">
-                <button id="generateBtn" class="btn">Générer Free</button>
-                <button id="generateGoldBtn" class="btn btn-gold">Générer Gold</button>
-            </div>
-
             <!-- TEST DE SÉCURITÉ -->
             <div class="generator-tips">
                 <p>Comment savoir si votre mot de passe est sécurisé ? <a href="#" id="security-test-link" class="security-test-link">Testez-le ici</a></p>
+            </div>
+
+            <!-- BOUTONS GENERER (pour phrase de passe) -->
+            <div class="generator-buttons" id="passphrase-generator-buttons" style="display: none;">
+                <button id="generateBtnPassphrase" class="btn">Générer Free</button>
+                <button id="generateGoldBtnPassphrase" class="btn btn-gold">Générer Gold</button>
             </div>
         </section>
 
@@ -258,15 +275,26 @@
             <h2>FAQ</h2>
             <div class="faq-item">
                 <h3>Comment fonctionne le mode Gold ?</h3>
-                <p>Le mode Gold permet de générer plusieurs mots de passe à la fois, d’utiliser des patterns personnalisés et de débloquer l’historique complet.</p>
+                <p>Le mode Gold permet de générer plusieurs mots de passe à la fois, d'utiliser des patterns personnalisés et de débloquer l'historique complet.</p>
             </div>
             <div class="faq-item">
                 <h3>Comment copier mon mot de passe ?</h3>
-                <p>Cliquez simplement sur le bouton “Copier” à droite de la barre du mot de passe.</p>
+                <p>Cliquez simplement sur le bouton "Copier" à droite de la barre du mot de passe.</p>
             </div>
             <div class="faq-item">
                 <h3>Est-ce sécurisé ?</h3>
                 <p>Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.</p>
+            </div>
+        </section>
+
+        <!-- ===================== ESPACE PUBLICITAIRE ===================== -->
+        <section class="ad-section">
+            <div class="ad-container">
+                <span class="ad-label">Publicité</span>
+                <div class="ad-placeholder-large">
+                    <p>Espace publicitaire premium</p>
+                    <small>728x90px - Leaderboard</small>
+                </div>
             </div>
         </section>
 
@@ -666,20 +694,12 @@
             <h2 id="language-modal-title">Choisir la langue</h2>
             <div class="language-selection">
                 <div class="language-option" data-lang="fr">
-                    <span class="language-flag">🇫🇷</span>
                     <span class="language-text">Français</span>
+                    <span class="language-flag">🇫🇷</span>
                 </div>
                 <div class="language-option" data-lang="en">
-                    <span class="language-flag">🇬🇧</span>
                     <span class="language-text">English</span>
-                </div>
-                <div class="language-option" data-lang="es">
-                    <span class="language-flag">🇪🇸</span>
-                    <span class="language-text">Español</span>
-                </div>
-                <div class="language-option" data-lang="de">
-                    <span class="language-flag">🇩🇪</span>
-                    <span class="language-text">Deutsch</span>
+                    <span class="language-flag">🇬🇧</span>
                 </div>
             </div>
         </div>

@@ -1058,6 +1058,58 @@ generateGoldBtn.addEventListener('click', () => {
     updateHistory(passwords);
 });
 
+// Event listeners pour les nouveaux boutons de phrase de passe
+document.addEventListener('DOMContentLoaded', function() {
+    const generateBtnPassphrase = document.getElementById('generateBtnPassphrase');
+    const generateGoldBtnPassphrase = document.getElementById('generateGoldBtnPassphrase');
+    
+    if (generateBtnPassphrase) {
+        generateBtnPassphrase.addEventListener('click', () => {
+            let count = 1; // Free: 1
+            const passwords = [];
+            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
+            
+            for (let i = 0; i < count; i++) {
+                const pwd = generatePassphrase(requestedWords, {
+                    uppercase: passphraseUppercase.checked,
+                    numbers: passphraseNumbers.checked,
+                    symbols: passphraseSymbols.checked
+                });
+                passwords.push(pwd);
+                if (i === 0) {
+                    displayColoredPassword(pwd);
+                }
+            }
+            
+            updateStrengthBar(passwords[0]);
+            updateHistory(passwords);
+        });
+    }
+    
+    if (generateGoldBtnPassphrase) {
+        generateGoldBtnPassphrase.addEventListener('click', () => {
+            const count = 5; // Gold: 5
+            const passwords = [];
+            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
+            
+            for (let i = 0; i < count; i++) {
+                const pwd = generatePassphrase(requestedWords, {
+                    uppercase: passphraseUppercase.checked,
+                    numbers: passphraseNumbers.checked,
+                    symbols: passphraseSymbols.checked
+                });
+                passwords.push(pwd);
+                if (i === 0) {
+                    displayColoredPassword(pwd);
+                }
+            }
+            
+            updateStrengthBar(passwords[0]);
+            updateHistory(passwords);
+        });
+    }
+});
+
 // ===================== COPIER AVEC GLOW =====================
 copyBtn.addEventListener('click', () => {
     // Récupérer le texte brut du mot de passe (sans les balises HTML)
@@ -1088,13 +1140,19 @@ copyBtn.addEventListener('click', () => {
 // ===================== GESTION DU TYPE DE MOT DE PASSE =====================
 function togglePasswordType() {
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
+    const passwordGeneratorButtons = document.getElementById('password-generator-buttons');
+    const passphraseGeneratorButtons = document.getElementById('passphrase-generator-buttons');
     
     if (selectedType === 'password') {
         passwordOptions.style.display = 'flex';
         passphraseOptions.style.display = 'none';
+        if (passwordGeneratorButtons) passwordGeneratorButtons.style.display = 'flex';
+        if (passphraseGeneratorButtons) passphraseGeneratorButtons.style.display = 'none';
     } else {
         passwordOptions.style.display = 'none';
         passphraseOptions.style.display = 'flex';
+        if (passwordGeneratorButtons) passwordGeneratorButtons.style.display = 'none';
+        if (passphraseGeneratorButtons) passphraseGeneratorButtons.style.display = 'flex';
     }
 }
 
@@ -1482,17 +1540,13 @@ function changeLanguage(lang) {
     // Afficher une notification
     const langNames = {
         'fr': 'Français',
-        'en': 'English',
-        'es': 'Español',
-        'de': 'Deutsch'
+        'en': 'English'
     };
     
     showNotification(`Langue changée en ${langNames[lang]}`);
     
-    // Fermer la modale après un court délai
-    setTimeout(() => {
-        closeLanguageModal();
-    }, 1000);
+    // Fermer la modale immédiatement
+    closeLanguageModal();
 }
 
 function openNotesModal(password) {
