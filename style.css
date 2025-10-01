@@ -204,7 +204,6 @@ button {
 
 /* Options pour passe de phrase - garder en bas */
 #passphrase-options {
-    display: flex !important;
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1.5rem;
