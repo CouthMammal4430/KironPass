@@ -514,6 +514,11 @@ body.theme-light .password-item .notes-icon { color: #000000; }
     --text-color: #f0f0f5;
     --btn-bg: linear-gradient(135deg, #8b5cf6, #a855f7, #9333ea);
     --gold-bg: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+    --card-bg: #0f0f0f;
+    --border-color: #333333;
+    --hover-bg: #1a1a1a;
+    --text-secondary: #b8bcc8;
+    --text-primary: #f0f0f5;
 }
 
 /* Thème sombre */
@@ -525,6 +530,11 @@ body.theme-dark {
     --text-color: #f0f0f5;
     --btn-bg: linear-gradient(135deg, #8b5cf6, #a855f7, #9333ea);
     --gold-bg: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+    --card-bg: #0f0f0f;
+    --border-color: #333333;
+    --hover-bg: #1a1a1a;
+    --text-secondary: #b8bcc8;
+    --text-primary: #f0f0f5;
 }
 
 /* Thème clair */
@@ -536,6 +546,11 @@ body.theme-light {
     --text-color: #000000;
     --btn-bg: linear-gradient(135deg, #7c3aed, #8b5cf6, #6d28d9);
     --gold-bg: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --hover-bg: #f8fafc;
+    --text-secondary: #64748b;
+    --text-primary: #000000;
 }
 
 /* Contour rose pour les boutons sélectionnés en thème clair */
