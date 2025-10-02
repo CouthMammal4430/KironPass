@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - KironPass</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9239068949462297"
+         crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header">
+    <div class="header-container container">
+        <!-- Logo avec lien retour -->
+        <a href="index.html" class="logo-link">
+            <div class="logo"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
+        </a>
+
+        <!-- Boutons à droite -->
+        <div class="nav-right">
+            <!-- Bouton Thème -->
+            <button class="theme-btn" id="theme-btn">
+                <span class="theme-icon">🌙</span>
+                <span class="theme-text">Thème</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- ===================== MAIN CONTENT ===================== -->
+<main class="container">
+    <div class="contact-page-container">
+        <h1>Contactez-nous</h1>
+        
+        <div class="contact-intro">
+            <p>Vous avez une question, une suggestion ou besoin d'aide ? N'hésitez pas à nous contacter !</p>
+            <p>Notre équipe vous répondra dans les plus brefs délais.</p>
+        </div>
+
+        <div class="contact-grid">
+            <!-- Formulaire de contact -->
+            <div class="contact-form-section">
+                <h2>Envoyez-nous un message</h2>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name">Nom complet *</label>
+                        <input type="text" id="contact-name" name="name" required placeholder="Votre nom complet">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-email">Adresse email *</label>
+                        <input type="email" id="contact-email" name="email" required placeholder="votre@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-subject">Sujet</label>
+                        <select id="contact-subject" name="subject">
+                            <option value="">Choisissez un sujet</option>
+                            <option value="question">Question générale</option>
+                            <option value="bug">Signaler un bug</option>
+                            <option value="feature">Suggestion de fonctionnalité</option>
+                            <option value="subscription">Abonnement KironGold</option>
+                            <option value="technical">Support technique</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-message">Message *</label>
+                        <textarea id="contact-message" name="message" required placeholder="Décrivez votre demande en détail..." rows="6"></textarea>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="contact-privacy" required>
+                            <span class="checkmark"></span>
+                            J'accepte que mes données soient utilisées pour répondre à ma demande conformément à la <a href="privacy.html" target="_blank">politique de confidentialité</a> *
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-gold">Envoyer le message</button>
+                </form>
+            </div>
+            
+            <!-- Informations de contact -->
+            <div class="contact-info-section">
+                <h2>Informations de contact</h2>
+                
+                <div class="contact-info-card">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>support@kironpass.com</p>
+                        <small>Réponse sous 24-48h</small>
+                    </div>
+                </div>
+                
+                <div class="contact-info-card">
+                    <div class="contact-icon">⏰</div>
+                    <div class="contact-details">
+                        <h3>Horaires de support</h3>
+                        <p>Lundi - Vendredi : 9h - 18h</p>
+                        <small>Heure de Paris (CET)</small>
+                    </div>
+                </div>
+                
+                <div class="contact-info-card">
+                    <div class="contact-icon">🏢</div>
+                    <div class="contact-details">
+                        <h3>Adresse</h3>
+                        <p>Iryon<br>
+                        123 Avenue des Champs-Élysées<br>
+                        75008 Paris, France</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info-card">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-details">
+                        <h3>Téléphone</h3>
+                        <p>+33 1 23 45 67 89</p>
+                        <small>Support technique uniquement</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ rapide -->
+        <div class="quick-faq">
+            <h2>Questions fréquentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Comment fonctionne KironGold ?</h3>
+                    <p>KironGold est notre version premium qui vous permet de générer plusieurs mots de passe simultanément, d'accéder à l'historique complet et de bénéficier de fonctionnalités avancées.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Mes mots de passe sont-ils sécurisés ?</h3>
+                    <p>Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur nos serveurs. Votre sécurité est notre priorité.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Puis-je annuler mon abonnement ?</h3>
+                    <p>Bien sûr ! Vous pouvez annuler votre abonnement KironGold à tout moment depuis votre espace utilisateur.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Le service est-il vraiment gratuit ?</h3>
+                    <p>Oui, la version de base de KironPass est entièrement gratuite. Seule la version Gold est payante.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton retour -->
+        <div class="back-to-home">
+            <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+    <div>© 2025 Iryon – Tous droits réservés</div>
+    <div class="footer-links">
+        <a href="contact.html">Contact</a>
+        <a href="cgu.html">CGU</a>
+        <a href="privacy.html">Politique de confidentialité</a>
+    </div>
+</footer>
+
+<!-- ===================== NOTIFICATION ===================== -->
+<div class="notification" id="notification">Message envoyé !</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+// Configuration EmailJS
+const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY'; // À remplacer par votre clé
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // À remplacer par votre service ID
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // À remplacer par votre template ID
+
+// ===================== THÈME =====================
+const themeBtn = document.getElementById('theme-btn');
+let savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';
+document.body.classList.add(savedTheme);
+
+const themeIcon = document.querySelector('.theme-icon');
+if (savedTheme === 'theme-dark') {
+    themeIcon.textContent = '🌙';
+} else {
+    themeIcon.textContent = '☀️';
+}
+
+themeBtn.addEventListener('click', () => {
+    let current = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+    let next = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
+    document.body.classList.remove(current);
+    document.body.classList.add(next);
+    localStorage.setItem('kironTheme', next);
+    
+    const themeIcon = document.querySelector('.theme-icon');
+    if (next === 'theme-dark') {
+        themeIcon.textContent = '🌙';
+    } else {
+        themeIcon.textContent = '☀️';
+    }
+});
+
+// ===================== FORMULAIRE DE CONTACT =====================
+const contactForm = document.getElementById('contact-form');
+const notification = document.getElementById('notification');
+
+function showNotification(message) {
+    notification.textContent = message;
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+}
+
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(contactForm);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject') || 'Question générale',
+        message: formData.get('message')
+    };
+    
+    // Validation
+    if (!data.name || !data.email || !data.message) {
+        showNotification('Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    if (!document.getElementById('contact-privacy').checked) {
+        showNotification('Veuillez accepter la politique de confidentialité');
+        return;
+    }
+    
+    // Simulation d'envoi (remplacer par EmailJS en production)
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+        
+        // Simulation d'envoi
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // En production, utiliser EmailJS :
+        /*
+        await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+                from_name: data.name,
+                from_email: data.email,
+                subject: data.subject,
+                message: data.message,
+                to_email: 'support@kironpass.com'
+            },
+            EMAILJS_PUBLIC_KEY
+        );
+        */
+        
+        showNotification('Message envoyé avec succès ! Nous vous répondrons bientôt.');
+        contactForm.reset();
+        
+    } catch (error) {
+        console.error('Erreur envoi email:', error);
+        showNotification('Erreur lors de l\'envoi. Veuillez réessayer.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    }
+});
+</script>
+
+<style>
+/* Styles spécifiques à la page contact */
+.contact-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.contact-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.contact-intro p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.contact-intro p:last-child {
+    margin-bottom: 0;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contact-form-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.checkbox-group {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-label a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.checkbox-label a:hover {
+    text-decoration: underline;
+}
+
+.contact-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-info-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.contact-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.contact-details h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.contact-details p {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.contact-details small {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.quick-faq {
+    margin-bottom: 3rem;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.faq-item {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.faq-item h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.faq-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.back-to-home {
+    text-align: center;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-link:hover .logo {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-page-container {
+        padding: 1rem;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .contact-form-section,
+    .contact-info-section {
+        padding: 1.5rem;
+    }
+    
+    .contact-info-card {
+        padding: 1rem;
+    }
+    
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .contact-icon {
+        align-self: center;
+    }
+}
+</style>
+
+</body>
+</html>

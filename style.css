@@ -43,7 +43,7 @@ button{cursor:pointer;border:none;outline:none}
 .type-toggle input[type="radio"]:checked{border-color:var(--primary-color);box-shadow:0 0 0 2px rgba(139,92,246,0.3)}
 .type-toggle:has(input[type="radio"]:checked){border-color:var(--primary-color);box-shadow:0 0 0 2px rgba(139,92,246,0.3)}
 
-.toggle-content{display:flex;align-items:center;gap:0.5rem;color:#b8bcc8;transition:color 0.3s ease}
+.toggle-content{display:flex;align-items:center;gap:0.5rem;color:var(--text-secondary);transition:color 0.3s ease}
 
 .toggle-icon{font-size:1.2rem}
 .toggle-text{font-size:0.9rem;font-weight:700}
@@ -53,12 +53,12 @@ button{cursor:pointer;border:none;outline:none}
 /* Options pour passe de phrase - garder en bas */
 #passphrase-options{flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
 
-.generator-options label{display:flex;align-items:center;gap:0.4rem;font-size:0.9rem;color:#f0f0f5}
+.generator-options label{display:flex;align-items:center;gap:0.4rem;font-size:0.9rem;color:var(--text-primary)}
 
 /* Cases à cocher pour les options */
-.generator-options label.option-toggle{display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding:0.8rem 1rem;border-radius:8px;background:#0f0f0f;border:1px solid #3a3f52;transition:all 0.3s ease;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.generator-options label.option-toggle{display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding:0.8rem 1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border-color);transition:all 0.3s ease;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
 
-.generator-options label.option-toggle:hover{background:#1a1a1a;border-color:var(--primary-color)}
+.generator-options label.option-toggle:hover{background:var(--hover-bg);border-color:var(--primary-color)}
 
 .generator-options label.option-toggle input[type="checkbox"]{width:18px;height:18px;accent-color:var(--primary-color);cursor:pointer}
 

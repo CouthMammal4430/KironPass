@@ -599,7 +599,7 @@ const translations = {
         'copyright': '© 2025 Iryon – Tous droits réservés',
         'contact-link': 'Contact',
         'terms-link': 'CGU',
-        'privacy-link': 'Privacy'
+        'privacy-link': 'Politique de confidentialité'
     },
     en: {
         // Header
@@ -665,7 +665,7 @@ const translations = {
         'copyright': '© 2025 Iryon – All rights reserved',
         'contact-link': 'Contact',
         'terms-link': 'Terms',
-        'privacy-link': 'Privacy'
+        'privacy-link': 'Politique de confidentialité'
     }
 };
 
@@ -1420,10 +1420,6 @@ document.addEventListener('click', (e) => {
     if (e.target.id === 'cancel-note') {
         e.preventDefault();
         closeNotesModal();
-    }
-    if (e.target.id === 'security-test-link') {
-        e.preventDefault();
-        openSecurityTestModal();
     }
 });
 
