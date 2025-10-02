@@ -15,18 +15,21 @@
 <!-- ===================== HEADER ===================== -->
 <header class="header">
     <div class="header-container container">
+        <!-- Flèche de retour -->
+        <a href="index.html" class="back-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+        </a>
+
         <!-- Logo avec lien retour -->
         <a href="index.html" class="logo-link">
-            <div class="logo"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
+            <div class="logo" translate="no"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
         </a>
 
         <!-- Boutons à droite -->
         <div class="nav-right">
-            <!-- Bouton Thème -->
-            <button class="theme-btn" id="theme-btn">
-                <span class="theme-icon">🌙</span>
-                <span class="theme-text">Thème</span>
-            </button>
+            <!-- Espace vide pour équilibrer -->
         </div>
     </div>
 </header>
@@ -229,8 +232,7 @@
                 <h3>14.1 Contact</h3>
                 <p>Pour toute question sur cette politique :</p>
                 <ul>
-                    <li>Email : privacy@kironpass.com</li>
-                    <li>Adresse : Iryon, 123 Avenue des Champs-Élysées, 75008 Paris, France</li>
+                    <li>Email : kironpass@gmail.com</li>
                 </ul>
 
                 <h3>14.2 Réclamations</h3>
@@ -260,31 +262,9 @@
 
 <script>
 // ===================== THÈME =====================
-const themeBtn = document.getElementById('theme-btn');
+// Appliquer le thème sauvegardé
 let savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';
 document.body.classList.add(savedTheme);
-
-const themeIcon = document.querySelector('.theme-icon');
-if (savedTheme === 'theme-dark') {
-    themeIcon.textContent = '🌙';
-} else {
-    themeIcon.textContent = '☀️';
-}
-
-themeBtn.addEventListener('click', () => {
-    let current = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
-    let next = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
-    document.body.classList.remove(current);
-    document.body.classList.add(next);
-    localStorage.setItem('kironTheme', next);
-    
-    const themeIcon = document.querySelector('.theme-icon');
-    if (next === 'theme-dark') {
-        themeIcon.textContent = '🌙';
-    } else {
-        themeIcon.textContent = '☀️';
-    }
-});
 </script>
 
 <style>
@@ -396,6 +376,32 @@ themeBtn.addEventListener('click', () => {
 
 .logo-link:hover .logo {
     opacity: 0.8;
+}
+
+.back-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.back-arrow:hover {
+    background: var(--hover-bg);
+    border-color: var(--primary-color);
+    transform: translateX(-2px);
+}
+
+.back-arrow svg {
+    width: 20px;
+    height: 20px;
 }
 
 /* Responsive */

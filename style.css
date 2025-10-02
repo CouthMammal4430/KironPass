@@ -232,7 +232,7 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
 .history-container h2 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 .history-list {
@@ -295,6 +295,12 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
     color: var(--primary-color);
 }
 
+.note-indicator {
+    color: var(--primary-color);
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+}
+
 .password-item .copy-icon svg {
     width: 18px;
     height: 18px;
@@ -317,7 +323,7 @@ body.theme-light .password-item .notes-icon { color: #000000; }
 }
 
 .premium-container h2 {
-    color: #c77dff;
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -351,7 +357,7 @@ body.theme-light .password-item .notes-icon { color: #000000; }
 }
 
 .faq-container h2 {
-    color: #c77dff;
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -669,10 +675,6 @@ body.theme-light .footer {
 /* Titres et liens accentués en thème clair */
 body.theme-light .logo,
 body.theme-light .generator-container h2,
-body.theme-light .history-container h2,
-body.theme-light .premium-container h2,
-body.theme-light .faq-container h2,
-body.theme-light .contact-container h2,
 body.theme-light .history-toggle,
 body.theme-light .strength-text,
 body.theme-light .footer-links a {

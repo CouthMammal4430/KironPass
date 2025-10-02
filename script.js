@@ -491,6 +491,17 @@ function closeGoldModal() {
     
     goldModal.classList.remove('show');
     goldModal.setAttribute('aria-hidden', 'true');
+    
+    // Faire défiler vers le générateur
+    setTimeout(() => {
+        const generatorSection = document.querySelector('.generator-container');
+        if (generatorSection) {
+            generatorSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }, 100);
 }
 
 function openSubscriptionModal() {
@@ -1108,8 +1119,16 @@ function renderHistory() {
         const div = document.createElement('div');
         div.classList.add('password-item');
 
+        // Récupérer la note si elle existe
+        const notes = JSON.parse(localStorage.getItem('kironNotes') || '{}');
+        const note = notes[pwd] || '';
+
         const textSpan = document.createElement('span');
-        textSpan.textContent = pwd;
+        if (note) {
+            textSpan.innerHTML = `${pwd} <span class="note-indicator" title="${note}">📝</span>`;
+        } else {
+            textSpan.textContent = pwd;
+        }
         textSpan.style.flex = '1';
         textSpan.style.overflow = 'hidden';
         textSpan.style.textOverflow = 'ellipsis';
@@ -1117,7 +1136,7 @@ function renderHistory() {
 
         const notesSpan = document.createElement('span');
         notesSpan.classList.add('notes-icon');
-        notesSpan.title = 'Ajouter une note';
+        notesSpan.title = note ? `Note: ${note}` : 'Ajouter une note';
         notesSpan.innerHTML = '\n            <svg viewBox="0 0 24 24" aria-hidden="true">\n                <circle cx="12" cy="12" r="1"/>\n                <circle cx="19" cy="12" r="1"/>\n                <circle cx="5" cy="12" r="1"/>\n            </svg>\n        ';
         notesSpan.addEventListener('click', () => {
             openNotesModal(pwd);
@@ -1128,7 +1147,14 @@ function renderHistory() {
         copySpan.title = 'Copier';
         copySpan.innerHTML = '\n            <svg viewBox="0 0 24 24" aria-hidden="true">\n                <path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1zm3 4H10a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H10V7h9v14z"/>\n            </svg>\n        ';
         copySpan.addEventListener('click', () => {
-            navigator.clipboard.writeText(pwd).then(() => showNotification('Copié !'));
+            navigator.clipboard.writeText(pwd).then(() => {
+                // Même comportement que le bouton principal
+                const originalText = copySpan.title;
+                copySpan.title = 'Copié !';
+                setTimeout(() => {
+                    copySpan.title = originalText;
+                }, 1000);
+            });
         });
 
         div.appendChild(textSpan);
@@ -1237,10 +1263,20 @@ copyBtn.addEventListener('click', () => {
     // Récupérer le texte brut du mot de passe (sans les balises HTML)
     const passwordText = passwordOutput.textContent || passwordOutput.innerText;
     if (!passwordText) return;
+    
     navigator.clipboard.writeText(passwordText).then(() => {
-        showNotification('Copié !');
+        // Sauvegarder le texte original
+        const originalText = copyBtn.textContent;
+        
+        // Changer le texte du bouton
+        copyBtn.textContent = 'Copié !';
         copyBtn.classList.add('active');
-        setTimeout(() => copyBtn.classList.remove('active'), 400);
+        
+        // Remettre le texte original après 1 seconde
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.classList.remove('active');
+        }, 1000);
     });
 });
 
@@ -1718,6 +1754,52 @@ function formatCrackTime(seconds) {
     }
 }
 
+// Fonction pour traduire les suggestions en français
+function translateSuggestion(suggestion) {
+    const translations = {
+        'Add another word or two. Uncommon words are better.': 'Ajoutez un ou deux mots supplémentaires. Les mots peu communs sont meilleurs.',
+        'Use a longer keyboard pattern with more turns': 'Utilisez un pattern de clavier plus long avec plus de virages',
+        'Add another word or two. Uncommon words are better': 'Ajoutez un ou deux mots supplémentaires. Les mots peu communs sont meilleurs.',
+        'Use a longer keyboard pattern with more turns.': 'Utilisez un pattern de clavier plus long avec plus de virages.',
+        'Avoid repeated patterns and keyboard patterns like "qwerty" or "asdf"': 'Évitez les patterns répétés et les patterns de clavier comme "qwerty" ou "asdf"',
+        'Avoid repeated patterns and keyboard patterns like "qwerty" or "asdf".': 'Évitez les patterns répétés et les patterns de clavier comme "qwerty" ou "asdf".',
+        'Avoid repeated patterns and keyboard patterns': 'Évitez les patterns répétés et les patterns de clavier',
+        'Avoid repeated patterns and keyboard patterns.': 'Évitez les patterns répétés et les patterns de clavier.',
+        'Use a longer keyboard pattern': 'Utilisez un pattern de clavier plus long',
+        'Use a longer keyboard pattern.': 'Utilisez un pattern de clavier plus long.',
+        'Add another word or two': 'Ajoutez un ou deux mots supplémentaires',
+        'Add another word or two.': 'Ajoutez un ou deux mots supplémentaires.',
+        'Uncommon words are better': 'Les mots peu communs sont meilleurs',
+        'Uncommon words are better.': 'Les mots peu communs sont meilleurs.'
+    };
+    
+    return translations[suggestion] || suggestion;
+}
+
+// Fonction pour traduire les avertissements en français
+function translateWarning(warning) {
+    const translations = {
+        'Straight rows of keys are easy to guess': 'Les rangées droites de touches sont faciles à deviner',
+        'Short keyboard patterns are easy to guess': 'Les patterns de clavier courts sont faciles à deviner',
+        'Repeats like "abcabcabc" are only slightly harder to guess than "abc"': 'Les répétitions comme "abcabcabc" ne sont que légèrement plus difficiles à deviner que "abc"',
+        'Repeats like "abcabcabc" are only slightly harder to guess than "abc".': 'Les répétitions comme "abcabcabc" ne sont que légèrement plus difficiles à deviner que "abc".',
+        'This is a very common password': 'Ceci est un mot de passe très courant',
+        'This is a very common password.': 'Ceci est un mot de passe très courant.',
+        'This is similar to a commonly used password': 'Ceci est similaire à un mot de passe couramment utilisé',
+        'This is similar to a commonly used password.': 'Ceci est similaire à un mot de passe couramment utilisé.',
+        'This is a top-10 common password': 'Ceci est un des 10 mots de passe les plus courants',
+        'This is a top-10 common password.': 'Ceci est un des 10 mots de passe les plus courants.',
+        'This is a top-100 common password': 'Ceci est un des 100 mots de passe les plus courants',
+        'This is a top-100 common password.': 'Ceci est un des 100 mots de passe les plus courants.',
+        'This is a very common password': 'Ceci est un mot de passe très courant',
+        'This is a very common password.': 'Ceci est un mot de passe très courant.',
+        'This is similar to a commonly used password': 'Ceci est similaire à un mot de passe couramment utilisé',
+        'This is similar to a commonly used password.': 'Ceci est similaire à un mot de passe couramment utilisé.'
+    };
+    
+    return translations[warning] || warning;
+}
+
 function testPasswordSecurity(password) {
     if (typeof zxcvbn === 'undefined') {
         return;
@@ -1769,12 +1851,12 @@ function testPasswordSecurity(password) {
     const crackTimeSeconds = result.crack_times_seconds.offline_slow_hashing_1e4_per_second;
     crackTime.textContent = formatCrackTime(crackTimeSeconds);
     
-    // Suggestions
+    // Suggestions traduites en français
     feedbackList.innerHTML = '';
     if (result.feedback.suggestions && result.feedback.suggestions.length > 0) {
         result.feedback.suggestions.forEach(suggestion => {
             const li = document.createElement('li');
-            li.textContent = suggestion;
+            li.textContent = translateSuggestion(suggestion);
             feedbackList.appendChild(li);
         });
     } else {
@@ -1784,10 +1866,10 @@ function testPasswordSecurity(password) {
         feedbackList.appendChild(li);
     }
     
-    // Avertissements
+    // Avertissements traduits
     if (result.feedback.warning) {
         const li = document.createElement('li');
-        li.textContent = `⚠️ ${result.feedback.warning}`;
+        li.textContent = `⚠️ ${translateWarning(result.feedback.warning)}`;
         li.style.color = '#f59e0b';
         feedbackList.appendChild(li);
     }
