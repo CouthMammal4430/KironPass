@@ -32,7 +32,7 @@ button{cursor:pointer;border:none;outline:none}
 /* ===================== TYPE DE MOT DE PASSE ===================== */
 .password-type{display:flex;gap:2rem;margin-bottom:1.5rem;justify-content:flex-start}
 
-.type-toggle{position:relative;display:flex;align-items:center;cursor:pointer;padding:0.8rem 1.2rem;border-radius:12px;background:var(--card-bg);border:2px solid transparent;transition:all 0.3s ease;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.type-toggle{position:relative;display:flex;align-items:center;cursor:pointer;padding:0.8rem 1.2rem;border-radius:12px;background:var(--input-bg);border:2px solid transparent;transition:all 0.3s ease;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
 
 .type-toggle:hover{background:var(--hover-bg);border-color:var(--primary-color);transform:translateY(-2px);box-shadow:0 4px 12px rgba(139,92,246,0.3)}
 
