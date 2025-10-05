@@ -457,6 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.warn('⚠️ Stripe SDK non encore chargé');
     }
+
 });
 
 // ===================== INITIALISATION STRIPE =====================
@@ -607,7 +608,7 @@ const translations = {
         'send': 'Envoyer',
         
         // Footer
-        'copyright': '© 2025 Iryon – Tous droits réservés',
+        'copyright': '© 2025 KironPass – Tous droits réservés',
         'contact-link': 'Contact',
         'terms-link': 'CGU',
         'privacy-link': 'Politique de confidentialité'
@@ -673,7 +674,7 @@ const translations = {
         'send': 'Send',
         
         // Footer
-        'copyright': '© 2025 Iryon – All rights reserved',
+        'copyright': '© 2025 KironPass – All rights reserved',
         'contact-link': 'Contact',
         'terms-link': 'Terms',
         'privacy-link': 'Politique de confidentialité'
@@ -1061,8 +1062,8 @@ function updateHistory(passwords) {
     if (!Array.isArray(passwords)) passwords = [passwords];
     history = [...passwords, ...history].slice(0, 20); // Limite à 20
     
-    // Sauvegarder dans l'historique complet
-    const fullHistory = JSON.parse(localStorage.getItem('kironFullHistory') || '[]');
+    // Sauvegarder dans l'historique complet (sessionStorage pour conserver pendant la navigation)
+    const fullHistory = JSON.parse(sessionStorage.getItem('kironFullHistory') || '[]');
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
     
     passwords.forEach(pwd => {
@@ -1075,7 +1076,7 @@ function updateHistory(passwords) {
     
     // Limiter à 100 éléments dans l'historique complet
     const limitedHistory = fullHistory.slice(0, 100);
-    localStorage.setItem('kironFullHistory', JSON.stringify(limitedHistory));
+    sessionStorage.setItem('kironFullHistory', JSON.stringify(limitedHistory));
     
     renderHistory();
 }
@@ -1106,7 +1107,17 @@ function displayColoredPassword(password) {
     const coloredPassword = colorizePassword(password);
     const passwordOutput = document.getElementById('password-output');
     if (passwordOutput) {
-        passwordOutput.innerHTML = coloredPassword;
+        // Si le mot de passe fait plus de 80 caractères, le diviser en lignes de 80 caractères
+        if (password.length > 80) {
+            const lines = [];
+            for (let i = 0; i < password.length; i += 80) {
+                const line = password.substring(i, i + 80);
+                lines.push(colorizePassword(line));
+            }
+            passwordOutput.innerHTML = lines.join('<br>');
+        } else {
+            passwordOutput.innerHTML = coloredPassword;
+        }
     }
 }
 
@@ -1189,6 +1200,12 @@ if (passphraseDecrease && passphraseIncrease && passphraseLength) {
 
 // GENERATION MOT DE PASSE NORMAL
 generateBtn.addEventListener('click', () => {
+    // Animation de l'icône
+    generateBtn.classList.add('generating');
+    setTimeout(() => {
+        generateBtn.classList.remove('generating');
+    }, 600);
+    
     let count = 1; // Free: 1
     const passwords = [];
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
@@ -1197,7 +1214,7 @@ generateBtn.addEventListener('click', () => {
         let pwd;
         
         if (selectedType === 'password') {
-            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
+            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 128);
             pwd = generatePassword(requestedLength, {
                 uppercase: includeUppercase.checked,
                 numbers: includeNumbers.checked,
@@ -1224,6 +1241,12 @@ generateBtn.addEventListener('click', () => {
 
 // GENERATION MOT DE PASSE GOLD
 generateGoldBtn.addEventListener('click', () => {
+    // Animation de l'icône
+    generateGoldBtn.classList.add('generating');
+    setTimeout(() => {
+        generateGoldBtn.classList.remove('generating');
+    }, 600);
+    
     const count = 5; // Gold: 5
     const passwords = [];
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
@@ -1232,7 +1255,7 @@ generateGoldBtn.addEventListener('click', () => {
         let pwd;
         
         if (selectedType === 'password') {
-            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 64);
+            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 128);
             pwd = generatePassword(requestedLength, {
                 uppercase: includeUppercase.checked,
                 numbers: includeNumbers.checked,
@@ -1272,11 +1295,11 @@ copyBtn.addEventListener('click', () => {
         copyBtn.textContent = 'Copié !';
         copyBtn.classList.add('active');
         
-        // Remettre le texte original après 1 seconde
+        // Remettre le texte original après 1.2 seconde
         setTimeout(() => {
             copyBtn.textContent = originalText;
             copyBtn.classList.remove('active');
-        }, 1000);
+        }, 1200);
     });
 });
 
@@ -1880,7 +1903,7 @@ function loadFullHistory() {
     if (!fullHistoryList) return;
     
     // Récupérer l'historique complet depuis localStorage
-    const fullHistory = JSON.parse(localStorage.getItem('kironFullHistory') || '[]');
+    const fullHistory = JSON.parse(sessionStorage.getItem('kironFullHistory') || '[]');
     
     fullHistoryList.innerHTML = '';
     
@@ -1921,7 +1944,7 @@ function loadFullHistory() {
             const index = parseInt(btn.getAttribute('data-index'));
             if (confirm('Supprimer ce mot de passe de l\'historique ?')) {
                 fullHistory.splice(index, 1);
-                localStorage.setItem('kironFullHistory', JSON.stringify(fullHistory));
+                sessionStorage.setItem('kironFullHistory', JSON.stringify(fullHistory));
                 loadFullHistory();
             }
         });
@@ -2430,3 +2453,4 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+

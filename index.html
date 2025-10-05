@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KironPass</title>
+    <title>KironPass – Générateur de mots de passe sécurisé</title>
     <link rel="stylesheet" href="style.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9239068949462297"
          crossorigin="anonymous"></script>
+    
+    <!-- PropellerAds -->
+    <meta name="monetag" content="917dcdd29abad44d566c6f0580470780">
 </head>
 <body>
 
@@ -118,7 +121,7 @@
                 </label>
                 <label class="length-control">
                     <span data-translate="length">Longueur</span>: <span id="passwordLengthValue">12</span>
-                    <input type="range" id="passwordLength" min="6" max="64" value="12">
+                    <input type="range" id="passwordLength" min="6" max="128" value="12">
                     <button type="button" id="lengthDecrease" class="length-btn">−</button>
                     <button type="button" id="lengthIncrease" class="length-btn">+</button>
                 </label>
@@ -157,8 +160,8 @@
 
             <!-- BOUTONS GENERER -->
             <div class="generator-buttons">
-                <button id="generateBtn" class="btn" data-translate="generate-free">Générer Free</button>
-                <button id="generateGoldBtn" class="btn btn-gold" data-translate="generate-gold">Générer Gold</button>
+                <button id="generateBtn" class="btn btn-generate" data-translate="generate-free">Générer Free</button>
+                <button id="generateGoldBtn" class="btn btn-gold btn-generate" data-translate="generate-gold">Générer Gold</button>
             </div>
 
             <!-- BARRE MOT DE PASSE + COPIER -->

@@ -9,19 +9,15 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9239068949462297"
          crossorigin="anonymous"></script>
+    
+    <!-- PropellerAds -->
+    <meta name="monetag" content="917dcdd29abad44d566c6f0580470780">
 </head>
 <body>
 
 <!-- ===================== HEADER ===================== -->
 <header class="header">
     <div class="header-container container">
-        <!-- Flèche de retour -->
-        <a href="index.html" class="back-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15,18 9,12 15,6"></polyline>
-            </svg>
-        </a>
-
         <!-- Logo avec lien retour -->
         <a href="index.html" class="logo-link">
             <div class="logo" translate="no"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
@@ -37,7 +33,14 @@
 <!-- ===================== MAIN CONTENT ===================== -->
 <main class="container">
     <div class="contact-page-container">
-        <h1>Contactez-nous</h1>
+        <div class="page-title-with-back">
+            <a href="index.html" class="back-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+            </a>
+            <h1>Contactez-nous</h1>
+        </div>
         
         <div class="contact-intro">
             <p>Vous avez une question, une suggestion ou besoin d'aide ? N'hésitez pas à nous contacter !</p>
@@ -247,7 +250,7 @@ contactForm.addEventListener('submit', async (e) => {
 <style>
 /* Styles spécifiques à la page contact */
 .contact-page-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
@@ -434,6 +437,18 @@ contactForm.addEventListener('submit', async (e) => {
     opacity: 0.8;
 }
 
+.page-title-with-back {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.page-title-with-back h1 {
+    margin: 0;
+    text-align: left;
+}
+
 .back-arrow {
     display: flex;
     align-items: center;
@@ -446,7 +461,7 @@ contactForm.addEventListener('submit', async (e) => {
     color: var(--text-primary);
     text-decoration: none;
     transition: all 0.3s ease;
-    margin-right: 1rem;
+    flex-shrink: 0;
 }
 
 .back-arrow:hover {

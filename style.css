@@ -67,7 +67,7 @@ button{cursor:pointer;border:none;outline:none}
 
 /* Contrôle de longueur (slider) */
 .length-control{display:flex;align-items:center;gap:0.5rem;padding:10px 0}
-.length-control input[type="range"]{width:280px;height:12px;accent-color:var(--primary-color);background:transparent;outline:none;-webkit-appearance:none;appearance:none}
+.length-control input[type="range"]{width:400px;height:12px;accent-color:var(--primary-color);background:transparent;outline:none;-webkit-appearance:none;appearance:none}
 .length-control input[type="range"]::-webkit-slider-runnable-track{background:#6b7280;border-radius:12px;height:12px;position:relative}
 .length-control input[type="range"]::-moz-range-track{background:#6b7280;border-radius:12px;height:12px;border:none}
 .length-control input[type="range"]::-webkit-slider-thumb{background:var(--primary-color);border-radius:50%;width:24px;height:24px;border:3px solid #fff;cursor:pointer;-webkit-appearance:none;appearance:none;margin-top:-6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);transition:all 0.2s ease}
@@ -101,9 +101,9 @@ body.theme-dark .length-btn{background:var(--primary-color)}
 body.theme-dark .length-btn:hover{background:var(--secondary-color)}
 
 /* ===================== BARRE MOT DE PASSE ===================== */
-.password-wrapper{display:flex;align-items:center;margin-bottom:1rem;gap:0.5rem;position:relative}
+.password-wrapper{display:flex;align-items:flex-start;margin-bottom:1rem;gap:0.5rem;position:relative}
 
-#password-output{flex:1;padding:0.8rem 1rem;border-radius:12px;border:none;background:#0f0f0f;color:#fff;font-size:1rem;min-height:20px;line-height:1.2;word-break:break-all;font-family:monospace}
+#password-output{flex:1;padding:0.8rem 1rem;border-radius:12px;border:none;background:#0f0f0f;color:#fff;font-size:1rem;min-height:20px;line-height:1.4;word-break:break-all;font-family:monospace;white-space:pre-wrap;overflow-wrap:break-word;text-align:center;display:block}
 
 /* Style pour le placeholder du div de mot de passe */
 .password-display:empty::before{content:attr(data-placeholder);color:#666;font-style:italic}
@@ -132,6 +132,10 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
 .generator-buttons{display:flex;gap:1rem;margin-bottom:1rem}
 
 .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     flex: 1;
     padding: 0.8rem 1rem;
     border-radius: 12px;
@@ -142,11 +146,36 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
     transition: all 0.3s ease-in-out;
     border: none;
     cursor: pointer;
+    position: relative;
+}
+
+.btn-generate::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
 }
 
 .btn:hover {
     transform: scale(1.01);
     box-shadow: 0 0 2px var(--primary-color);
+}
+
+.btn-generate:active::before {
+    transform: rotate(360deg);
+}
+
+.btn-generate.generating::before {
+    animation: spin 0.6s ease-in-out;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .btn-gold {
@@ -193,6 +222,9 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
 }
 
 .btn-copy {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.8rem 1.5rem;
     background: var(--btn-bg);
     color: #fff;
@@ -202,6 +234,19 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    position: relative;
+    align-self: flex-start;
+}
+
+.btn-copy::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
 }
 
 .btn-copy:hover {
@@ -209,9 +254,24 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
+.btn-copy:hover::before {
+    transform: rotate(15deg);
+}
+
 .btn-copy.active {
-    background: #4CAF50;
-    transform: scale(1.05);
+    background: #ff1493 !important;
+    transform: none !important;
+}
+
+.btn-copy.active::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 60%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-5px); }
 }
 
 /* ===================== ASTUCES ===================== */
@@ -249,6 +309,10 @@ body.theme-dark .length-btn:hover{background:var(--secondary-color)}
     background: #0f0f0f;
     border-radius: 12px;
     font-family: monospace;
+    word-break: break-all;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    line-height: 1.4;
 }
 
 .password-item:hover {
@@ -344,7 +408,7 @@ body.theme-light .password-item .notes-icon { color: #000000; }
     content: "✔";
     position: absolute;
     left: 0;
-    color: #c77dff;
+    color: var(--primary-color);
 }
 
 /* ===================== FAQ ===================== */
@@ -475,32 +539,254 @@ body.theme-light .password-item .notes-icon { color: #000000; }
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1024px) {
+    .container {
+        width: 95%;
+    }
+    
     .password-type {
         flex-direction: column;
         gap: 1rem;
     }
+    
     .generator-options {
         flex-direction: column;
     }
+    
     .generator-buttons {
         flex-direction: column;
     }
+    
     .nav-right {
         flex-direction: column;
         gap: 0.5rem;
     }
+    
+    .length-control input[type="range"] {
+        width: 300px;
+    }
 }
 
-@media (max-width: 640px) {
-    .password-display-area {
+@media (max-width: 768px) {
+    .container {
+        width: 98%;
+        padding: 0 1rem;
+    }
+    
+    .header-container {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .generator-container {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .generator-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .password-wrapper {
         flex-direction: column;
+        gap: 0.75rem;
     }
-    #copy-btn {
+    
+    .password-wrapper #password-output {
         width: 100%;
+        font-size: 0.9rem;
     }
-    .theme-btn, .btn-gold-top {
+    
+    .password-wrapper .btn-copy {
         width: 100%;
-        text-align: center;
+        justify-content: center;
+    }
+    
+    .length-control {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+    }
+    
+    .length-control input[type="range"] {
+        width: 250px;
+    }
+    
+    .generator-options {
+        gap: 0.75rem;
+    }
+    
+    .generator-options label.option-toggle {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .generator-buttons {
+        gap: 0.75rem;
+    }
+    
+    .btn {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .history-container {
+        padding: 1rem;
+    }
+    
+    .history-container h2 {
+        font-size: 1.3rem;
+    }
+    
+    .password-item {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .premium-container,
+    .faq-container,
+    .contact-container {
+        padding: 1.5rem;
+    }
+    }
+    
+    .page-title-with-back {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+    }
+    
+    .page-title-with-back h1 {
+        font-size: 1.8rem;
+    }
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 0 0.75rem;
+    }
+    
+    .header {
+        padding: 0.75rem 0;
+    }
+    
+    .header-container {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+    }
+    
+    .nav-right {
+        flex-direction: row;
+        gap: 0.75rem;
+        justify-content: center;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .generator-container {
+        padding: 1rem;
+        margin: 0.75rem 0;
+        border-radius: 12px;
+    }
+    
+    .generator-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .password-type {
+        gap: 0.75rem;
+    }
+    
+    .type-toggle {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .length-control input[type="range"] {
+        width: 200px;
+    }
+    
+    .generator-options label.option-toggle {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn {
+        padding: 0.6rem 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .btn-copy {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .history-container {
+        padding: 0.75rem;
+    }
+    
+    .password-item {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .premium-container,
+    .faq-container,
+    .contact-container {
+        padding: 1rem;
+    }
+    
+    .tools-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    
+    .page-title-with-back {
+        margin-bottom: 1.5rem;
+    }
+    
+    .page-title-with-back h1 {
+        font-size: 1.5rem;
+    }
+    
+    .back-arrow {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .back-arrow svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .modal-dialog {
+        margin: 1rem auto;
+        padding: 1rem;
+        max-width: 95%;
+    }
+    
+    .gold-modal-dialog,
+    .subscription-modal-dialog {
+        width: 95%;
+        padding: 1rem;
+        margin: 0.5rem auto;
+    }
+    
+    .notification {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
     }
 }
 /* ===================== THEME DYNAMIQUE ===================== */
@@ -3118,5 +3404,269 @@ body.theme-light .security-test-link:hover {
     
     .ad-placeholder-large small {
         font-size: 11px;
+    }
+}
+
+/* ===================== RESPONSIVE PAGES SECONDAIRES ===================== */
+@media (max-width: 768px) {
+    .legal-page-container,
+    .contact-page-container,
+    .password-test-container {
+        padding: 1rem;
+        max-width: 100%;
+    }
+    
+    .legal-page-container h1,
+    .contact-page-container h1,
+    .password-test-container h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .legal-section,
+    .contact-section,
+    .test-section {
+        padding: 1.5rem;
+    }
+    
+    .legal-section h2,
+    .contact-section h2,
+    .test-section h2 {
+        font-size: 1.3rem;
+    }
+    
+    .legal-info-card,
+    .contact-info-card,
+    .test-info-card {
+        padding: 1rem;
+    }
+    
+    .back-to-home {
+        margin-top: 2rem;
+    }
+    
+    .back-to-home .btn {
+        width: 100%;
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .legal-page-container,
+    .contact-page-container,
+    .password-test-container {
+        padding: 0.75rem;
+        max-width: 100%;
+    }
+    
+    .legal-page-container h1,
+    .contact-page-container h1,
+    .password-test-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .legal-section,
+    .contact-section,
+    .test-section {
+        padding: 1rem;
+    }
+    
+    .legal-section h2,
+    .contact-section h2,
+    .test-section h2 {
+        font-size: 1.2rem;
+    }
+    
+    .legal-info-card,
+    .contact-info-card,
+    .test-info-card {
+        padding: 0.75rem;
+    }
+    
+    .legal-section ul,
+    .contact-section ul,
+    .test-section ul {
+        margin-left: 1rem;
+    }
+    
+    .legal-section li,
+    .contact-section li,
+    .test-section li {
+        font-size: 0.9rem;
+    }
+    
+    .back-to-home {
+        margin-top: 1.5rem;
+    }
+    
+    .back-to-home .btn {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===================== RESPONSIVE MENU OUTILS ===================== */
+@media (max-width: 768px) {
+    .tools-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .tools-dropdown {
+        min-width: 200px;
+        right: 0;
+        left: auto;
+    }
+    
+    .tools-item {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tools-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    
+    .tools-item {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .tools-item-icon {
+        font-size: 14px;
+        width: 18px;
+    }
+}
+
+/* ===================== RESPONSIVE MODALES ===================== */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 1rem auto;
+        padding: 1.5rem;
+        max-width: 95%;
+    }
+    
+    .gold-modal-dialog,
+    .subscription-modal-dialog {
+        width: 95%;
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+    
+    .gold-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .price {
+        font-size: 2.5rem;
+    }
+    
+    .feature-list li {
+        font-size: 0.9rem;
+    }
+    
+    .settings-modal-dialog {
+        width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .settings-container {
+        flex-direction: column;
+        height: 100vh;
+    }
+    
+    .settings-navigation {
+        width: 100%;
+        height: auto;
+        order: 2;
+    }
+    
+    .settings-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: 0.5rem;
+        gap: 0.5rem;
+    }
+    
+    .nav-item {
+        flex-direction: column;
+        min-width: 80px;
+        padding: 8px;
+        text-align: center;
+        gap: 4px;
+    }
+    
+    .nav-text {
+        font-size: 12px;
+    }
+    
+    .settings-content {
+        order: 1;
+        flex: 1;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-dialog {
+        margin: 0.5rem auto;
+        padding: 1rem;
+        max-width: 98%;
+    }
+    
+    .gold-modal-dialog,
+    .subscription-modal-dialog {
+        width: 98%;
+        padding: 1rem;
+        margin: 0.5rem auto;
+    }
+    
+    .gold-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .price {
+        font-size: 2rem;
+    }
+    
+    .feature-list li {
+        font-size: 0.85rem;
+    }
+    
+    .settings-content {
+        padding: 0.75rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .preferences-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .security-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .support-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .subscription-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .account-card {
+        flex-direction: column;
+        text-align: center;
     }
 }
