@@ -1,7 +1,6 @@
 // ===================== VARIABLES =====================
 const passwordOutput = document.getElementById('password-output');
 const generateBtn = document.getElementById('generateBtn');
-const generateGoldBtn = document.getElementById('generateGoldBtn');
 const copyBtn = document.getElementById('copy-btn');
 const notification = document.getElementById('notification');
 const historyContainer = document.querySelector('.history-container');
@@ -552,6 +551,8 @@ const translations = {
         'discover-gold': 'Découvrir Gold',
         'theme': 'Thème',
         'login': 'Se connecter',
+        'resources': 'Ressources',
+        'common-passwords-2024': 'Les 10 mots de passe les plus courants en 2024',
         
         // Generator
         'password-generator': 'Générateur de mot de passe',
@@ -562,7 +563,7 @@ const translations = {
         'symbols': 'SYMBOLES',
         'length': 'Longueur',
         'words': 'Mots',
-        'generate-free': 'Générer Free',
+        'generate': 'Générer',
         'generate-gold': 'Générer Gold',
         'copy': 'Copier',
         'strength': 'Force',
@@ -611,13 +612,40 @@ const translations = {
         'copyright': '© 2025 KironPass – Tous droits réservés',
         'contact-link': 'Contact',
         'terms-link': 'CGU',
-        'privacy-link': 'Politique de confidentialité'
+        'privacy-link': 'Politique de confidentialité',
+        
+        // Mots de passe courants
+        'most-common-passwords-title': 'Les 10 mots de passe les plus courants en 2024',
+        'most-common-passwords-intro': 'Découvrez les mots de passe les plus utilisés et pourquoi il est crucial de les éviter. Utilisez KironPass pour générer des mots de passe uniques et sécurisés.',
+        'alert-title': 'Danger !',
+        'alert-text': 'L\'utilisation de ces mots de passe vous expose à un risque élevé de piratage. Ne les utilisez JAMAIS !',
+        'why-avoid': 'Pourquoi éviter ces mots de passe ?',
+        'why-avoid-text': 'Ces mots de passe sont les premières cibles des cybercriminels car ils sont faciles à deviner ou à "cracker" via des attaques par dictionnaire ou par force brute. Leur simplicité est leur plus grande faiblesse.',
+        'solutions': 'Solutions pour une sécurité optimale',
+        'solution-generator-title': 'Utilisez un générateur',
+        'solution-generator-text': 'KironPass génère des mots de passe complexes et aléatoires, impossibles à deviner.',
+        'solution-passphrase-title': 'Optez pour une phrase de passe',
+        'solution-passphrase-text': 'Plus longue et plus facile à retenir, une phrase de passe est très sécurisée.',
+        'solution-unique-title': 'Un mot de passe unique',
+        'solution-unique-text': 'N\'utilisez jamais le même mot de passe pour plusieurs comptes.',
+        'best-practices': 'Bonnes pratiques de sécurité',
+        'practice-length-title': 'Longueur minimale',
+        'practice-length-text': 'Visez au moins 12 caractères pour vos mots de passe.',
+        'practice-complexity-title': 'Mélangez les caractères',
+        'practice-complexity-text': 'Incluez majuscules, minuscules, chiffres et symboles.',
+        'practice-2fa-title': 'Activez la 2FA',
+        'practice-2fa-text': 'L\'authentification à deux facteurs ajoute une couche de sécurité essentielle.',
+        'cta-title': 'Protégez vos comptes dès maintenant !',
+        'cta-text': 'Générez un mot de passe ultra sécurisé avec KironPass.',
+        'cta-button': 'Générer un mot de passe'
     },
     en: {
         // Header
         'discover-gold': 'Discover Gold',
         'theme': 'Theme',
         'login': 'Sign in',
+        'resources': 'Resources',
+        'common-passwords-2024': 'The 10 Most Common Passwords in 2024',
         
         // Generator
         'password-generator': 'Password Generator',
@@ -628,7 +656,7 @@ const translations = {
         'symbols': 'SYMBOLS',
         'length': 'Length',
         'words': 'Words',
-        'generate-free': 'Generate Free',
+        'generate': 'Generate',
         'generate-gold': 'Generate Gold',
         'copy': 'Copy',
         'strength': 'Strength',
@@ -677,7 +705,32 @@ const translations = {
         'copyright': '© 2025 KironPass – All rights reserved',
         'contact-link': 'Contact',
         'terms-link': 'Terms',
-        'privacy-link': 'Politique de confidentialité'
+        'privacy-link': 'Privacy Policy',
+        
+        // Mots de passe courants
+        'most-common-passwords-title': 'The 10 Most Common Passwords in 2024',
+        'most-common-passwords-intro': 'Discover the most used passwords and why it\'s crucial to avoid them. Use KironPass to generate unique and secure passwords.',
+        'alert-title': 'Danger!',
+        'alert-text': 'Using these passwords exposes you to a high risk of hacking. NEVER use them!',
+        'why-avoid': 'Why avoid these passwords?',
+        'why-avoid-text': 'These passwords are the first targets of cybercriminals because they are easy to guess or "crack" through dictionary or brute force attacks. Their simplicity is their greatest weakness.',
+        'solutions': 'Solutions for optimal security',
+        'solution-generator-title': 'Use a generator',
+        'solution-generator-text': 'KironPass generates complex and random passwords, impossible to guess.',
+        'solution-passphrase-title': 'Opt for a passphrase',
+        'solution-passphrase-text': 'Longer and easier to remember, a passphrase is very secure.',
+        'solution-unique-title': 'A unique password',
+        'solution-unique-text': 'Never use the same password for multiple accounts.',
+        'best-practices': 'Security best practices',
+        'practice-length-title': 'Minimum length',
+        'practice-length-text': 'Aim for at least 12 characters for your passwords.',
+        'practice-complexity-title': 'Mix characters',
+        'practice-complexity-text': 'Include uppercase, lowercase, numbers and symbols.',
+        'practice-2fa-title': 'Enable 2FA',
+        'practice-2fa-text': 'Two-factor authentication adds an essential layer of security.',
+        'cta-title': 'Protect your accounts now!',
+        'cta-text': 'Generate an ultra-secure password with KironPass.',
+        'cta-button': 'Generate a password'
     }
 };
 
@@ -685,8 +738,160 @@ function changeLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('kironLanguage', lang);
     
-    // Recharger la page pour appliquer le changement de langue
-    window.location.reload();
+    // Appliquer la traduction automatique
+    if (lang === 'en') {
+        translatePageToEnglish();
+    } else {
+        translatePageToFrench();
+    }
+    
+    // Mettre à jour l'interface
+    updateLanguageUI();
+}
+
+// Fonction de traduction automatique vers l'anglais
+function translatePageToEnglish() {
+    // Dictionnaire de traductions
+    const translations = {
+        'Générer': 'Generate',
+        'Copier': 'Copy',
+        'Force': 'Strength',
+        'Longueur': 'Length',
+        'Mots': 'Words',
+        'MAJUSCULES': 'UPPERCASE',
+        'CHIFFRES': 'NUMBERS',
+        'SYMBOLES': 'SYMBOLS',
+        'MOT DE PASSE': 'PASSWORD',
+        'PHRASE DE PASSE': 'PASSPHRASE',
+        'Historique': 'History',
+        'Thème': 'Theme',
+        'Ressources': 'Resources',
+        'Se connecter': 'Sign in',
+        'Découvrir Gold': 'Discover Gold',
+        'Comment savoir si votre mot de passe est sécurisé ?': 'How to know if your password is secure?',
+        'Testez-le ici': 'Test it here',
+        'Besoin d\'un rappel sur les bonnes pratiques des mots de passe ?': 'Need a reminder about password best practices?',
+        'Longueur': 'Length',
+        'Utilisez au moins 12 caractères. Plus c\'est long, plus c\'est sécurisé !': 'Use at least 12 characters. The longer, the more secure!',
+        'Complexité': 'Complexity',
+        'Mélangez majuscules, minuscules, chiffres et symboles pour une sécurité maximale.': 'Mix uppercase, lowercase, numbers and symbols for maximum security.',
+        'Unicité': 'Uniqueness',
+        'Un mot de passe unique pour chaque compte. Ne réutilisez jamais le même !': 'A unique password for each account. Never reuse the same one!',
+        'Fonctionnalités Gold': 'Gold Features',
+        'Multi-génération de mots de passe': 'Multi-password generation',
+        'Patterns personnalisés': 'Custom patterns',
+        'Historique complet illimité': 'Unlimited complete history',
+        'Thème dynamique & boutons animés': 'Dynamic theme & animated buttons',
+        'Notifications stylées': 'Styled notifications',
+        'Couleurs et glow premium': 'Premium colors and glow',
+        'Responsive sur mobile, tablette et PC': 'Responsive on mobile, tablet and PC',
+        'FAQ': 'FAQ',
+        'Comment fonctionne le mode Gold ?': 'How does Gold mode work?',
+        'Le mode Gold permet de générer plusieurs mots de passe à la fois, d\'utiliser des patterns personnalisés et de débloquer l\'historique complet.': 'Gold mode allows you to generate multiple passwords at once, use custom patterns and unlock the complete history.',
+        'Comment copier mon mot de passe ?': 'How to copy my password?',
+        'Cliquez simplement sur le bouton "Copier" à droite de la barre du mot de passe.': 'Simply click the "Copy" button to the right of the password bar.',
+        'Est-ce sécurisé ?': 'Is it secure?',
+        'Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.': 'Yes, all passwords are generated client-side and are never sent to a server.',
+        '© 2025 KironPass – Tous droits réservés': '© 2025 KironPass – All rights reserved',
+        'Contact': 'Contact',
+        'CGU': 'Terms',
+        'Politique de confidentialité': 'Privacy Policy',
+        'Mentions légales': 'Legal Notice'
+    };
+    
+    // Traduire tous les éléments de texte
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+    
+    const textNodes = [];
+    let node;
+    while (node = walker.nextNode()) {
+        if (node.textContent.trim() && node.parentElement.tagName !== 'SCRIPT' && node.parentElement.tagName !== 'STYLE') {
+            textNodes.push(node);
+        }
+    }
+    
+    textNodes.forEach(textNode => {
+        const originalText = textNode.textContent.trim();
+        if (translations[originalText]) {
+            textNode.textContent = textNode.textContent.replace(originalText, translations[originalText]);
+        }
+    });
+}
+
+// Fonction de traduction automatique vers le français
+function translatePageToFrench() {
+    // Dictionnaire de traductions
+    const translations = {
+        'Generate': 'Générer',
+        'Copy': 'Copier',
+        'Strength': 'Force',
+        'Length': 'Longueur',
+        'Words': 'Mots',
+        'UPPERCASE': 'MAJUSCULES',
+        'NUMBERS': 'CHIFFRES',
+        'SYMBOLS': 'SYMBOLES',
+        'PASSWORD': 'MOT DE PASSE',
+        'PASSPHRASE': 'PHRASE DE PASSE',
+        'History': 'Historique',
+        'Theme': 'Thème',
+        'Resources': 'Ressources',
+        'Sign in': 'Se connecter',
+        'Discover Gold': 'Découvrir Gold',
+        'How to know if your password is secure?': 'Comment savoir si votre mot de passe est sécurisé ?',
+        'Test it here': 'Testez-le ici',
+        'Need a reminder about password best practices?': 'Besoin d\'un rappel sur les bonnes pratiques des mots de passe ?',
+        'Use at least 12 characters. The longer, the more secure!': 'Utilisez au moins 12 caractères. Plus c\'est long, plus c\'est sécurisé !',
+        'Complexity': 'Complexité',
+        'Mix uppercase, lowercase, numbers and symbols for maximum security.': 'Mélangez majuscules, minuscules, chiffres et symboles pour une sécurité maximale.',
+        'Uniqueness': 'Unicité',
+        'A unique password for each account. Never reuse the same one!': 'Un mot de passe unique pour chaque compte. Ne réutilisez jamais le même !',
+        'Gold Features': 'Fonctionnalités Gold',
+        'Multi-password generation': 'Multi-génération de mots de passe',
+        'Custom patterns': 'Patterns personnalisés',
+        'Unlimited complete history': 'Historique complet illimité',
+        'Dynamic theme & animated buttons': 'Thème dynamique & boutons animés',
+        'Styled notifications': 'Notifications stylées',
+        'Premium colors and glow': 'Couleurs et glow premium',
+        'Responsive on mobile, tablet and PC': 'Responsive sur mobile, tablette et PC',
+        'How does Gold mode work?': 'Comment fonctionne le mode Gold ?',
+        'Gold mode allows you to generate multiple passwords at once, use custom patterns and unlock the complete history.': 'Le mode Gold permet de générer plusieurs mots de passe à la fois, d\'utiliser des patterns personnalisés et de débloquer l\'historique complet.',
+        'How to copy my password?': 'Comment copier mon mot de passe ?',
+        'Simply click the "Copy" button to the right of the password bar.': 'Cliquez simplement sur le bouton "Copier" à droite de la barre du mot de passe.',
+        'Is it secure?': 'Est-ce sécurisé ?',
+        'Yes, all passwords are generated client-side and are never sent to a server.': 'Oui, tous les mots de passe sont générés côté client et ne sont jamais envoyés sur un serveur.',
+        '© 2025 KironPass – All rights reserved': '© 2025 KironPass – Tous droits réservés',
+        'Terms': 'CGU',
+        'Privacy Policy': 'Politique de confidentialité',
+        'Legal Notice': 'Mentions légales'
+    };
+    
+    // Traduire tous les éléments de texte
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+    
+    const textNodes = [];
+    let node;
+    while (node = walker.nextNode()) {
+        if (node.textContent.trim() && node.parentElement.tagName !== 'SCRIPT' && node.parentElement.tagName !== 'STYLE') {
+            textNodes.push(node);
+        }
+    }
+    
+    textNodes.forEach(textNode => {
+        const originalText = textNode.textContent.trim();
+        if (translations[originalText]) {
+            textNode.textContent = textNode.textContent.replace(originalText, translations[originalText]);
+        }
+    });
 }
 
 function updateLanguageUI() {
@@ -751,6 +956,27 @@ function updateSubscriptionDisplay() {
             if (paymentMethod && userSubscription.paymentMethod) {
                 paymentMethod.textContent = userSubscription.paymentMethod;
             }
+        }
+    }
+    
+    // Mettre à jour l'affichage des boutons de génération
+    updateGeneratorButtons();
+}
+
+function updateGeneratorButtons() {
+    const isPremium = userSubscription && userSubscription.status === 'active';
+    
+    if (isPremium) {
+        // Pour les utilisateurs premium, le bouton "Générer" devient "Générer Gold"
+        if (generateBtn) {
+            generateBtn.textContent = 'Générer Gold';
+            generateBtn.classList.add('btn-gold');
+        }
+    } else {
+        // Pour les utilisateurs gratuits, texte normal
+        if (generateBtn) {
+            generateBtn.textContent = 'Générer';
+            generateBtn.classList.remove('btn-gold');
         }
     }
 }
@@ -1200,13 +1426,16 @@ if (passphraseDecrease && passphraseIncrease && passphraseLength) {
 
 // GENERATION MOT DE PASSE NORMAL
 generateBtn.addEventListener('click', () => {
+    // Vérifier si l'utilisateur est premium
+    const isPremium = userSubscription && userSubscription.status === 'active';
+    
     // Animation de l'icône
     generateBtn.classList.add('generating');
     setTimeout(() => {
         generateBtn.classList.remove('generating');
     }, 600);
     
-    let count = 1; // Free: 1
+    let count = isPremium ? 5 : 1; // Premium: 5, Free: 1
     const passwords = [];
     const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
 
@@ -1240,45 +1469,6 @@ generateBtn.addEventListener('click', () => {
 });
 
 // GENERATION MOT DE PASSE GOLD
-generateGoldBtn.addEventListener('click', () => {
-    // Animation de l'icône
-    generateGoldBtn.classList.add('generating');
-    setTimeout(() => {
-        generateGoldBtn.classList.remove('generating');
-    }, 600);
-    
-    const count = 5; // Gold: 5
-    const passwords = [];
-    const selectedType = document.querySelector('input[name="passwordType"]:checked').value;
-
-    for (let i = 0; i < count; i++) {
-        let pwd;
-        
-        if (selectedType === 'password') {
-            const requestedLength = Math.min(Math.max(parseInt(passwordLength.value) || 12, 6), 128);
-            pwd = generatePassword(requestedLength, {
-                uppercase: includeUppercase.checked,
-                numbers: includeNumbers.checked,
-                symbols: includeSymbols.checked
-            });
-        } else {
-            const requestedWords = Math.min(Math.max(parseInt(passphraseLength.value) || 4, 1), 10);
-            pwd = generatePassphrase(requestedWords, {
-                uppercase: passphraseUppercase.checked,
-                numbers: passphraseNumbers.checked,
-                symbols: passphraseSymbols.checked
-            });
-        }
-        
-        passwords.push(pwd);
-        if (i === 0) {
-            displayColoredPassword(pwd);
-        }
-    }
-
-    updateStrengthBar(passwords[0]);
-    updateHistory(passwords);
-});
 
 
 // ===================== COPIER AVEC GLOW =====================
@@ -1306,14 +1496,7 @@ copyBtn.addEventListener('click', () => {
 // (Toggle historique supprimé, liste désormais scrollable)
 
 // ===================== MICRO-INTERACTIONS BOUTONS =====================
-[generateBtn, generateGoldBtn, copyBtn].forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'scale(1.01)';
-    });
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'scale(1)';
-    });
-});
+// Les effets d'agrandissement ont été supprimés, seul le CSS gère les hovers
 
 // ===================== BARRE DE FORCE DYNAMIQUE =====================
 // L'event listener input n'est plus nécessaire car c'est maintenant un div
@@ -1404,6 +1587,37 @@ themeBtn.addEventListener('click', () => {
         themeIcon.textContent = '🌙'; // Lune pour le thème sombre
     } else {
         themeIcon.textContent = '☀️'; // Soleil pour le thème clair
+    }
+});
+
+// ===================== BOUTON RESSOURCES =====================
+const resourcesBtn = document.getElementById('resources-btn');
+const resourcesDropdown = document.getElementById('resources-dropdown');
+const dropdownArrow = document.querySelector('.dropdown-arrow');
+
+function toggleResourcesDropdown() {
+    if (resourcesDropdown) {
+        resourcesDropdown.classList.toggle('show');
+        if (dropdownArrow) {
+            dropdownArrow.style.transform = resourcesDropdown.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    }
+}
+
+if (resourcesBtn) {
+    resourcesBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleResourcesDropdown();
+    });
+}
+
+// Fermer le dropdown en cliquant ailleurs
+document.addEventListener('click', (e) => {
+    if (resourcesDropdown && !resourcesBtn.contains(e.target) && !resourcesDropdown.contains(e.target)) {
+        resourcesDropdown.classList.remove('show');
+        if (dropdownArrow) {
+            dropdownArrow.style.transform = 'rotate(0deg)';
+        }
     }
 });
 

@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="7MLZN4OHbx16dpoJ1Dkjq2Bfr9pFsWsu7LmF5sm6LpU" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="icon" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#8b5cf6">
     <title>KironPass – Générateur de mots de passe sécurisé</title>
     <link rel="stylesheet" href="style.css">
     
@@ -14,6 +21,9 @@
     <!-- PropellerAds -->
     <meta name="monetag" content="917dcdd29abad44d566c6f0580470780">
     
+    <!-- AdMaven -->
+    <meta name='admaven-placement' content=Bqja7rHnG>
+    
 </head>
 <body>
 
@@ -21,12 +31,24 @@
 <header class="header">
     <div class="header-container container">
         <!-- Logo -->
-        <div class="logo" translate="no"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
+        <div class="logo" translate="no"><img src="/favicon.png" alt="KironPass" class="logo-icon" width="64" height="64" style="vertical-align:middle;margin-right:4px;"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
 
         <!-- Boutons à droite -->
         <div class="nav-right">
             <!-- Bouton Découvrir Gold -->
             <button class="btn-gold-top" data-translate="discover-gold">Découvrir Gold</button>
+
+                <!-- Bouton Ressources -->
+                <div class="resources-dropdown-container">
+                    <button class="resources-btn" id="resources-btn">
+                        <span class="resources-icon">📚</span>
+                        <span class="resources-text" data-translate="resources">Ressources</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div id="resources-dropdown" class="resources-dropdown">
+                        <a href="mots-de-passe-courants.html" class="dropdown-item" data-translate="common-passwords-2024">Les 10 mots de passe les plus courants en 2024</a>
+                    </div>
+                </div>
 
             <!-- Bouton Thème -->
             <button class="theme-btn" id="theme-btn">
@@ -168,16 +190,15 @@
                 </label>
             </div>
 
-            <!-- BOUTONS GENERER -->
+            <!-- BOUTONS GENERER ET COPIER -->
             <div class="generator-buttons">
-                <button id="generateBtn" class="btn btn-generate" data-translate="generate-free">Générer Free</button>
-                <button id="generateGoldBtn" class="btn btn-gold btn-generate" data-translate="generate-gold">Générer Gold</button>
+                <button id="generateBtn" class="btn btn-generate" data-translate="generate">Générer</button>
+                <button id="copy-btn" class="btn-copy btn-copy-violet" data-translate="copy" translate="no">Copier</button>
             </div>
 
-            <!-- BARRE MOT DE PASSE + COPIER -->
+            <!-- BARRE MOT DE PASSE -->
             <div class="password-display-area">
                 <div id="password-output" class="password-text" data-placeholder="Votre mot de passe apparaîtra ici"></div>
-                <button id="copy-btn" class="btn-copy" data-translate="copy" translate="no">Copier</button>
             </div>
 
             <!-- FORCE DU MOT DE PASSE -->
@@ -311,6 +332,8 @@
 
     <!-- ===================== NOTIFICATION ===================== -->
     <div class="notification" id="notification">Copié !</div>
+    <!-- Bouton langue discret -->
+    <button id="lang-fab" class="lang-fab" title="Langue">🌐</button>
 
     <!-- ===================== PAGE KIRONGOLD ===================== -->
     <div class="modal" id="gold-modal" aria-hidden="true">
@@ -1240,6 +1263,19 @@
             } else {
                 console.error('❌ Stripe SDK non chargé');
             }
+        });
+    </script>
+    <script>
+        // Fab langue (bas-droite)
+        document.addEventListener('DOMContentLoaded',()=>{
+            const fab=document.getElementById('lang-fab');
+            if(!fab) return;
+            fab.addEventListener('click',()=>{
+                const current=localStorage.getItem('kironLanguage')||'fr';
+                const next=current==='fr'?'en':'fr';
+                localStorage.setItem('kironLanguage',next);
+                window.location.reload();
+            });
         });
     </script>
 </body>

@@ -5,11 +5,15 @@
   "main": "index.html",
   "scripts": {
     "build": "echo 'No build step required'",
-    "start": "echo 'Static site - no start script needed'"
+    "start": "echo 'Static site - no start script needed'",
+    "icons": "node scripts/generate-icons.js"
   },
   "keywords": ["password", "generator", "security"],
   "author": "KironPass",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.33.3"
+  },
   "dependencies": {}
 }
