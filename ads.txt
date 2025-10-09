@@ -1,8 +1,3 @@
-# ads.txt file for KironPass
-# This file authorizes Google AdSense to serve ads on this domain
-
-# Google AdSense
-google.com, pub-9239068949462297, DIRECT, f08c47fec0942fa0
-
-# Additional authorized sellers (optional)
-# You can add more authorized sellers here if needed
+# ads.txt file for KironPass - Ezoic
+# This file is managed by Ezoic Ad Management
+# For updates, visit: https://srv.adstxtmanager.com/19390/kironpass.com

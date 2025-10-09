@@ -7,6 +7,13 @@
   SECRETS_SCAN_ENABLED = "false"
   SECRETS_SCAN_OMIT_PATHS = "*.md,netlify/functions/*"
 
+# Redirection ads.txt vers Ezoic
+[[redirects]]
+  from = "/ads.txt"
+  to = "https://srv.adstxtmanager.com/19390/kironpass.com"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
