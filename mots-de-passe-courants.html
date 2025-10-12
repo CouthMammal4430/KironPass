@@ -42,12 +42,19 @@
             <button class="btn-gold-top" data-translate="discover-gold">Découvrir Gold</button>
             <div class="resources-dropdown-container">
                 <button class="resources-btn" id="resources-btn">
-                    <span class="resources-icon">📚</span>
                     <span class="resources-text" data-translate="resources">Ressources</span>
                     <span class="dropdown-arrow">▼</span>
                 </button>
                 <div id="resources-dropdown" class="resources-dropdown">
-                    <a href="mots-de-passe-courants.html" class="dropdown-item" data-translate="common-passwords-2024">Les 10 mots de passe les plus courants en 2024</a>
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Articles</div>
+                        <a href="mots-de-passe-courants.html" class="dropdown-item" data-translate="common-passwords-2024">Les 10 mots de passe les plus courants en 2024</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Outils</div>
+                        <a href="password-test.html" class="dropdown-item" data-translate="password-strength-test">Test de force de mot de passe</a>
+                        <a href="password-improver.html" class="dropdown-item" data-translate="password-improver">Améliorateur de mot de passe</a>
+                    </div>
                 </div>
             </div>
             <button class="theme-btn" id="theme-btn">
@@ -63,8 +70,8 @@
                 </button>
                 <div id="user-dropdown" class="user-dropdown">
                     <div class="dropdown-item" id="language-item">
-                        <span class="dropdown-icon">🌐</span>
-                        <span>Langue</span>
+                        <span class="dropdown-icon">🇫🇷</span>
+                        <span>Français</span>
                     </div>
                 </div>
             </div>
@@ -405,6 +412,8 @@
 
 <!-- Configuration des variables d'environnement -->
 <script src="config.js"></script>
+<!-- Script commun pour toutes les pages -->
+<script src="common.js"></script>
 <!-- Google Identity Services -->
 <script src="https://accounts.google.com/gsi/client" defer onload="initGoogleSignIn()"></script>
 <!-- EmailJS SDK -->

@@ -3,7 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Générateur de mots de passe sécurisé gratuit en ligne. Créez des mots de passe ultra-sécurisés avec KironPass. Testez la force de vos mots de passe et améliorez votre sécurité en ligne.">
+    <meta name="keywords" content="générateur mot de passe, mot de passe sécurisé, créer mot de passe, sécurité en ligne, KironPass, password generator">
+    <meta name="author" content="KironPass">
     <meta name="google-site-verification" content="7MLZN4OHbx16dpoJ1Dkjq2Bfr9pFsWsu7LmF5sm6LpU" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kironpass.com/">
+    <meta property="og:title" content="KironPass – Générateur de mots de passe sécurisé">
+    <meta property="og:description" content="Créez des mots de passe ultra-sécurisés gratuitement avec KironPass. Testez et améliorez la sécurité de vos mots de passe.">
+    <meta property="og:image" content="https://kironpass.com/favicon-512.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://kironpass.com/">
+    <meta property="twitter:title" content="KironPass – Générateur de mots de passe sécurisé">
+    <meta property="twitter:description" content="Créez des mots de passe ultra-sécurisés gratuitement avec KironPass.">
+    <meta property="twitter:image" content="https://kironpass.com/favicon-512.png">
+    
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -11,7 +29,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#8b5cf6">
-    <title>KironPass – Générateur de mots de passe sécurisé</title>
+    <link rel="canonical" href="https://kironpass.com/">
+    <title>KironPass – Générateur de mots de passe sécurisé gratuit en ligne</title>
     <link rel="stylesheet" href="style.css">
     
     <!-- Ezoic Verification -->
@@ -45,13 +64,20 @@
                 <!-- Bouton Ressources -->
                 <div class="resources-dropdown-container">
                     <button class="resources-btn" id="resources-btn">
-                        <span class="resources-icon">📚</span>
                         <span class="resources-text" data-translate="resources">Ressources</span>
                         <span class="dropdown-arrow">▼</span>
                     </button>
-                    <div id="resources-dropdown" class="resources-dropdown">
+                <div id="resources-dropdown" class="resources-dropdown">
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Articles</div>
                         <a href="mots-de-passe-courants.html" class="dropdown-item" data-translate="common-passwords-2024">Les 10 mots de passe les plus courants en 2024</a>
                     </div>
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Outils</div>
+                        <a href="password-test.html" class="dropdown-item" data-translate="password-strength-test">Test de force de mot de passe</a>
+                        <a href="password-improver.html" class="dropdown-item" data-translate="password-improver">Améliorateur de mot de passe</a>
+                    </div>
+                </div>
                 </div>
 
             <!-- Bouton Thème -->
@@ -74,8 +100,8 @@
                 </button>
                 <div id="user-dropdown" class="user-dropdown">
                     <div class="dropdown-item" id="language-item">
-                        <span class="dropdown-icon">🌐</span>
-                        <span>Langue</span>
+                        <span class="dropdown-icon">🇫🇷</span>
+                        <span>Français</span>
                     </div>
                 </div>
             </div>
@@ -190,10 +216,10 @@
                 </label>
             </div>
 
-            <!-- BOUTONS GENERER ET COPIER -->
+            <!-- BOUTONS GENERER -->
             <div class="generator-buttons">
                 <button id="generateBtn" class="btn btn-generate" data-translate="generate">Générer</button>
-                <button id="copy-btn" class="btn-copy btn-copy-violet" data-translate="copy" translate="no">Copier</button>
+                <button id="copyBtn" class="btn btn-copy" data-translate="copy">Copier</button>
             </div>
 
             <!-- BARRE MOT DE PASSE -->
@@ -328,8 +354,6 @@
 
     <!-- ===================== NOTIFICATION ===================== -->
     <div class="notification" id="notification">Copié !</div>
-    <!-- Bouton langue discret -->
-    <button id="lang-fab" class="lang-fab" title="Langue">🌐</button>
 
     <!-- ===================== PAGE KIRONGOLD ===================== -->
     <div class="modal" id="gold-modal" aria-hidden="true">
@@ -1239,6 +1263,8 @@
 
     <!-- Configuration des variables d'environnement -->
     <script src="config.js"></script>
+    <!-- Listes de mots pour passphrase -->
+    <script src="wordlists.js" defer></script>
     <!-- Google Identity Services (remplacez le Client ID dans script.js) -->
     <script src="https://accounts.google.com/gsi/client" defer onload="initGoogleSignIn()"></script>
     <!-- EmailJS SDK (remplacez les IDs dans script.js). Utilise defer pour garantir l'ordre. -->
@@ -1247,32 +1273,9 @@
     <script src="https://js.stripe.com/v3/"></script>
     <!-- zxcvbn pour l'évaluation de la force des mots de passe -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
-    <script>
-        // Attendre que Stripe soit chargé avant d'exécuter le script principal
-        window.addEventListener('load', function() {
-            if (typeof Stripe !== 'undefined') {
-                console.log('✅ Stripe SDK chargé');
-                // Charger le script principal
-                const script = document.createElement('script');
-                script.src = 'script.js';
-                document.head.appendChild(script);
-            } else {
-                console.error('❌ Stripe SDK non chargé');
-            }
-        });
-    </script>
-    <script>
-        // Fab langue (bas-droite)
-        document.addEventListener('DOMContentLoaded',()=>{
-            const fab=document.getElementById('lang-fab');
-            if(!fab) return;
-            fab.addEventListener('click',()=>{
-                const current=localStorage.getItem('kironLanguage')||'fr';
-                const next=current==='fr'?'en':'fr';
-                localStorage.setItem('kironLanguage',next);
-                window.location.reload();
-            });
-        });
-    </script>
+    <!-- Script principal - defer pour garantir le chargement après le DOM -->
+    <script src="script.js" defer></script>
+    <!-- Script commun pour toutes les pages -->
+    <script src="common.js" defer></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 // ===================== VARIABLES =====================
 const passwordOutput = document.getElementById('password-output');
 const generateBtn = document.getElementById('generateBtn');
-const copyBtn = document.getElementById('copy-btn');
+const copyBtn = document.getElementById('copyBtn');
 const notification = document.getElementById('notification');
 const historyContainer = document.querySelector('.history-container');
 const historyList = document.querySelector('.history-list');
@@ -290,7 +290,8 @@ function closeAuthModal() {
 // Event listeners seront attachés dans DOMContentLoaded
 
 // Tabs
-tabs.forEach(tab => {
+if (tabs && tabs.length > 0) {
+    tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         panels.forEach(p => p.classList.remove('active'));
@@ -301,6 +302,7 @@ tabs.forEach(tab => {
         renderGoogleButtonInModal();
     });
 });
+}
 
 // ===================== LOGIN / SIGNUP (DEMO FRONT) =====================
 function validateEmail(email) {
@@ -534,11 +536,13 @@ function closeSubscriptionModal() {
 function toggleUserDropdown() {
     if (!userDropdown) return;
     userDropdown.classList.toggle('show');
+    if (hamburgerBtn) hamburgerBtn.classList.toggle('active');
 }
 
 function closeUserDropdown() {
     if (!userDropdown) return;
     userDropdown.classList.remove('show');
+    if (hamburgerBtn) hamburgerBtn.classList.remove('active');
 }
 
 // ===================== GESTION DES LANGUES =====================
@@ -1115,91 +1119,75 @@ function getRandomInt(min, max) {
 
 // FONCTION DE GENERATION DE MOT DE PASSE
 function generatePassword(length = 12, options = {}) {
-    let chars = '';
-    if (options.uppercase) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    if (options.numbers) chars += '0123456789';
-    if (options.symbols) chars += '!@#$%^&*()_+{}[]<>?/|';
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '!@#$%^&*()_+{}[]<>?/|';
     
-    // Si aucun caractère spécial n'est sélectionné, utiliser seulement des minuscules
-    if (!chars) {
-        chars = 'abcdefghijklmnopqrstuvwxyz';
-    } else {
-        // Toujours inclure les minuscules par défaut
-        chars += 'abcdefghijklmnopqrstuvwxyz';
+    let chars = lowercase; // Toujours inclure les minuscules
+    let required = [];
+    
+    // Ajouter les caractères requis selon les options
+    if (options.uppercase) {
+        chars += uppercase;
+        required.push(uppercase);
     }
-
+    if (options.numbers) {
+        chars += numbers;
+        required.push(numbers);
+    }
+    if (options.symbols) {
+        chars += symbols;
+        required.push(symbols);
+    }
+    
     let password = '';
-    for (let i = 0; i < length; i++) {
+    
+    // S'assurer qu'il y a au moins un caractère de chaque type requis
+    for (let i = 0; i < required.length; i++) {
+        const charset = required[i];
+        password += charset.charAt(getRandomInt(0, charset.length - 1));
+    }
+    
+    // Compléter le reste du mot de passe avec des caractères aléatoires
+    for (let i = password.length; i < length; i++) {
         password += chars.charAt(getRandomInt(0, chars.length - 1));
     }
+    
+    // Mélanger le mot de passe pour éviter que les caractères requis soient toujours au début
+    password = password.split('').sort(() => Math.random() - 0.5).join('');
+    
     return password;
 }
 
 // FONCTION DE GENERATION DE PHRASE DE PASSE
 function generatePassphrase(wordCount = 4, options = {}) {
-    const words = [
-        // A
-        'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract',
-        'absurd', 'abuse', 'access', 'accident', 'account', 'accuse', 'achieve', 'acid',
-        'acoustic', 'acquire', 'across', 'act', 'action', 'actor', 'actress', 'actual',
-        'adapt', 'add', 'addict', 'address', 'adjust', 'admit', 'adult', 'advance',
-        'advice', 'aerobic', 'affair', 'afford', 'afraid', 'again', 'age', 'agent',
-        'agree', 'ahead', 'aim', 'air', 'airport', 'aisle', 'alarm', 'album',
-        'alcohol', 'alert', 'alien', 'all', 'alley', 'allow', 'almost', 'alone',
-        'alpha', 'already', 'also', 'alter', 'always', 'amateur', 'amazing', 'among',
-        'amount', 'amused', 'analyst', 'anchor', 'ancient', 'anger', 'angle', 'angry',
-        'animal', 'ankle', 'announce', 'annual', 'another', 'answer', 'antenna', 'antique',
-        'anxiety', 'any', 'apart', 'apology', 'appear', 'apple', 'approve', 'april',
-        // B
-        'baby', 'bachelor', 'bacon', 'badge', 'bag', 'balance', 'balcony', 'ball',
-        'bamboo', 'banana', 'banner', 'bar', 'barely', 'bargain', 'barrel', 'base',
-        'basic', 'basket', 'battle', 'beach', 'bean', 'beauty', 'because', 'become',
-        'beef', 'before', 'begin', 'behave', 'behind', 'believe', 'below', 'belt',
-        'bench', 'benefit', 'best', 'betray', 'better', 'between', 'beyond', 'bicycle',
-        'bid', 'bike', 'bind', 'biology', 'bird', 'birth', 'bitter', 'black',
-        'blade', 'blame', 'blanket', 'blast', 'bleak', 'bless', 'blind', 'blood',
-        'blossom', 'blow', 'blue', 'blur', 'blush', 'board', 'boat', 'body',
-        'boil', 'bomb', 'bone', 'bonus', 'book', 'boost', 'border', 'boring',
-        'borrow', 'boss', 'bottom', 'bounce', 'box', 'boy', 'bracket', 'brain',
-        'brand', 'brass', 'brave', 'bread', 'breeze', 'brick', 'bridge', 'brief',
-        'bright', 'bring', 'brisk', 'broccoli', 'broken', 'bronze', 'broom', 'brother',
-        'brown', 'brush', 'bubble', 'buddy', 'budget', 'buffalo', 'build', 'bulb',
-        'bulk', 'bullet', 'bundle', 'bunker', 'burden', 'burger', 'burst', 'bus',
-        'business', 'busy', 'butter', 'buyer', 'buzz',
-        // C
-        'cabbage', 'cabin', 'cable', 'cactus', 'cage', 'cake', 'call', 'calm',
-        'camera', 'camp', 'can', 'canal', 'cancel', 'candy', 'cannon', 'canoe',
-        'canvas', 'canyon', 'capable', 'capital', 'captain', 'car', 'carbon', 'card',
-        'care', 'career', 'careful', 'careless', 'cargo', 'carpet', 'carry', 'cart',
-        'case', 'cash', 'casino', 'cast', 'casual', 'cat', 'catalog', 'catch',
-        'category', 'cattle', 'caught', 'cause', 'caution', 'cave', 'ceiling', 'celery',
-        'cement', 'census', 'century', 'cereal', 'certain', 'chair', 'chalk', 'champion',
-        'change', 'chaos', 'chapter', 'charge', 'chase', 'cheap', 'check', 'cheese',
-        'chef', 'cherry', 'chest', 'chicken', 'chief', 'child', 'chimney', 'choice',
-        'choose', 'chronic', 'chuckle', 'chunk', 'churn', 'cigar', 'cinnamon', 'circle',
-        'citizen', 'city', 'civil', 'claim', 'clamp', 'clarify', 'claw', 'clay',
-        'clean', 'clerk', 'clever', 'click', 'client', 'cliff', 'climb', 'cling',
-        'clinic', 'clip', 'clock', 'clog', 'close', 'cloth', 'cloud', 'clown',
-        'club', 'clump', 'cluster', 'clutch', 'coach', 'coast', 'coconut', 'code',
-        'coffee', 'coil', 'coin', 'collect', 'color', 'column', 'come', 'comfort',
-        'comic', 'common', 'company', 'concert', 'conduct', 'confirm', 'congress', 'connect',
-        'consider', 'control', 'convince', 'cook', 'cool', 'copper', 'copy', 'coral',
-        'core', 'corn', 'correct', 'cost', 'cotton', 'couch', 'country', 'couple',
-        'course', 'cousin', 'cover', 'coyote', 'crack', 'cradle', 'craft', 'cram',
-        'crane', 'crash', 'crater', 'crawl', 'crazy', 'cream', 'credit', 'creek',
-        'crew', 'cricket', 'crime', 'crisp', 'critic', 'crop', 'cross', 'crouch',
-        'crowd', 'crucial', 'cruel', 'cruise', 'crumble', 'crunch', 'crush', 'cry',
-        'crystal', 'cube', 'culture', 'cup', 'cupboard', 'curious', 'current', 'curtain',
-        'curve', 'cushion', 'custom', 'cute', 'cycle'
-    ];
+    // Récupérer la langue actuelle (définie dans common.js ou localStorage)
+    const currentLang = sessionStorage.getItem('kironLanguage') || 'fr';
+    
+    // Utiliser la liste de mots appropriée
+    const words = typeof getWordList !== 'undefined' ? getWordList(currentLang) : 
+        ['abandon', 'ability', 'accept', 'action', 'animal', 'apple', 'balance', 
+         'beauty', 'bridge', 'camera', 'castle', 'change', 'circle', 'coffee',
+         'design', 'dream', 'energy', 'family', 'flower', 'forest', 'future',
+         'garden', 'golden', 'guitar', 'health', 'heaven', 'island', 'journey',
+         'jungle', 'kitchen', 'laptop', 'legend', 'letter', 'library', 'listen',
+         'machine', 'memory', 'moment', 'mountain', 'nature', 'ocean', 'orange',
+         'palace', 'planet', 'poetry', 'rainbow', 'rhythm', 'river', 'secret',
+         'shadow', 'simple', 'spirit', 'summer', 'sunset', 'temple', 'thunder',
+         'travel', 'treasure', 'universe', 'victory', 'village', 'vision', 'voyage',
+         'wallet', 'whisper', 'window', 'winter', 'wisdom', 'wonder', 'yellow'];
     
     const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
     
     let passphrase = '';
     let totalDigits = 0;
     let totalSymbols = 0;
-    const maxDigits = options.numbers ? getRandomInt(1, 2) : 0; // Max 1-2 chiffres au total
-    const maxSymbols = options.symbols ? getRandomInt(1, 2) : 0; // Max 1-2 symboles au total
+    let hasUppercase = false;
+    const minDigits = options.numbers ? 1 : 0; // Au moins 1 chiffre si activé
+    const minSymbols = options.symbols ? 1 : 0; // Au moins 1 symbole si activé
+    const maxDigits = options.numbers ? getRandomInt(1, 2) : 0;
+    const maxSymbols = options.symbols ? getRandomInt(1, 2) : 0;
     
     for (let i = 0; i < wordCount; i++) {
         const randomWord = words[getRandomInt(0, words.length - 1)];
@@ -1207,40 +1195,36 @@ function generatePassphrase(wordCount = 4, options = {}) {
         // Appliquer les options
         let finalWord = randomWord;
         
-        if (options.uppercase) {
+        // S'assurer qu'au moins un mot a une majuscule
+        if (options.uppercase && (i === 0 || !hasUppercase)) {
+            finalWord = finalWord.charAt(0).toUpperCase() + finalWord.slice(1);
+            hasUppercase = true;
+        } else if (options.uppercase && getRandomInt(0, 1) === 1) {
             finalWord = finalWord.charAt(0).toUpperCase() + finalWord.slice(1);
         }
         
-        // Ajouter des chiffres seulement si on n'a pas atteint le maximum
-        if (options.numbers && totalDigits < maxDigits) {
-            const shouldAddDigit = getRandomInt(0, 1) === 1; // 50% de chance
-            if (shouldAddDigit) {
-                const randomDigit = getRandomInt(0, 9);
-                // Ajouter le chiffre au début ou à la fin du mot
-                const addAtEnd = getRandomInt(0, 1) === 1;
-                if (addAtEnd) {
-                    finalWord = finalWord + randomDigit;
-                } else {
-                    finalWord = randomDigit + finalWord;
-                }
-                totalDigits++;
+        // S'assurer qu'au moins un chiffre est ajouté si l'option est activée
+        if (options.numbers && (totalDigits < minDigits || (totalDigits < maxDigits && getRandomInt(0, 1) === 1))) {
+            const randomDigit = getRandomInt(0, 9);
+            const addAtEnd = getRandomInt(0, 1) === 1;
+            if (addAtEnd) {
+                finalWord = finalWord + randomDigit;
+            } else {
+                finalWord = randomDigit + finalWord;
             }
+            totalDigits++;
         }
         
-        // Ajouter des symboles seulement si on n'a pas atteint le maximum
-        if (options.symbols && totalSymbols < maxSymbols) {
-            const shouldAddSymbol = getRandomInt(0, 2) === 1; // 33% de chance
-            if (shouldAddSymbol) {
-                const randomSymbol = symbols[getRandomInt(0, symbols.length - 1)];
-                // Ajouter le symbole au début ou à la fin du mot
-                const addAtEnd = getRandomInt(0, 1) === 1;
-                if (addAtEnd) {
-                    finalWord = finalWord + randomSymbol;
-                } else {
-                    finalWord = randomSymbol + finalWord;
-                }
-                totalSymbols++;
+        // S'assurer qu'au moins un symbole est ajouté si l'option est activée
+        if (options.symbols && (totalSymbols < minSymbols || (totalSymbols < maxSymbols && getRandomInt(0, 2) === 1))) {
+            const randomSymbol = symbols[getRandomInt(0, symbols.length - 1)];
+            const addAtEnd = getRandomInt(0, 1) === 1;
+            if (addAtEnd) {
+                finalWord = finalWord + randomSymbol;
+            } else {
+                finalWord = randomSymbol + finalWord;
             }
+            totalSymbols++;
         }
         
         passphrase += finalWord;
@@ -1425,7 +1409,8 @@ if (passphraseDecrease && passphraseIncrease && passphraseLength) {
 // ===================== EVENEMENTS =====================
 
 // GENERATION MOT DE PASSE NORMAL
-generateBtn.addEventListener('click', () => {
+if (generateBtn) {
+    generateBtn.addEventListener('click', () => {
     // Vérifier si l'utilisateur est premium
     const isPremium = userSubscription && userSubscription.status === 'active';
     
@@ -1467,31 +1452,46 @@ generateBtn.addEventListener('click', () => {
     updateStrengthBar(passwords[0]);
     updateHistory(passwords);
 });
+}
 
 // GENERATION MOT DE PASSE GOLD
 
 
 // ===================== COPIER AVEC GLOW =====================
-copyBtn.addEventListener('click', () => {
+let copyTimeout = null;
+if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
     // Récupérer le texte brut du mot de passe (sans les balises HTML)
     const passwordText = passwordOutput.textContent || passwordOutput.innerText;
     if (!passwordText) return;
     
     navigator.clipboard.writeText(passwordText).then(() => {
-        // Sauvegarder le texte original
-        const originalText = copyBtn.textContent;
+        // Sauvegarder le texte original seulement si ce n'est pas déjà "Copié !"
+        const originalText = copyBtn.getAttribute('data-original-text') || copyBtn.textContent;
+        
+        // Si ce n'est pas encore stocké, le stocker
+        if (!copyBtn.getAttribute('data-original-text')) {
+            copyBtn.setAttribute('data-original-text', originalText);
+        }
+        
+        // Annuler le timeout précédent s'il existe
+        if (copyTimeout) {
+            clearTimeout(copyTimeout);
+        }
         
         // Changer le texte du bouton
         copyBtn.textContent = 'Copié !';
         copyBtn.classList.add('active');
         
         // Remettre le texte original après 1.2 seconde
-        setTimeout(() => {
-            copyBtn.textContent = originalText;
+        copyTimeout = setTimeout(() => {
+            copyBtn.textContent = copyBtn.getAttribute('data-original-text');
             copyBtn.classList.remove('active');
+            copyTimeout = null;
         }, 1200);
     });
 });
+}
 
 // (Toggle historique supprimé, liste désormais scrollable)
 
@@ -1515,9 +1515,11 @@ function togglePasswordType() {
 }
 
 // Event listeners pour le type de mot de passe
-passwordTypeRadios.forEach(radio => {
-    radio.addEventListener('change', togglePasswordType);
-});
+if (passwordTypeRadios && passwordTypeRadios.length > 0) {
+    passwordTypeRadios.forEach(radio => {
+        radio.addEventListener('change', togglePasswordType);
+    });
+}
 
 // Slider longueur - mise à jour valeur affichée
 if (passwordLength && passwordLengthValue) {
@@ -1565,6 +1567,7 @@ if (lengthDecrease && lengthIncrease && passwordLength) {
 const themeBtn = document.getElementById('theme-btn');
 let savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';
 document.body.classList.add(savedTheme);
+window.themeInitialized = true; // Marquer que le thème est géré par script.js
 
 // Définir l'icône correcte au chargement
 const themeIcon = document.querySelector('.theme-icon');
@@ -1635,6 +1638,7 @@ if (discoverGoldBtn) {
 // Menu hamburger pour la langue
 if (hamburgerBtn) {
     hamburgerBtn.addEventListener('click', toggleUserDropdown);
+    window.hamburgerInitialized = true; // Marquer que le hamburger est géré par script.js
 }
 
 // Fermer le dropdown en cliquant ailleurs
@@ -2667,4 +2671,3 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
-
