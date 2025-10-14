@@ -36,21 +36,20 @@
     <!-- Ezoic Verification -->
     <meta name="ezoic-site-verification" content="Jti6XzIcgo0cMYgjPTsFN87OUrYw7M" />
     
-    <!-- Cookie Consent Manager - DOIT être chargé AVANT Ezoic -->
-    <script src="cookie-consent.js"></script>
+    <!-- Cookie Consent Manager - Chargé en async pour ne pas bloquer -->
+    <script src="cookie-consent.js" defer></script>
     
-    <!-- Ezoic CMP Scripts -->
-    <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
-    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+    <!-- Ezoic CMP Scripts - Chargés en différé -->
+    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false" defer></script>
 
     <!-- Ezoic Standalone Scripts -->
-    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
     <script>
         window.ezstandalone = window.ezstandalone || {};
         ezstandalone.cmd = ezstandalone.cmd || [];
     </script>
+    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
 
-    <!-- Google AdSense -->
+    <!-- Google AdSense - Chargé en différé -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9239068949462297"
      crossorigin="anonymous"></script>
     
@@ -125,19 +124,25 @@
     <div class="ad-banner">
         <div class="ad-content">
             <span class="ad-label">Publicité</span>
-            <!-- Adsterra Native Banner 728x90 -->
-            <div style="text-align: center;">
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : '22eff5407c06ba38682d6acf66277ac6',
-                        'format' : 'iframe',
-                        'height' : 90,
-                        'width' : 728,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//www.highperformanceformat.com/22eff5407c06ba38682d6acf66277ac6/invoke.js"></script>
-            </div>
+            <!-- Adsterra Native Banner 728x90 - Chargé en différé -->
+            <div style="text-align: center;" id="adsterra-banner-1"></div>
+            <script type="text/javascript">
+                window.addEventListener('load', function() {
+                    setTimeout(function() {
+                        window.atOptions = {
+                            'key' : '22eff5407c06ba38682d6acf66277ac6',
+                            'format' : 'iframe',
+                            'height' : 90,
+                            'width' : 728,
+                            'params' : {}
+                        };
+                        var s = document.createElement('script');
+                        s.type = 'text/javascript';
+                        s.src = '//www.highperformanceformat.com/22eff5407c06ba38682d6acf66277ac6/invoke.js';
+                        document.getElementById('adsterra-banner-1').appendChild(s);
+                    }, 2000);
+                });
+            </script>
         </div>
     </div>
 
@@ -261,19 +266,25 @@
         <section class="ad-section">
             <div class="ad-container">
                 <span class="ad-label">Publicité</span>
-                <!-- Adsterra Native Banner 300x250 -->
-                <div style="text-align: center; margin: 20px auto;">
-                    <script type="text/javascript">
-                        atOptions = {
-                            'key' : '70fb79e38924c59307eafd4703e95d1d',
-                            'format' : 'iframe',
-                            'height' : 250,
-                            'width' : 300,
-                            'params' : {}
-                        };
-                    </script>
-                    <script type="text/javascript" src="//www.highperformanceformat.com/70fb79e38924c59307eafd4703e95d1d/invoke.js"></script>
-                </div>
+                <!-- Adsterra Native Banner 300x250 - Chargé en différé -->
+                <div style="text-align: center; margin: 20px auto;" id="adsterra-banner-2"></div>
+                <script type="text/javascript">
+                    window.addEventListener('load', function() {
+                        setTimeout(function() {
+                            window.atOptions = {
+                                'key' : '70fb79e38924c59307eafd4703e95d1d',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                            var s = document.createElement('script');
+                            s.type = 'text/javascript';
+                            s.src = '//www.highperformanceformat.com/70fb79e38924c59307eafd4703e95d1d/invoke.js';
+                            document.getElementById('adsterra-banner-2').appendChild(s);
+                        }, 2500);
+                    });
+                </script>
             </div>
         </section>
 
@@ -1295,23 +1306,26 @@
     </div>
 
     <!-- Configuration des variables d'environnement -->
-    <script src="config.js"></script>
+    <script src="config.js" defer></script>
     <!-- Listes de mots pour passphrase -->
     <script src="wordlists.js" defer></script>
-    <!-- Google Identity Services (remplacez le Client ID dans script.js) -->
-    <script src="https://accounts.google.com/gsi/client" defer onload="initGoogleSignIn()"></script>
-    <!-- EmailJS SDK (remplacez les IDs dans script.js). Utilise defer pour garantir l'ordre. -->
+    <!-- EmailJS SDK - Chargé uniquement si nécessaire -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
-    <!-- Stripe SDK -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <!-- zxcvbn pour l'évaluation de la force des mots de passe -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+    
+    <!-- Scripts chargés dynamiquement (lazy-load) : -->
+    <!-- Google Identity Services, Stripe, zxcvbn seront chargés uniquement quand nécessaire -->
+    <script src="lazy-loader.js" defer></script>
+    
     <!-- Script principal - defer pour garantir le chargement après le DOM -->
     <script src="script.js" defer></script>
     <!-- Script commun pour toutes les pages -->
     <script src="common.js" defer></script>
 
-    <!-- Monetag Vignette Ad -->
-    <script>(function(s){s.dataset.zone='10038491',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- Monetag Vignette Ad - Chargé en différé -->
+    <script>
+    setTimeout(function(){
+        (function(s){s.dataset.zone='10038491',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+    }, 3000);
+    </script>
 </body>
 </html>

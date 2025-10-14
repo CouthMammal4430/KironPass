@@ -261,8 +261,13 @@ function renderGoogleButtonInModal() {
     }
 }
 
-function openAuthModal() {
+async function openAuthModal() {
     if (!authModal) return;
+    
+    // Charger Google Sign-In en lazy-load
+    if (!window.google && typeof window.loadGoogleSignIn === 'function') {
+        await window.loadGoogleSignIn();
+    }
     
     // Empêcher le défilement de la page
     document.body.style.overflow = 'hidden';
@@ -468,8 +473,13 @@ function initializeStripe() {
 }
 
 // ===================== GESTION DES MODALES =====================
-function openGoldModal() {
+async function openGoldModal() {
     if (!goldModal) return;
+    
+    // Charger Stripe en lazy-load
+    if (typeof window.Stripe === 'undefined' && typeof window.loadStripe === 'function') {
+        await window.loadStripe();
+    }
     
     // Empêcher le défilement de la page
     document.body.style.overflow = 'hidden';
@@ -2041,9 +2051,14 @@ function translateWarning(warning) {
     return translations[warning] || warning;
 }
 
-function testPasswordSecurity(password) {
+async function testPasswordSecurity(password) {
+    // Charger zxcvbn en lazy-load
     if (typeof zxcvbn === 'undefined') {
-        return;
+        if (typeof window.loadZxcvbn === 'function') {
+            await window.loadZxcvbn();
+        } else {
+            return;
+        }
     }
     
     // Si le mot de passe est vide, réinitialiser l'affichage

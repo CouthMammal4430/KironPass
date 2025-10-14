@@ -1,242 +1,118 @@
 // =====================================================
-// COOKIE CONSENT MANAGER - KironPass
+// COOKIE CONSENT MANAGER - KironPass (OPTIMISÉ)
 // =====================================================
-// Gère le consentement aux cookies pour éviter que la bannière
-// Ezoic ne s'affiche à chaque changement de page
+// Version optimisée pour de meilleures performances
 
 (function() {
     'use strict';
     
-    const CONSENT_KEY = 'kironpass_cookie_consent';
-    const EZOIC_CONSENT_KEY = 'ezCMPCookieConsent'; // Clé utilisée par Ezoic
-    const CONSENT_EXPIRY_DAYS = 365;
+    const CK = 'kironpass_cookie_consent';
+    const EK = 'ezCMPCookieConsent';
+    const EXP = 31536000000; // 365 jours en ms
     
-    /**
-     * Vérifie si l'utilisateur a déjà donné son consentement
-     */
-    function hasUserConsented() {
+    // Vérifier consentement
+    function hasConsent() {
         try {
-            // Vérifier notre propre clé
-            const consent = localStorage.getItem(CONSENT_KEY);
-            if (consent) {
-                const consentData = JSON.parse(consent);
-                const now = new Date().getTime();
-                
-                if (consentData.expiry && consentData.expiry > now) {
-                    return true;
-                }
+            const c = localStorage.getItem(CK);
+            if (c) {
+                const d = JSON.parse(c);
+                if (d.expiry > Date.now()) return true;
             }
-            
-            // Vérifier aussi la clé Ezoic native
-            const ezoicConsent = localStorage.getItem(EZOIC_CONSENT_KEY);
-            if (ezoicConsent) {
-                // Si Ezoic a déjà un consentement, on le synchronise
-                saveConsent(true);
+            if (localStorage.getItem(EK)) {
+                saveConsent();
                 return true;
             }
-            
-            return false;
-        } catch (e) {
-            return false;
-        }
+        } catch (e) {}
+        return false;
     }
     
-    /**
-     * Enregistre le consentement de l'utilisateur
-     */
-    function saveConsent(accepted = true) {
+    // Sauvegarder consentement
+    function saveConsent() {
         try {
-            const now = new Date().getTime();
-            const expiry = now + (CONSENT_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
-            
-            const consentData = {
-                accepted: accepted,
+            const now = Date.now();
+            localStorage.setItem(CK, JSON.stringify({
+                accepted: true,
                 timestamp: now,
-                expiry: expiry,
+                expiry: now + EXP,
                 version: '1.0'
-            };
-            
-            localStorage.setItem(CONSENT_KEY, JSON.stringify(consentData));
-        } catch (e) {
-            // Silencieux
-        }
+            }));
+        } catch (e) {}
     }
     
-    /**
-     * Injecte le CSS pour masquer la bannière
-     */
-    function injectBlockerCSS() {
-        if (document.getElementById('ezoic-cmp-blocker')) {
-            return; // Déjà injecté
-        }
-        
-        const style = document.createElement('style');
-        style.id = 'ezoic-cmp-blocker';
-        style.textContent = `
-            /* Masquer TOUTES les modales Ezoic/Gatekeeper */
-            div[class*="gatekeeper"],
-            div[id*="gatekeeper"],
-            div[class*="cmp"],
-            div[id*="cmp"],
-            .gk-cmp-modal,
-            .gk-cmp-overlay,
-            .ezstandalone-cmp,
-            iframe[src*="gatekeeper"],
-            iframe[src*="cmp"] {
-                display: none !important;
-                visibility: hidden !important;
-                opacity: 0 !important;
-                pointer-events: none !important;
-                position: absolute !important;
-                left: -9999px !important;
-            }
-            
-            /* Restaurer le scroll */
-            body {
-                overflow: auto !important;
-                position: static !important;
-            }
-            
-            html {
-                overflow: auto !important;
-            }
-        `;
-        
-        (document.head || document.documentElement).appendChild(style);
+    // Injecter CSS bloqueur
+    function injectCSS() {
+        if (document.getElementById('ezoic-cmp-blocker')) return;
+        const s = document.createElement('style');
+        s.id = 'ezoic-cmp-blocker';
+        s.textContent = 'div[class*="gatekeeper"],div[id*="gatekeeper"],div[class*="cmp"],div[id*="cmp"],.gk-cmp-modal,.gk-cmp-overlay,.ezstandalone-cmp,iframe[src*="gatekeeper"],iframe[src*="cmp"]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;position:absolute!important;left:-9999px!important}body,html{overflow:auto!important}body{position:static!important}';
+        (document.head || document.documentElement).appendChild(s);
     }
     
-    /**
-     * Supprime la bannière du DOM si elle existe
-     */
-    function removeCMPFromDOM() {
-        const selectors = [
-            'div[class*="gatekeeper"]',
-            'div[id*="gatekeeper"]',
-            'div[class*="cmp-modal"]',
-            'div[id*="cmp"]',
-            '.gk-cmp-modal',
-            '.gk-cmp-overlay'
-        ];
-        
-        selectors.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => {
-                el.remove();
-            });
+    // Supprimer bannière CMP
+    function removeCMP() {
+        ['div[class*="gatekeeper"]','div[id*="gatekeeper"]','div[class*="cmp-modal"]','div[id*="cmp"]','.gk-cmp-modal','.gk-cmp-overlay'].forEach(sel => {
+            document.querySelectorAll(sel).forEach(el => el.remove());
         });
     }
     
-    /**
-     * Observe le DOM pour supprimer la bannière si elle apparaît
-     */
-    function observeAndBlock() {
-        const observer = new MutationObserver(function(mutations) {
-            removeCMPFromDOM();
-        });
-        
-        observer.observe(document.body || document.documentElement, {
-            childList: true,
-            subtree: true
-        });
-        
-        // Nettoyer après 5 secondes (la bannière devrait être chargée)
-        setTimeout(() => observer.disconnect(), 5000);
+    // Observer DOM
+    function observe() {
+        const obs = new MutationObserver(removeCMP);
+        obs.observe(document.body || document.documentElement, {childList: true, subtree: true});
+        setTimeout(() => obs.disconnect(), 5000);
     }
     
-    /**
-     * Bloque les scripts Ezoic de s'exécuter
-     */
-    function blockEzoicScripts() {
-        // Intercepter les appels Ezoic
-        window.ezstandalone = window.ezstandalone || {};
-        window.ezstandalone.enabled = false;
-        
-        // Empêcher le CMP de se charger
-        const originalCreateElement = document.createElement;
-        document.createElement = function(tagName) {
-            const element = originalCreateElement.call(document, tagName);
-            
-            if (tagName.toLowerCase() === 'script') {
-                const originalSetAttribute = element.setAttribute;
-                element.setAttribute = function(name, value) {
-                    // Bloquer les scripts CMP
-                    if (name === 'src' && value && 
-                        (value.includes('gatekeeper') || value.includes('cmp'))) {
-                        return;
-                    }
-                    originalSetAttribute.call(element, name, value);
-                };
-            }
-            
-            return element;
-        };
-    }
-    
-    /**
-     * Écoute les clics pour sauvegarder le consentement
-     */
-    function listenForConsent() {
+    // Écouter acceptation
+    function listen() {
         document.addEventListener('click', function(e) {
-            const target = e.target;
-            const text = target.textContent?.toLowerCase() || '';
-            
-            // Détection large des boutons d'acceptation
-            if (text.includes('accept') || text.includes('accepter') || 
-                text.includes('tout accepter') || text.includes('agree')) {
-                saveConsent(true);
+            const txt = (e.target.textContent || '').toLowerCase();
+            if (txt.includes('accept') || txt.includes('accepter') || txt.includes('agree')) {
+                saveConsent();
             }
         }, true);
         
-        // Observer le localStorage pour les changements Ezoic
-        const originalSetItem = localStorage.setItem;
-        localStorage.setItem = function(key, value) {
-            if (key.includes('ezoic') || key.includes('gatekeeper') || key.includes('CMP')) {
-                saveConsent(true);
+        const origSet = localStorage.setItem;
+        localStorage.setItem = function(k, v) {
+            if (k.includes('ezoic') || k.includes('gatekeeper') || k.includes('CMP')) {
+                saveConsent();
             }
-            originalSetItem.apply(this, arguments);
+            origSet.apply(this, arguments);
         };
     }
     
-    /**
-     * Initialisation IMMÉDIATE
-     */
+    // Init
     (function init() {
-        const hasConsented = hasUserConsented();
-        
-        if (hasConsented) {
-            // BLOQUER immédiatement
-            injectBlockerCSS();
-            blockEzoicScripts();
+        if (hasConsent()) {
+            injectCSS();
+            window.ezstandalone = window.ezstandalone || {};
+            window.ezstandalone.enabled = false;
             
-            // Observer et nettoyer en continu
             if (document.body) {
-                observeAndBlock();
-                removeCMPFromDOM();
+                observe();
+                removeCMP();
             } else {
                 document.addEventListener('DOMContentLoaded', () => {
-                    observeAndBlock();
-                    removeCMPFromDOM();
+                    observe();
+                    removeCMP();
                 });
             }
             
-            // Nettoyage répété (au cas où)
-            setInterval(removeCMPFromDOM, 500);
-            setTimeout(() => clearInterval, 3000);
+            const interval = setInterval(removeCMP, 500);
+            setTimeout(() => clearInterval(interval), 3000);
         } else {
-            // Pas encore de consentement, écouter
-            listenForConsent();
+            listen();
         }
     })();
     
-    // API publique (sans bouton reset)
+    // API
     window.KironPassConsent = {
-        hasConsented: hasUserConsented,
+        hasConsented: hasConsent,
         saveConsent: saveConsent,
         reset: function() {
-            localStorage.removeItem(CONSENT_KEY);
-            localStorage.removeItem(EZOIC_CONSENT_KEY);
+            localStorage.removeItem(CK);
+            localStorage.removeItem(EK);
             location.reload();
         }
     };
-    
 })();
 

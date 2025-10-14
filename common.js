@@ -1,37 +1,25 @@
-// ===================== FICHIER COMMUN POUR TOUTES LES PAGES =====================
+// ===================== FICHIER COMMUN OPTIMISÉ =====================
 
 // ===================== GESTION DU THÈME =====================
 function initTheme() {
-    // Charger le thème depuis localStorage
-    let savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';
-    
-    // Appliquer le thème au body immédiatement
+    const savedTheme = localStorage.getItem('kironTheme') || 'theme-dark';
     document.body.classList.remove('theme-dark', 'theme-light');
     document.body.classList.add(savedTheme);
     
-    // Mettre à jour l'icône si elle existe
     const themeIcon = document.querySelector('.theme-icon');
-    if (themeIcon) {
-        themeIcon.textContent = savedTheme === 'theme-dark' ? '🌙' : '☀️';
-    }
+    if (themeIcon) themeIcon.textContent = savedTheme === 'theme-dark' ? '🌙' : '☀️';
     
-    // Ne pas ajouter l'event listener si déjà fait par script.js
     if (window.themeInitialized) return;
     
     const themeBtn = document.getElementById('theme-btn');
     if (!themeBtn) return;
     
     themeBtn.addEventListener('click', () => {
-        let current = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
-        let next = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
-        document.body.classList.remove(current);
-        document.body.classList.add(next);
+        const current = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+        const next = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
+        document.body.classList.replace(current, next);
         localStorage.setItem('kironTheme', next);
-        
-        const themeIcon = document.querySelector('.theme-icon');
-        if (themeIcon) {
-            themeIcon.textContent = next === 'theme-dark' ? '🌙' : '☀️';
-        }
+        if (themeIcon) themeIcon.textContent = next === 'theme-dark' ? '🌙' : '☀️';
     });
     
     window.themeInitialized = true;
@@ -39,42 +27,33 @@ function initTheme() {
 
 // ===================== GESTION DU MENU HAMBURGER =====================
 function initHamburger() {
-    // Ne pas initialiser si script.js s'en occupe déjà (sur index.html)
     if (window.hamburgerInitialized) return;
     
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const userDropdown = document.getElementById('user-dropdown');
-    
     if (!hamburgerBtn || !userDropdown) return;
     
-    function toggleUserDropdown() {
+    const toggle = () => {
         userDropdown.classList.toggle('show');
         hamburgerBtn.classList.toggle('active');
-    }
+    };
     
-    function closeUserDropdown() {
+    const close = () => {
         userDropdown.classList.remove('show');
         hamburgerBtn.classList.remove('active');
-    }
+    };
     
     hamburgerBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        toggleUserDropdown();
+        toggle();
     });
     
-    // Fermer le dropdown en cliquant ailleurs
     document.addEventListener('click', (e) => {
-        if (!userDropdown.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-            closeUserDropdown();
-        }
+        if (!userDropdown.contains(e.target) && !hamburgerBtn.contains(e.target)) close();
     });
     
-    // Gérer les clics sur les éléments du menu
-    const dropdownItems = userDropdown.querySelectorAll('.dropdown-item');
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', () => {
-            closeUserDropdown();
-        });
+    userDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', close);
     });
     
     window.hamburgerInitialized = true;
@@ -84,7 +63,6 @@ function initHamburger() {
 function initResourcesMenu() {
     const resourcesBtn = document.getElementById('resources-btn');
     const resourcesDropdown = document.getElementById('resources-dropdown');
-    
     if (!resourcesBtn || !resourcesDropdown) return;
     
     resourcesBtn.addEventListener('click', (e) => {
@@ -92,7 +70,6 @@ function initResourcesMenu() {
         resourcesDropdown.classList.toggle('show');
     });
     
-    // Fermer le dropdown en cliquant ailleurs
     document.addEventListener('click', (e) => {
         if (!resourcesDropdown.contains(e.target) && !resourcesBtn.contains(e.target)) {
             resourcesDropdown.classList.remove('show');
