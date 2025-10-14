@@ -7,6 +7,18 @@
   SECRETS_SCAN_ENABLED = "false"
   SECRETS_SCAN_OMIT_PATHS = "*.md,netlify/functions/*"
 
+# Headers pour sitemap et robots
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=utf-8"
+    X-Robots-Tag = "noindex"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
 # Redirection ads.txt vers Ezoic
 [[redirects]]
   from = "/ads.txt"
@@ -14,7 +26,9 @@
   status = 301
   force = true
 
+# Redirection par défaut (sauf pour les fichiers existants)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false

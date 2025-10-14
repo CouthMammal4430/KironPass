@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez l'histoire de KironPass, créé par Léo Blanchon, étudiant passionné par la cybersécurité et la technologie.">
+    <meta name="google-site-verification" content="7MLZN4OHbx16dpoJ1Dkjq2Bfr9pFsWsu7LmF5sm6LpU" />
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="icon" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#8b5cf6">
+    <title>À propos - KironPass</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Ezoic Verification -->
+    <meta name="ezoic-site-verification" content="Jti6XzIcgo0cMYgjPTsFN87OUrYw7M" />
+    
+    <!-- Cookie Consent Manager - DOIT être chargé AVANT Ezoic -->
+    <script src="cookie-consent.js"></script>
+    
+    <!-- Ezoic CMP Scripts -->
+    <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
+    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+
+    <!-- Ezoic Standalone Scripts -->
+    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+    <script>
+        window.ezstandalone = window.ezstandalone || {};
+        ezstandalone.cmd = ezstandalone.cmd || [];
+    </script>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header">
+    <div class="header-container container">
+        <!-- Logo -->
+        <div class="logo" translate="no"><img src="/favicon.png" alt="KironPass" class="logo-icon" width="64" height="64" style="vertical-align:middle;margin-right:4px;"><span class="brand">Kiron</span><span class="brand-pass">Pass</span></div>
+
+        <!-- Boutons à droite -->
+        <div class="nav-right">
+            <button class="btn-gold-top" data-translate="discover-gold">Découvrir Gold</button>
+            <div class="resources-dropdown-container">
+                <button class="resources-btn" id="resources-btn">
+                    <span class="resources-text" data-translate="resources">Ressources</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div id="resources-dropdown" class="resources-dropdown">
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Articles</div>
+                        <a href="mots-de-passe-courants.html" class="dropdown-item">Les 10 mots de passe les plus courants en 2024</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <div class="dropdown-section-title">Outils</div>
+                        <a href="password-test.html" class="dropdown-item">Test de force de mot de passe</a>
+                        <a href="password-improver.html" class="dropdown-item">Améliorateur de mot de passe</a>
+                    </div>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">
+                <span class="theme-icon">🌙</span>
+                <span class="theme-text">Thème</span>
+            </button>
+            <div id="user-menu" class="user-menu">
+                <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu utilisateur">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="user-dropdown" class="user-dropdown">
+                    <div class="dropdown-item" id="language-item">
+                        <span class="dropdown-icon">🇫🇷</span>
+                        <span>Français</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===================== MAIN CONTENT ===================== -->
+<main class="container">
+    <div class="about-page-container">
+        <!-- Flèche de retour et titre -->
+        <div class="page-title-with-back">
+            <a href="index.html" class="back-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+            </a>
+            <h1>À propos de KironPass</h1>
+        </div>
+
+        <!-- Hero section -->
+        <section class="about-hero">
+            <div class="hero-content">
+                <div class="hero-icon">🛡️</div>
+                <h2>Rendre la sécurité accessible à tous</h2>
+                <p class="hero-subtitle">KironPass est né d'une conviction simple : tout le monde devrait avoir accès à des outils de sécurité puissants et pratiques, gratuitement.</p>
+            </div>
+        </section>
+
+        <!-- Histoire -->
+        <section class="content-section">
+            <div class="content-card">
+                <h2>L'histoire de KironPass</h2>
+                <div class="story-content">
+                    <p>Créé en <strong>septembre 2024</strong>, KironPass est né d'une observation simple : alors que les cyberattaques se multiplient et que les violations de données font régulièrement la une, les outils de sécurité restent souvent complexes ou payants.</p>
+                    
+                    <p>En tant qu'étudiant en école d'ingénieur passionné par la technologie, j'ai voulu créer quelque chose de différent : <strong>un générateur de mots de passe vraiment utile, accessible à tous, et totalement gratuit</strong>.</p>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-icon">💡</div>
+                        <div class="highlight-content">
+                            <h3>La philosophie KironPass</h3>
+                            <p>Contrairement aux gestionnaires de mots de passe traditionnels, KironPass se concentre sur ce qui compte vraiment : <strong>créer des mots de passe robustes</strong>, <strong>tester leur sécurité</strong>, et <strong>améliorer ceux qui sont faibles</strong>. Pas de fonctionnalités superflues, juste l'essentiel, fait bien.</p>
+                        </div>
+                    </div>
+
+                    <p>Ce qui rend KironPass unique, ce sont des outils comme l'<strong>améliorateur de mot de passe</strong>, qui vous permet de transformer un mot de passe existant en une version ultra-sécurisée, sans avoir à en créer un complètement nouveau. C'est ce genre d'innovation pratique qui fait toute la différence au quotidien.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Qui suis-je -->
+        <section class="content-section">
+            <div class="content-card creator-card">
+                <h2>Qui suis-je ?</h2>
+                <div class="creator-content">
+                    <div class="creator-info">
+                        <div class="creator-avatar">👨‍💻</div>
+                        <div class="creator-details">
+                            <h3>Léo Blanchon</h3>
+                            <p class="creator-title">Créateur de KironPass</p>
+                            <p class="creator-status">Étudiant en école d'ingénieur • Passionné de technologie</p>
+                        </div>
+                    </div>
+                    
+                    <div class="creator-bio">
+                        <p>Bonjour ! Je m'appelle Léo, et je suis étudiant en école d'ingénieur basé à Meximieux, en France.</p>
+                        
+                        <p>Passionné par la technologie et le développement web, j'ai créé KironPass avec une mission claire : <strong>démocratiser l'accès aux outils de cybersécurité</strong>. Je crois fermement que la sécurité en ligne ne devrait pas être un luxe réservé à ceux qui peuvent payer des abonnements premium.</p>
+                        
+                        <p>Bien que je ne sois pas un expert en cybersécurité avec 20 ans d'expérience, je suis un développeur passionné qui apprend constamment et qui s'appuie sur les meilleures pratiques de l'industrie pour créer des outils fiables et utiles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="content-section">
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">🎯</div>
+                    <h3>Ma mission</h3>
+                    <p>Fournir des outils de sécurité <strong>gratuits, puissants et faciles à utiliser</strong> pour protéger les comptes de millions d'utilisateurs à travers le monde.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">🚀</div>
+                    <h3>Ma vision</h3>
+                    <p>Faire de KironPass <strong>la référence en matière de génération de mots de passe</strong>, tout en restant accessible et centré sur les besoins réels des utilisateurs.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">💎</div>
+                    <h3>L'avenir</h3>
+                    <p>Développer <strong>KironGold</strong>, une version premium qui apportera des fonctionnalités avancées tout en gardant la version gratuite pleinement fonctionnelle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technologies -->
+        <section class="content-section">
+            <div class="content-card">
+                <h2>Technologies utilisées</h2>
+                <p>KironPass est construit avec des technologies web modernes pour garantir rapidité, sécurité et accessibilité :</p>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon">⚡</div>
+                        <div class="tech-details">
+                            <h4>Génération côté client</h4>
+                            <p>Tous les mots de passe sont générés dans votre navigateur. <strong>Aucune donnée n'est envoyée sur nos serveurs</strong>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon">🔐</div>
+                        <div class="tech-details">
+                            <h4>Algorithmes cryptographiques</h4>
+                            <p>Utilisation de <strong>Web Crypto API</strong> pour une génération vraiment aléatoire et sécurisée.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon">🎨</div>
+                        <div class="tech-details">
+                            <h4>Interface moderne</h4>
+                            <p>Design responsive et accessible, optimisé pour tous les appareils.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <div class="tech-icon">📊</div>
+                        <div class="tech-details">
+                            <h4>Analyse de sécurité</h4>
+                            <p>Intégration de <strong>zxcvbn</strong> pour une évaluation précise de la force des mots de passe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Valeurs -->
+        <section class="content-section">
+            <div class="content-card">
+                <h2>Mes valeurs</h2>
+                <div class="values-list">
+                    <div class="value-item">
+                        <span class="value-number">1</span>
+                        <div class="value-content">
+                            <h3>Transparence</h3>
+                            <p>Code ouvert, génération locale, aucune collecte de mots de passe. Vous savez exactement ce qui se passe avec vos données.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="value-item">
+                        <span class="value-number">2</span>
+                        <div class="value-content">
+                            <h3>Accessibilité</h3>
+                            <p>La sécurité ne devrait pas être un luxe. KironPass est et restera gratuit dans sa version de base.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="value-item">
+                        <span class="value-number">3</span>
+                        <div class="value-content">
+                            <h3>Simplicité</h3>
+                            <p>Des outils puissants mais faciles à utiliser. Pas besoin d'être un expert pour protéger ses comptes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="value-item">
+                        <span class="value-number">4</span>
+                        <div class="value-content">
+                            <h3>Innovation</h3>
+                            <p>Créer des fonctionnalités vraiment utiles, comme l'améliorateur de mots de passe, qui répondent à de vrais besoins.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistiques -->
+        <section class="content-section">
+            <div class="stats-section">
+                <h2>KironPass en chiffres</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Gratuit</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Mots de passe stockés</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Outils puissants</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Mots de passe générés</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA -->
+        <section class="content-section">
+            <div class="cta-card">
+                <h2>Une question ? Une suggestion ?</h2>
+                <p>N'hésitez pas à me contacter ! Je suis toujours ouvert aux retours et aux idées pour améliorer KironPass.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-primary">Me contacter</a>
+                    <a href="index.html" class="btn btn-secondary">Essayer KironPass</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bouton retour -->
+        <div class="back-to-home">
+            <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+    <div>© 2025 KironPass – Créé par Léo Blanchon</div>
+    <div class="footer-links">
+        <a href="about.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="cgu.html">CGU</a>
+        <a href="privacy.html">Politique de confidentialité</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="config.js"></script>
+<script src="common.js"></script>
+
+<!-- Monetag Vignette Ad -->
+<script>(function(s){s.dataset.zone='10038491',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+<style>
+/* Styles spécifiques à la page About */
+.about-page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.about-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), #6d28d9);
+    border-radius: 20px;
+    color: white;
+}
+
+.hero-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.about-hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.story-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.highlight-box {
+    display: flex;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    color: white;
+}
+
+.highlight-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.highlight-content h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.highlight-content p {
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+}
+
+.creator-card {
+    background: linear-gradient(135deg, var(--card-bg), var(--hover-bg));
+}
+
+.creator-info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+}
+
+.creator-avatar {
+    font-size: 5rem;
+    flex-shrink: 0;
+}
+
+.creator-details h3 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.creator-title {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.creator-status {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.creator-bio p {
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.mission-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+}
+
+.mission-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.mission-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.tech-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--hover-bg);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.tech-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.tech-details h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.tech-details p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.values-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.value-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.value-number {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.value-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.value-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.stats-section {
+    text-align: center;
+}
+
+.stats-section h2 {
+    margin-bottom: 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.cta-card {
+    background: linear-gradient(135deg, var(--primary-color), #6d28d9);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+}
+
+.cta-card h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.cta-card p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.back-to-home {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.page-title-with-back {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.page-title-with-back h1 {
+    margin: 0;
+    text-align: left;
+}
+
+.back-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.back-arrow:hover {
+    background: var(--hover-bg);
+    border-color: var(--primary-color);
+    transform: translateX(-2px);
+}
+
+.back-arrow svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-page-container {
+        padding: 1rem;
+    }
+    
+    .about-hero {
+        padding: 2rem 1rem;
+    }
+    
+    .about-hero h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .creator-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .highlight-box {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .mission-grid,
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-card {
+        padding: 2rem 1rem;
+    }
+}
+</style>
+
+</body>
+</html>
+

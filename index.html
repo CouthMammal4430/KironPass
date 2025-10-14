@@ -36,6 +36,9 @@
     <!-- Ezoic Verification -->
     <meta name="ezoic-site-verification" content="Jti6XzIcgo0cMYgjPTsFN87OUrYw7M" />
     
+    <!-- Cookie Consent Manager - DOIT être chargé AVANT Ezoic -->
+    <script src="cookie-consent.js"></script>
+    
     <!-- Ezoic CMP Scripts -->
     <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
     <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
@@ -118,18 +121,23 @@
         Votre mot de passe ultra sécurisé, gratuit ou en version Gold premium !
     </div>
 
-    <!-- ===================== BANNIERE PUBLICITAIRE EZOIC ===================== -->
+    <!-- ===================== BANNIERE PUBLICITAIRE ADSTERRA ===================== -->
     <div class="ad-banner">
         <div class="ad-content">
             <span class="ad-label">Publicité</span>
-            <!-- Ezoic - mid_content - mid_content -->
-            <div id="ezoic-pub-ad-placeholder-111"></div>
-            <!-- End Ezoic - mid_content - mid_content -->
-            <script>
-                ezstandalone.cmd.push(function () {
-                    ezstandalone.showAds(111);
-                });
-            </script>
+            <!-- Adsterra Native Banner 728x90 -->
+            <div style="text-align: center;">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '22eff5407c06ba38682d6acf66277ac6',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/22eff5407c06ba38682d6acf66277ac6/invoke.js"></script>
+            </div>
         </div>
     </div>
 
@@ -249,6 +257,26 @@
             <div class="history-list"></div>
         </section>
 
+        <!-- ===================== BANNIERE PUBLICITAIRE ADSTERRA ===================== -->
+        <section class="ad-section">
+            <div class="ad-container">
+                <span class="ad-label">Publicité</span>
+                <!-- Adsterra Native Banner 300x250 -->
+                <div style="text-align: center; margin: 20px auto;">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : '70fb79e38924c59307eafd4703e95d1d',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/70fb79e38924c59307eafd4703e95d1d/invoke.js"></script>
+                </div>
+            </div>
+        </section>
+
         <!-- ===================== SECTION SÉCURITÉ ===================== -->
         <section class="security-container">
             <h2 data-translate="security-title">Besoin d'un rappel sur les bonnes pratiques des mots de passe ?</h2>
@@ -347,8 +375,9 @@
 
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
-        <div data-translate="copyright">© 2025 KironPass – Tous droits réservés</div>
+        <div data-translate="copyright">© 2025 KironPass – Créé par Léo Blanchon</div>
         <div class="footer-links">
+            <a href="about.html">À propos</a>
             <a href="contact.html" data-translate="contact-link">Contact</a>
             <a href="cgu.html" data-translate="terms-link">CGU</a>
             <a href="privacy.html" data-translate="privacy-link">Politique de confidentialité</a>
@@ -1281,5 +1310,8 @@
     <script src="script.js" defer></script>
     <!-- Script commun pour toutes les pages -->
     <script src="common.js" defer></script>
+
+    <!-- Monetag Vignette Ad -->
+    <script>(function(s){s.dataset.zone='10038491',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+# Robots.txt pour KironPass
+# Permet à tous les moteurs de recherche d'indexer le site
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kironpass.com/sitemap.xml
+
+# Disallow admin/private pages if any (none for now)
+# Disallow: /admin/
+
