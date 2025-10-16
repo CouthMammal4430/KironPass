@@ -423,6 +423,7 @@ const wordListsEN = [
 
 // Exporter les listes de mots selon la langue
 function getWordList(language = 'fr') {
-    return language === 'fr' ? wordListsFR : wordListsEN;
+    // Supporter 'fr' et 'en' comme codes de langue
+    return language === 'en' ? wordListsEN : wordListsFR;
 }
 

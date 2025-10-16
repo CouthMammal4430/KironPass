@@ -1172,10 +1172,10 @@ function generatePassword(length = 12, options = {}) {
 
 // FONCTION DE GENERATION DE PHRASE DE PASSE
 function generatePassphrase(wordCount = 4, options = {}) {
-    // Récupérer la langue actuelle (définie dans common.js ou localStorage)
-    const currentLang = sessionStorage.getItem('kironLanguage') || 'fr';
+    // Récupérer la langue actuelle (utilise currentLanguage défini plus haut)
+    const currentLang = currentLanguage || localStorage.getItem('kironLanguage') || 'fr';
     
-    // Utiliser la liste de mots appropriée
+    // Utiliser la liste de mots appropriée selon la langue
     const words = typeof getWordList !== 'undefined' ? getWordList(currentLang) : 
         ['abandon', 'ability', 'accept', 'action', 'animal', 'apple', 'balance', 
          'beauty', 'bridge', 'camera', 'castle', 'change', 'circle', 'coffee',
