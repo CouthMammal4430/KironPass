@@ -8,13 +8,12 @@
 - **Ressources JavaScript inutilisées** : 553 KiB
 
 ### Scripts Problématiques
-1. **gizokraijaw.net** (Monetag) : 1 229 ms
-2. **Stripe SDK** : 359 ms
-3. **Google Ads** : 283 ms
-4. **ezojs.com** : 229 ms
-5. **zxcvbn.js** : 186 ms
-6. **Gatekeeper CMP** : 131 ms
-7. **Google Sign-In** : 85 ms
+1. **Stripe SDK** : 359 ms
+2. **Google Ads** : 283 ms
+3. **ezojs.com** : 229 ms
+4. **zxcvbn.js** : 186 ms
+5. **Gatekeeper CMP** : 131 ms
+6. **Google Sign-In** : 85 ms
 
 ---
 
@@ -32,10 +31,10 @@
 #### Modifications dans `index.html`
 - ✅ **Adsterra Banner 1** : Chargement différé de 2 secondes après le load
 - ✅ **Adsterra Banner 2** : Chargement différé de 2,5 secondes après le load
-- ✅ **Monetag Vignette** : Chargement différé de 3 secondes après le load
 - ✅ **Suppression du script Ezoic CMP dupliqué**
+- ✅ **Suppression de Monetag** : Script publicitaire retiré
 
-**Impact estimé** : -1 229 ms de temps d'exécution JavaScript
+**Impact estimé** : Réduction du temps d'exécution JavaScript
 
 ### 3. **Optimisation de cookie-consent.js**
 #### Avant : 243 lignes
@@ -89,7 +88,6 @@
 2. **Stripe** : Uniquement sur ouverture modal Gold
 3. **Google Sign-In** : Uniquement sur ouverture modal Auth
 4. **Publicités Adsterra** : 2-3 secondes après le chargement
-5. **Monetag Vignette** : 3 secondes après le chargement
 
 ---
 
@@ -110,7 +108,7 @@
 ## 🎯 Recommandations Supplémentaires
 
 ### Court Terme
-1. ⚠️ Envisager de réduire le nombre de scripts publicitaires (actuellement : Ezoic + AdSense + Adsterra + Monetag)
+1. ⚠️ Envisager de réduire le nombre de scripts publicitaires (actuellement : Ezoic + AdSense + Adsterra)
 2. ⚠️ Minifier `script.js` et `common.js` pour la production
 3. ⚠️ Compresser les images (favicon, logo, etc.)
 4. ⚠️ Implémenter un cache service worker
